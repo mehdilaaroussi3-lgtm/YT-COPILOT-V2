@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+
+# Secrets & config
+config.yml
+.env
+*.json.key
+service-account*.json
+
+# Generated content
+output/
+cache/
+data/*.db
+data/*.db-journal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store

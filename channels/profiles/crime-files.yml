@@ -1,0 +1,24 @@
+name: "Crime Files"
+niche: "crime_documentary"
+
+brand:
+  primary_color: "#CC0000"
+  secondary_color: "#0a0a0a"
+  accent_color: "#FFFFFF"
+  font_family: "oswald"
+  font_weight: "Bold"
+  font_style: "uppercase"
+
+thumbnail_rules:
+  text_position: "upper"
+  max_words: 5
+  text_size: "xl"
+  background_style: "dark"
+  grain_intensity: 0.28
+  vignette: true
+  color_grading: "noir"
+
+content_style:
+  preferred_compositions: ["noir_dramatic_lighting", "evidence_board_style"]
+  avoid: ["bright_colors", "happy_vibe", "clean_modern"]
+  reference_channels: ["Fern", "JCS", "Coffeehouse Crime"]

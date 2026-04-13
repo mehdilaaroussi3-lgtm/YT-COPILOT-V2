@@ -1,0 +1,95 @@
+# Pre-seeded reference channels per niche (from THUMBCRAFT_MASTERPLAN.md §3.2)
+# These are the channels whose thumbnails consistently get high CTR.
+# Add or remove with: thumbcraft registry add/remove
+
+crime_documentary:
+  channels:
+    - name: "Fern"
+      channel_id: "UCxFK2uJRN4HWEcFKXRHcBSg"
+      style_tags: ["3d_cinematic", "dark_moody", "dramatic_lighting", "minimal_text"]
+      why: "Millions of views with slick 3D visuals and noir aesthetic"
+    - name: "JCS - Criminal Psychology"
+      channel_id: "UCYwVxWpjeKFWwu8TML-Te9A"
+      style_tags: ["interrogation_footage", "minimal", "dark", "text_focused"]
+      why: "Pioneered the crime breakdown format"
+    - name: "Coffeehouse Crime"
+      channel_id: "UCLLsm5_J-3sNp4MSwDmJCIQ"
+      style_tags: ["editorial", "high_contrast", "red_accent", "evidence_style"]
+      why: "Professional editorial look, consistent brand"
+    - name: "That Chapter"
+      channel_id: "UCL44k-cLvKiB_kDxFMKfWOA"
+      style_tags: ["photo_collage", "mugshot_style", "bold_text"]
+      why: "High CTR with face-forward thumbnail approach"
+    - name: "EWU Crime"
+      channel_id: "UC_ViSsVg5d7dBbwLj3YtHfQ"
+      style_tags: ["cinematic", "dark_tones", "mystery_reveal"]
+      why: "Cinematic dark style with consistent branding"
+
+ai_tech:
+  channels:
+    - name: "Fireship"
+      channel_id: "UCsBjURrPoezykLs9EqgamOA"
+      style_tags: ["bold_icon", "gradient_bg", "minimal_text", "logo_centric"]
+      why: "Iconic minimalist thumbnails, instant recognition"
+    - name: "Matt Wolfe"
+      channel_id: "UChpleBmo18P08aKCIgti38g"
+      style_tags: ["tech_collage", "blue_palette", "screenshot_style"]
+      why: "AI tool roundup format with high CTR"
+    - name: "AI Explained"
+      channel_id: "UCNJ1Ymd5yFuUPtn21xtRbbw"
+      style_tags: ["clean", "diagram_style", "educational", "minimal"]
+      why: "Authoritative explainer style"
+    - name: "Two Minute Papers"
+      channel_id: "UCbfYPyITQ-7l4upoX8nvctg"
+      style_tags: ["screenshot_demo", "before_after", "tech_visual"]
+      why: "Research visualization style"
+    - name: "TheAIGRID"
+      channel_id: "UCxRpmvyUAsaN1w465S39QnQ"
+      style_tags: ["news_style", "bold_text", "dark_bg", "neon_accents"]
+      why: "News-style AI thumbnails with urgency"
+
+finance_money:
+  channels:
+    - name: "How Money Works"
+      channel_id: "UCoxWrvPMR9AEB_yTj8BI0Vw"
+      style_tags: ["infographic", "bold_numbers", "green_palette", "clean"]
+      why: "1M+ subs faceless, infographic-style thumbnails"
+    - name: "Economics Explained"
+      channel_id: "UCZ4AMrDcNrfy3X6nsU8-rPg"
+      style_tags: ["diagram", "editorial", "data_viz", "clean_professional"]
+      why: "Professional explainer style with data visuals"
+    - name: "Logically Answered"
+      channel_id: "UCkEB8BcG_-OP_5XuPMqKnfw"
+      style_tags: ["brand_logos", "clean_layout", "corporate_style"]
+      why: "Clean brand-focused business thumbnails"
+    - name: "Patrick Boyle"
+      channel_id: "UCASM17pICdtDwyBjqoXI5Vg"
+      style_tags: ["editorial", "newspaper_style", "sophisticated"]
+      why: "Sophisticated finance editorial look"
+    - name: "Money & Macro"
+      channel_id: "UCE-W39YOkNIKKzlDqwDMaSQ"
+      style_tags: ["data_chart", "clean", "professional", "blue_tones"]
+      why: "Clean data-driven finance style"
+
+documentary_essay:
+  channels:
+    - name: "Fern"
+      channel_id: "UCxFK2uJRN4HWEcFKXRHcBSg"
+      style_tags: ["3d_cinematic", "dark_moody", "dramatic_lighting"]
+      why: "Gold standard for faceless documentary thumbnails"
+    - name: "Veritasium"
+      channel_id: "UCHnyfMqiRRG1u-2MsSQLbXA"
+      style_tags: ["science_visual", "curiosity_gap", "clean_photo"]
+      why: "Curiosity-driven science thumbnails"
+    - name: "Johnny Harris"
+      channel_id: "UCmGSJVG3mCRXVOP4yZrU1Dw"
+      style_tags: ["map_overlay", "editorial_photo", "journalistic"]
+      why: "Journalistic documentary essay style"
+    - name: "Lemmino"
+      channel_id: "UCRcgy6GzDeccI7dkbbBna3Q"
+      style_tags: ["minimal", "dark", "cinematic", "mystery"]
+      why: "Cinematic mystery documentary with clean design"
+    - name: "ColdFusion"
+      channel_id: "UC4QZ_LsYcvcq7qOsOhpAI4A"
+      style_tags: ["tech_doc", "clean_editorial", "blue_dark"]
+      why: "Tech documentary with polished editorial aesthetic"

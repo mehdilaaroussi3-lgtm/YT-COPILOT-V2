@@ -1,0 +1,27 @@
+# ThumbCraft Configuration
+# Copy this to config.yml and fill in your values.
+
+vertex:
+  # Vertex-enabled API key from a GCP project with Vertex AI API + billing.
+  # No service account / OAuth needed — uses the global aiplatform.googleapis.com
+  # endpoint with ?key= auth.
+  api_key: "your-vertex-api-key"
+
+gemini:
+  image_model: "gemini-3-pro-image-preview"
+  vision_model: "gemini-2.5-pro"
+  image_size: "2K"             # Vertex only — yields ~1376x768 widescreen
+  aspect_ratio: "16:9"
+
+youtube:
+  api_key: "your-youtube-data-api-v3-key"
+
+defaults:
+  variants: 3
+  output_dir: "output"
+  cache_dir: "cache"
+
+quality_gate:
+  enabled: true
+  min_score: 6.0
+  max_retries: 3

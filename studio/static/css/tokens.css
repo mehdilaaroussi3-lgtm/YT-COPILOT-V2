@@ -1,0 +1,94 @@
+/* Design tokens — literal 1of10 match */
+:root {
+  /* Text */
+  --ink-900: #141414;
+  --ink-700: #262932;
+  --ink-600: #4a4f5c;
+  --ink-500: #6b7280;
+  --ink-400: #9aa0ac;
+  --ink-300: #c8ccd6;
+  --ink-200: #e4e4ec;
+
+  /* Backgrounds */
+  --paper:     #ffffff;
+  --app-bg-a:  #eef2fd;    /* top gradient — pale cornflower */
+  --app-bg-b:  #f7f9fe;    /* middle */
+  --app-bg-c:  #ffffff;    /* bottom */
+  --surface:   #ffffff;
+  --surface-2: #f5f7fb;    /* hover / subtle card fill */
+  --surface-3: #eef2f9;
+
+  --line:   #e5e7ef;
+  --line-2: #d6d9e2;
+
+  /* Accents — the 1of10 blue-indigo */
+  --accent:        #2d5bff;
+  --accent-hover:  #1f47e0;
+  --accent-soft:   #e7edff;
+  --black:         #0a0a0b;
+  --black-hover:   #1d1d20;
+
+  /* Gradient for page titles (blue → purple → pink) */
+  --title-gradient: linear-gradient(90deg, #2d5bff 0%, #8b35f6 45%, #f04797 100%);
+
+  /* Semantic */
+  --positive:      #1fab4c;
+  --positive-soft: #def4e5;
+  --warning:       #d8a300;
+  --warning-soft:  #fff3c4;
+  --danger:        #e23838;
+  --danger-soft:   #fde3e3;
+
+  /* Shadow */
+  --shadow-1: 0 1px 2px rgba(10, 10, 11, .04);
+  --shadow-2: 0 1px 2px rgba(10, 10, 11, .04), 0 4px 12px -2px rgba(10, 10, 11, .06);
+  --shadow-3: 0 1px 2px rgba(10, 10, 11, .04), 0 12px 32px -8px rgba(10, 10, 11, .12);
+
+  /* Radius */
+  --r-2:  6px;
+  --r-3:  10px;
+  --r-4:  12px;
+  --r-5:  16px;
+  --r-6:  20px;
+  --r-full: 999px;
+
+  /* Spacing */
+  --s-1:   4px;
+  --s-2:   8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10:128px;
+
+  /* Typography — Inter across the board, tuned weights */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  /* Motion */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --dur-quick: 140ms;
+  --dur-base:  220ms;
+  --dur-slow:  360ms;
+
+  /* Layout */
+  --sidebar-w: 240px;
+  --content-max: 1280px;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/Inter-Variable.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/fonts/JetBrainsMono-Variable.ttf") format("truetype-variations");
+  font-weight: 100 800;
+  font-display: swap;
+}

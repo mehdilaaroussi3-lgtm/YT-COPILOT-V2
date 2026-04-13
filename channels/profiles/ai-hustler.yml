@@ -1,0 +1,24 @@
+name: "AI Hustler"
+niche: "ai_tech"
+
+brand:
+  primary_color: "#00D4FF"
+  secondary_color: "#1a1a2e"
+  accent_color: "#FFD700"
+  font_family: "inter"
+  font_weight: "Black"
+  font_style: "uppercase"
+
+thumbnail_rules:
+  text_position: "upper"
+  max_words: 4
+  text_size: "large"
+  background_style: "dark"
+  grain_intensity: 0.10
+  vignette: true
+  color_grading: "cyberpunk"
+
+content_style:
+  preferred_compositions: ["bold_text_left_visual_right", "centered_subject_text_below"]
+  avoid: ["cartoonish", "stock_photo_feel", "symmetrical_centered", "pastel_colors"]
+  reference_channels: ["Fireship", "Matt Wolfe", "AI Explained"]

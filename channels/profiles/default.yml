@@ -1,0 +1,24 @@
+name: "Default"
+niche: "documentary_essay"
+
+brand:
+  primary_color: "#FFFFFF"
+  secondary_color: "#0a0a0a"
+  accent_color: "#FFD700"
+  font_family: "inter"
+  font_weight: "Black"
+  font_style: "uppercase"
+
+thumbnail_rules:
+  text_position: "upper"
+  max_words: 4
+  text_size: "large"
+  background_style: "dark"
+  grain_intensity: 0.12
+  vignette: true
+  color_grading: "cinematic"
+
+content_style:
+  preferred_compositions: ["bold_subject_center", "left_text_right_visual"]
+  avoid: ["cartoonish", "stock_photo_feel", "symmetrical_centered"]
+  reference_channels: ["Lemmino", "ColdFusion", "Veritasium"]
