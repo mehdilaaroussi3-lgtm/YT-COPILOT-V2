@@ -1,8 +1,11 @@
-"""Lightweight Gemini text-only client (used by agents for reasoning fallbacks).
+"""Text generation router.
 
-When ThumbCraft runs inside Claude Code, Claude IS the reasoning engine and
-this module is bypassed. When run standalone (CLI from a terminal), agents
-call this for title pattern extraction, scoring, etc.
+Historical name. All text reasoning now routes through the local Claude CLI
+via generators/claude_text.py. The Gemini text path is retained behind
+`text.engine: "gemini"` in config.yml as an escape hatch only.
+
+Vision and image generation continue to use the Gemini API directly — this
+module is text-only. See CLAUDE.md at the repo root for the rule.
 """
 from __future__ import annotations
 
@@ -12,6 +15,7 @@ import time
 import httpx
 
 from cli import config as cfg
+
 
 VERTEX_HOST = "https://aiplatform.googleapis.com"
 ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
@@ -23,7 +27,21 @@ class TextError(RuntimeError):
 
 def generate_text(prompt: str, model: str | None = None,
                    temperature: float = 0.4) -> str:
-    """One-shot text generation with retry."""
+    """Route text generation to the configured engine (default: claude)."""
+    engine = (cfg.get("text.engine") or "claude").lower()
+    if engine == "claude":
+        from generators.claude_text import generate_text as _claude_generate
+        from generators.claude_text import ClaudeTextError
+        try:
+            return _claude_generate(prompt, model=model, temperature=temperature)
+        except ClaudeTextError as e:
+            raise TextError(str(e)) from e
+    return _generate_text_gemini(prompt, model=model, temperature=temperature)
+
+
+def _generate_text_gemini(prompt: str, model: str | None = None,
+                           temperature: float = 0.4) -> str:
+    """Legacy Gemini text path. Only reached when text.engine == 'gemini'."""
     api_key = cfg.get("vertex.api_key")
     if not api_key or api_key.startswith("your-"):
         raise TextError("vertex.api_key not set")

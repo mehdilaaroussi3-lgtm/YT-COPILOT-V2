@@ -47,17 +47,32 @@ async def api_generate(
     return {"job_id": job_id}
 
 
+def _json_safe(v):
+    """Coerce filesystem-path-like values to strings so JSON serialization
+    never blows up. sqlite-utils and FastAPI both call json.dumps on
+    whatever we hand them, and Path objects are not serializable."""
+    from pathlib import PurePath
+    if isinstance(v, PurePath):
+        return str(v)
+    if isinstance(v, dict):
+        return {k: _json_safe(x) for k, x in v.items()}
+    if isinstance(v, (list, tuple)):
+        return [_json_safe(x) for x in v]
+    return v
+
+
 async def _run_generate(job_id, title, channel, script,
                          sketch, reference, no_text, variants, style_channel_id):
+    import traceback
     from generators.pipeline import run_pipeline
     job = _jobs[job_id]
     job["status"] = "running"
 
     def progress(msg: str) -> None:
-        job["events"].append(msg)
+        job["events"].append(str(msg))
 
     def variant_done(data: dict) -> None:
-        payload = dict(data)
+        payload = _json_safe(dict(data))
         if payload.get("file_path"):
             payload["url"] = to_output_url(payload["file_path"])
         job["variant_events"].append(payload)
@@ -76,9 +91,12 @@ async def _run_generate(job_id, title, channel, script,
                 should_cancel=lambda: job["cancelled"],
             ),
         )
-        job["result"] = _serialize(result)
+        job["result"] = _json_safe(_serialize(result))
         job["status"] = "done"
     except Exception as e:  # noqa: BLE001
+        tb = traceback.format_exc()
+        # Full traceback to the console so we can audit; short message to client.
+        print(f"[pipeline error] job={job_id}\n{tb}")
         job["events"].append(f"Error: {e}")
         job["status"] = "error"
         job["error"] = str(e)
@@ -115,17 +133,17 @@ async def progress_stream(job_id: str):
         while True:
             job = _jobs[job_id]
             while last_log < len(job["events"]):
-                yield f"data: {json.dumps({'msg': job['events'][last_log]})}\n\n"
+                yield f"data: {json.dumps({'msg': str(job['events'][last_log])})}\n\n"
                 last_log += 1
             while last_var < len(job["variant_events"]):
-                v = job["variant_events"][last_var]
+                v = _json_safe(job["variant_events"][last_var])
                 yield f"event: variant\ndata: {json.dumps(v)}\n\n"
                 last_var += 1
             if job["status"] == "done":
-                yield f"event: done\ndata: {json.dumps(job['result'])}\n\n"
+                yield f"event: done\ndata: {json.dumps(_json_safe(job['result']))}\n\n"
                 return
             if job["status"] == "error":
-                yield f"event: error\ndata: {json.dumps({'error': job['error']})}\n\n"
+                yield f"event: error\ndata: {json.dumps({'error': str(job['error'])})}\n\n"
                 return
             await asyncio.sleep(0.3)
 

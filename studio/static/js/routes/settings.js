@@ -7,7 +7,7 @@ export async function mount(outlet) {
   outlet.appendChild(pageHeader({
     kicker: "Config",
     title: "Settings",
-    subtitle: "Read-only view of your ThumbCraft configuration. Edit config.yml at the repo root to change keys and model choices.",
+    subtitle: "Read-only view of your YTcopilot configuration. Edit config.yml at the repo root to change keys and model choices.",
   }));
 
   const [settings, stats] = await Promise.all([api.settings(), api.stats()]);

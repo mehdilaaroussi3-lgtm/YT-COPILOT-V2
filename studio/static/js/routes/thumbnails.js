@@ -3,6 +3,7 @@
 import { api } from "../api.js";
 import { h, icons, toast, $, formatRelative, channelPicker } from "../components.js";
 import { streamJob } from "../lib/sse.js";
+import { openSketchPad } from "../components/sketch_pad.js";
 
 export async function mount(outlet, { state }) {
   outlet.appendChild(h("div", { class: "page-center" }, [
@@ -23,9 +24,29 @@ export async function mount(outlet, { state }) {
   const hookEl = h("span", { class: "value", id: "hook" }, ["—"]);
   const pairingEl = h("span", { class: "score", id: "pairing" }, [""]);
 
-  const sketchInput = h("input", { type: "file", accept: "image/*" });
-  const sketchChip = h("label", { class: "file-chip" }, [h("span", { html: icons.refine }), " Sketch", sketchInput]);
-  sketchInput.addEventListener("change", () => sketchChip.classList.toggle("has-file", !!sketchInput.files[0]));
+  // Sketch: button opens a draw-in-browser modal. The exported PNG acts as
+  // the LAYOUT blueprint (subject placement, composition); the channel
+  // reference still controls visual STYLE. Kept file-like API for the form:
+  // sketchInput.files[0] is the sketch (if any) when the form submits.
+  let sketchFile = null;
+  const sketchChip = h("button", {
+    type: "button", class: "file-chip",
+  }, [h("span", { html: icons.refine }), " Sketch"]);
+  const sketchInput = {
+    get files() { return sketchFile ? [sketchFile] : []; },
+    clear() { sketchFile = null; sketchChip.classList.remove("has-file"); },
+  };
+  sketchChip.addEventListener("click", (e) => {
+    e.preventDefault();
+    openSketchPad({
+      initialBlob: sketchFile || null,
+      onUse: (file) => {
+        sketchFile = file;
+        sketchChip.classList.add("has-file");
+        toast("Sketch saved — will be used as layout blueprint", { kind: "success" });
+      },
+    });
+  });
 
   const refInput = h("input", { type: "file", accept: "image/*" });
   const refChip = h("label", { class: "file-chip" }, [h("span", { html: icons.plus }), " Reference image", refInput]);

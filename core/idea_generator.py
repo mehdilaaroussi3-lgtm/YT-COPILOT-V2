@@ -18,82 +18,145 @@ from generators.gemini_text import generate_text
 
 
 IDEA_PROMPT = """\
-You are generating YouTube video ideas for a faceless channel.
+Generate {count} new YouTube video ideas for the channel {channel_handle} ({channel_name}).
 
-CHANNEL PROFILE:
-- Name: {channel_name}
-- Niche: {niche}
-- Preferred tone: {tone}
-- Avoid: {avoid}
+Here are real past video titles from this channel so you understand what it's about. Study them to infer the subject matter, characters, themes, vocabulary, and world this channel covers:
 
-{topic_block}
+{channel_titles_block}
+
+{topic_block}Rules for the ideas:
+- Stay in the SAME topic domain as the real titles above. If they are about Game of Thrones, write more Game of Thrones ideas. If about legal loopholes and financial exploits, write more in that world. Never drift into generic "interesting story" territory just because of the niche label "{niche}".
+- Don't repeat what this channel has already covered.
+- Each idea must be distinct from the others.
+- Strong curiosity gap. Visually thumbnail-friendly.
+- Title: 3 to 8 words, matching this channel's phrasing style.
+- Description: 1-2 sentences, what the video covers and its hook.
+- Angle: one line on why this specific idea fits this specific channel's audience.
+
+For inspiration on viral energy/structure (not topic), here are unrelated outlier titles from similar-niche channels:
 {outlier_block}
 
-Task: generate {count} ORIGINAL video ideas. Each idea must:
-- Match the channel's niche and tone
-- Create a strong curiosity gap (the viewer needs to click to resolve)
-- Be visually thumbnail-friendly (you can imagine a dramatic visual for it)
-- Be distinct from the others in this batch
-
-Output STRICT JSON only — an array of {count} objects, no prose, no fence:
-
-[
-  {{
-    "title": "<working video title, 3-8 words>",
-    "description": "<1-2 sentence pitch of what this video covers and the hook>",
-    "angle": "<why this idea works for this channel in 1 line>"
-  }},
-  ...
-]
+Output a STRICT JSON array of {count} objects, each with keys "title", "description", "angle". No prose, no markdown fence, no extra keys. Example shape:
+[{{"title": "...", "description": "...", "angle": "..."}}]
 """
+
+
+def _sanitize_title(s: str) -> str:
+    """Strip bytes that corrupt the Gemini prompt stream.
+
+    Some scraped titles contain mojibake replacement chars (\\ufffd) or raw
+    non-UTF-8 bytes — these truncate the request body mid-transit and the
+    model sees a cut-off message. Replace them with a safe placeholder and
+    re-encode clean."""
+    if not s:
+        return ""
+    # Drop replacement chars entirely (they're already-broken data)
+    s = s.replace("\ufffd", "")
+    # Re-encode with aggressive fallback to kill any lingering surrogates
+    s = s.encode("utf-8", errors="ignore").decode("utf-8", errors="ignore")
+    return s.strip()
+
+
+def _channel_real_titles(channel_id: str | None, limit: int = 20) -> list[str]:
+    """All of this channel's real past video titles — the single most important
+    signal for what topic domain to stay in. No outlier filter: we want a
+    BROAD view of the channel's content, not only the viral hits. Titles
+    are sanitized so non-UTF-8 mojibake bytes don't break the prompt."""
+    if not channel_id:
+        return []
+    d = db()
+    try:
+        rows = list(d["videos"].rows_where(
+            "channel_id = ?", [channel_id],
+            order_by="outlier_score desc, published_at desc",
+            limit=limit,
+        ))
+        out = []
+        for r in rows:
+            t = _sanitize_title(r.get("title", ""))
+            if t:
+                out.append(t)
+        return out
+    except Exception:  # noqa: BLE001
+        return []
 
 
 def _recent_outlier_titles(niche: str, limit: int = 20,
                               channel_id: str | None = None) -> list[str]:
+    """Outlier titles from OTHER channels in the same niche — used only as
+    'energy reference', never as the primary domain signal."""
     d = db()
-    if channel_id:
-        sql = """
-        SELECT title FROM videos
-        WHERE channel_id = ? AND outlier_score >= 1
-        ORDER BY outlier_score DESC
-        LIMIT ?
-        """
-        return [r["title"] for r in d.query(sql, [channel_id, limit]) if r.get("title")]
     sql = """
     SELECT v.title FROM videos v
     LEFT JOIN channels c ON c.channel_id = v.channel_id
     WHERE (c.niche = ? OR c.niche IS NULL)
       AND v.outlier_score >= 2
+      AND v.channel_id != ?
     ORDER BY v.outlier_score DESC
     LIMIT ?
     """
-    return [r["title"] for r in d.query(sql, [niche, limit]) if r.get("title")]
+    out = []
+    for r in d.query(sql, [niche, channel_id or "", limit]):
+        t = _sanitize_title(r.get("title", ""))
+        if t:
+            out.append(t)
+    return out
 
 
 def generate_ideas(channel: str, topic: str | None = None,
                     count: int = 6) -> list[dict]:
-    """Generate + persist `count` video ideas for a channel."""
+    """Generate + persist `count` video ideas for a channel.
+
+    Anchors the model in the channel's REAL past video titles (the single
+    strongest domain signal) so ideas stay inside the channel's actual topic
+    world — not some generic 'documentary essay' space.
+    """
     profile = load_profile(channel)
     niche = profile.get("niche", "documentary_essay")
+    channel_id = profile.get("channel_id") or (channel if isinstance(channel, str) and channel.startswith("UC") else None)
 
-    tone = ", ".join(profile.get("content_style", {}).get("preferred_compositions", [])) or "editorial"
-    avoid = ", ".join(profile.get("content_style", {}).get("avoid", [])) or "generic"
+    # If the channel wasn't scanned yet (no real titles cached), trigger a
+    # scan synchronously — otherwise we'd be prompting blind and get the
+    # generic-story failure mode the user just hit.
+    real_titles = _channel_real_titles(channel_id, limit=20)
+    if not real_titles and channel_id:
+        try:
+            from core.style_channel import resolve_style_channel
+            resolve_style_channel(channel_id)
+            real_titles = _channel_real_titles(channel_id, limit=20)
+        except Exception:  # noqa: BLE001
+            real_titles = []
+
+    if real_titles:
+        channel_titles_block = "\n".join(f"- {t}" for t in real_titles)
+    else:
+        channel_titles_block = (
+            "(No past titles cached for this channel yet — infer the topic "
+            "domain from the channel handle and niche label alone.)"
+        )
 
     topic_block = f"TOPIC DIRECTION: {topic}\n" if topic else ""
-    outliers = _recent_outlier_titles(niche, channel_id=profile.get("channel_id"))
+    outliers = _recent_outlier_titles(niche, channel_id=channel_id)
     outlier_block = ""
     if outliers:
         outlier_block = (
-            "REFERENCE OUTLIERS (titles that hugely outperformed in this niche — "
-            "emulate their energy, DO NOT copy):\n"
-            + "\n".join(f"- {t}" for t in outliers[:15])
+            "(These come from OTHER channels in a similar niche — borrow "
+            "their ENERGY / structure only. They are NOT the topic domain.)\n"
+            + "\n".join(f"- {t}" for t in outliers[:10])
             + "\n"
         )
+    else:
+        outlier_block = "(none available)\n"
+
+    handle = profile.get("handle") or ""
+    if handle and not handle.startswith("@"):
+        handle = "@" + handle
 
     prompt = IDEA_PROMPT.format(
+        channel_handle=handle or "(unknown handle)",
         channel_name=profile.get("name", channel),
         niche=niche,
-        tone=tone, avoid=avoid,
+        channel_titles_block=channel_titles_block,
         topic_block=topic_block,
         outlier_block=outlier_block,
         count=count,

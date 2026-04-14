@@ -112,7 +112,7 @@ export function channelPicker({ items = [], selected = "", onChange } = {}) {
     h("span", {}, ["Manage channels"]),
   ]);
 
-  const menu = h("div", { class: "ch-picker-menu hidden" }, [
+  const menu = h("div", { class: "ch-picker-menu ch-picker-menu-portal hidden" }, [
     h("div", { class: "ch-picker-search-wrap" }, [
       h("span", { class: "ch-picker-search-icon", html: icons.search }),
       searchInput,
@@ -121,7 +121,11 @@ export function channelPicker({ items = [], selected = "", onChange } = {}) {
     manageBtn,
   ]);
 
-  const wrap = h("div", { class: "ch-picker" }, [trigger, menu]);
+  const wrap = h("div", { class: "ch-picker" }, [trigger]);
+  // The menu lives on document.body so it escapes every parent stacking
+  // context (rise-in animation leaves transform:translateY(0) on cards, which
+  // traps any z-index set inside them).
+  document.body.appendChild(menu);
 
   function renderList() {
     const q = searchInput.value.trim().toLowerCase();
@@ -155,12 +159,29 @@ export function channelPicker({ items = [], selected = "", onChange } = {}) {
     onChange && onChange(value);
     renderList();
   }
-  function openMenu() { open = true; menu.classList.remove("hidden"); renderList(); setTimeout(() => searchInput.focus(), 0); }
+  function positionMenu() {
+    const r = trigger.getBoundingClientRect();
+    menu.style.position = "fixed";
+    menu.style.top = `${r.bottom + 6}px`;
+    menu.style.left = `${r.left}px`;
+    menu.style.width = `${r.width}px`;
+  }
+  function openMenu() {
+    open = true;
+    positionMenu();
+    menu.classList.remove("hidden");
+    renderList();
+    setTimeout(() => searchInput.focus(), 0);
+  }
   function close() { open = false; menu.classList.add("hidden"); }
   function toggle() { open ? close() : openMenu(); }
 
   searchInput.addEventListener("input", renderList);
-  document.addEventListener("click", (e) => { if (open && !wrap.contains(e.target)) close(); });
+  document.addEventListener("click", (e) => {
+    if (open && !wrap.contains(e.target) && !menu.contains(e.target)) close();
+  });
+  window.addEventListener("resize", () => { if (open) positionMenu(); });
+  window.addEventListener("scroll", () => { if (open) positionMenu(); }, true);
 
   renderList();
 

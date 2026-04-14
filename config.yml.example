@@ -1,5 +1,11 @@
-# ThumbCraft Configuration
+# YTcopilot Configuration
 # Copy this to config.yml and fill in your values.
+
+text:
+  # Engine for text reasoning (titles, ideas, hooks, scripts).
+  # "claude" (default) routes through the local Claude CLI.
+  # "gemini" falls back to the Vertex text API (legacy).
+  engine: "claude"
 
 vertex:
   # Vertex-enabled API key from a GCP project with Vertex AI API + billing.

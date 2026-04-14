@@ -1,4 +1,4 @@
-"""SQLite database layer for ThumbCraft.
+"""SQLite database layer for YTcopilot.
 
 Stores: channels, videos, thumbnails, style_index, title_patterns,
 trends, generations, research findings.

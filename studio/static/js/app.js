@@ -12,6 +12,7 @@ import * as titles from "./routes/titles.js";
 import * as thumbnails from "./routes/thumbnails.js";
 import * as winners from "./routes/winners.js";
 import * as settings from "./routes/settings.js";
+import * as archive from "./routes/archive.js";
 
 register("/home",       home);
 register("/trackers",   trackers);
@@ -19,6 +20,7 @@ register("/bookmarks",  bookmarks);
 register("/ideas",      ideas);
 register("/titles",     titles);
 register("/thumbnails", thumbnails);
+register("/archive",    archive);
 register("/winners",    winners);
 register("/settings",   settings);
 
@@ -33,6 +35,9 @@ const NAV = [
     { path: "/titles",     label: "Title Generator",     icon: icons.title },
     { path: "/thumbnails", label: "Thumbnail Generator", icon: icons.thumb },
   ]},
+  { section: "Library", items: [
+    { path: "/archive",    label: "Archive",             icon: icons.folder || icons.bookmark },
+  ]},
   { section: "Analyze", items: [
     { path: "/winners",    label: "Thumbnail Winners",   icon: icons.winner, badge: "Beta" },
   ]},
@@ -41,8 +46,8 @@ const NAV = [
 function buildSidebar() {
   const sidebar = h("aside", { class: "sidebar" }, [
     h("a", { class: "brand", href: "#/home" }, [
-      h("span", { class: "brand-mark" }, ["TC"]),
-      h("span", { class: "brand-text" }, ["ThumbCraft"]),
+      h("span", { class: "brand-mark" }, ["YT"]),
+      h("span", { class: "brand-text" }, ["YTcopilot"]),
     ]),
 
     h("div", { class: "credits" }, [

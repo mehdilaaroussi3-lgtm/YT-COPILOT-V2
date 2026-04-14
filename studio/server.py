@@ -1,4 +1,4 @@
-"""ThumbCraft Studio — FastAPI shell.
+"""YTcopilot Studio — FastAPI shell.
 
 Mounts static files + every router. All business logic lives in core/, generators/,
 scraper/, agents/ — this file only wires HTTP to Python functions.
@@ -23,7 +23,7 @@ from studio.routers.common import CACHE_DIR, OUTPUT_DIR
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-app = FastAPI(title="ThumbCraft Studio", version="0.2.0")
+app = FastAPI(title="YTcopilot Studio", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -103,5 +103,5 @@ async def hook(title: str, channel: str | None = None) -> dict:
 
 def start_studio(host: str = "127.0.0.1", port: int = 8000) -> None:
     import uvicorn
-    print(f"\n  ThumbCraft Studio → http://{host}:{port}\n")
+    print(f"\n  YTcopilot Studio → http://{host}:{port}\n")
     uvicorn.run(app, host=host, port=port, log_level="info")

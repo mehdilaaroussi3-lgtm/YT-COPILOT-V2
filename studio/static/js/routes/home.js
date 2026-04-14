@@ -55,11 +55,11 @@ export async function mount(outlet) {
   }
 
   // Initial load
-  const res = await api.outliersRandom(16);
+  const res = await api.outliersRandom(24);
   load(res.items);
 
   $("#random", topbar).addEventListener("click", async () => {
-    const r = await api.outliersRandom(16);
+    const r = await api.outliersRandom(24);
     load(r.items);
   });
 
@@ -70,7 +70,7 @@ export async function mount(outlet) {
     debounce = setTimeout(async () => {
       const q = qEl.value.trim();
       if (!q) {
-        const r = await api.outliersRandom(16);
+        const r = await api.outliersRandom(24);
         load(r.items);
       } else {
         const r = await api.outliersSearch(q);

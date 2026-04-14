@@ -39,7 +39,16 @@ baked into each image (titles, captions, labels, numbers). Ignore visual
 style — another analyst handles that.
 
 For EACH thumbnail, transcribe the visible text exactly as it appears
-(preserve casing, line breaks, punctuation, numbers).
+(preserve casing, line breaks, punctuation, numbers). If a thumbnail has
+no prominent baked-in text — or only tiny marginal labels — write "[none]"
+for that entry.
+
+Then decide overall TEXT USAGE for this channel, one of:
+- "never"     — essentially none of the thumbnails use baked-in text
+- "rare"      — maybe 1 in 5 uses text, usually goes text-free
+- "sometimes" — roughly half use text, half don't
+- "often"     — most use text but some are clean
+- "always"    — every thumbnail has prominent text
 
 Then synthesize a TEXT DNA profile with:
 
@@ -59,7 +68,8 @@ Then synthesize a TEXT DNA profile with:
 
 Output STRICT JSON only, this schema:
 {{
-  "observed_texts": ["...", "...", ...],
+  "text_usage": "never|rare|sometimes|often|always",
+  "observed_texts": ["...", "[none]", "...", ...],
   "structure": "...",
   "length": "...",
   "casing": "...",
@@ -116,30 +126,41 @@ STEP 3 — WRITE THE HOOK.
 The hook must REINFORCE the thesis from Step 1, in the voice from Step 2.
 
 HARD RULES:
-1. NEVER just label the topic. These are all BAD:
+1. LANGUAGE: Write the hook in the SAME LANGUAGE as the video title above.
+   If the title is English, write in English. If it's French, write in
+   French. If it's German, write in German. The channel's DNA may show
+   words in a different language — IGNORE the channel's language, only
+   borrow its STRUCTURE, CASING, LENGTH, and TONE. Never output a hook in
+   a language different from the title.
+
+2. NEVER just label the topic. These are all BAD:
    - Title "LinkedIn is horrible"  →  "PROFESSIONAL NETWORK"   ← labels topic
    - Title "AI is replacing us"    →  "ARTIFICIAL INTELLIGENCE" ← labels topic
    - Title "Never buy Tesla"       →  "ELECTRIC CAR"           ← labels topic
    - Title "NFTs explained"        →  "NFTS"                    ← labels topic
 
-2. The hook IS the creator's REACTION / VERDICT / STAKES, not a caption of
+3. The hook IS the creator's REACTION / VERDICT / STAKES, not a caption of
    the subject. These are GOOD:
    - Title "LinkedIn is horrible"  →  "CORPORATE HELL"  or  "IT'S CRINGE"
    - Title "AI is replacing us"    →  "WE'RE COOKED"    or  "GAME OVER"
    - Title "Never buy Tesla"       →  "THE TRAP"        or  "WE GOT SCAMMED"
    - Title "Secret behind NFTs"    →  "THE TRUTH"       or  "IT'S A LIE"
 
-3. COMPLEMENT the title — if the title already says "horrible", your hook
+4. COMPLEMENT the title — if the title already says "horrible", your hook
    shouldn't also say "horrible". Pick a DIFFERENT angle of the same thesis
    (stakes, reaction, verdict, emotion).
 
-4. Match the channel's STRUCTURE (one block vs two stacked blocks — use \\n
-   between lines if two), CASING, LENGTH, VOCABULARY.
+5. Match the channel's STRUCTURE (one block vs two stacked blocks — use \\n
+   between lines if two), CASING, LENGTH, TONE — but TRANSLATE the style
+   into the title's language. Do NOT copy the channel's exact recurring
+   words if they're in a different language than the title.
 
-5. Use the channel's RECURRING WORDS when they fit the thesis. Do not force
-   them when they don't.
+6. Use the channel's RECURRING WORDS only when they're in the title's
+   language AND they fit the thesis. If the channel speaks German and
+   your title is English, do not use the German words — use equivalently
+   punchy English words in the same register.
 
-6. No emojis. No quotes around your output. No "Hook:" prefix.
+7. No emojis. No quotes around your output. No "Hook:" prefix.
 
 ═══════════════════════════════════════════
 INPUT
@@ -187,16 +208,24 @@ Each hook hits a DIFFERENT angle of the same thesis. Mix the angles:
 - Or: confession, dare, warning label, rhetorical question, specific number.
 
 HARD RULES (apply to ALL hooks):
-1. NEVER label the topic. "PROFESSIONAL NETWORK" for LinkedIn is DUMB.
+1. LANGUAGE: Write every hook in the SAME LANGUAGE as the video title.
+   If the channel's DNA is in a different language, ignore the channel's
+   exact words — only borrow its STRUCTURE, CASING, and TONE, rendered in
+   the title's language. Never mix languages. Never output a hook in a
+   language different from the title.
+2. NEVER label the topic. "PROFESSIONAL NETWORK" for LinkedIn is DUMB.
    The hook is the creator's REACTION / STAKES / VERDICT, not the subject.
-2. COMPLEMENT the title — don't reuse its main words.
-3. Match the channel's STRUCTURE, CASING, LENGTH, VOCABULARY.
-4. Use the channel's recurring words when they fit. Don't force them.
-5. The {n} hooks must be visibly DIFFERENT from each other — different
+3. COMPLEMENT the title — don't reuse its main words.
+4. Match the channel's STRUCTURE, CASING, LENGTH, TONE (in the title's
+   language).
+5. Use the channel's recurring words ONLY if they're in the title's
+   language AND they fit. Otherwise find equivalents in the title's
+   language with the same register.
+6. The {n} hooks must be visibly DIFFERENT from each other — different
    angle, different vocabulary, different length if the channel allows.
-6. If the channel's DNA uses two-line stacked text, format each hook with
+7. If the channel's DNA uses two-line stacked text, format each hook with
    a single \\n separator inside the string.
-7. No emojis.
+8. No emojis.
 
 ═══════════════════════════════════════════
 INPUT
@@ -240,7 +269,14 @@ def build_text_dna(channel_id: str, thumb_paths: list[Path]) -> str:
             existing = None
 
     if existing and existing.get("text_dna") and existing.get("thumb_count") == len(thumb_paths):
-        return existing["text_dna"] or ""
+        # Only reuse if the cached DNA already has the new text_usage field.
+        # Older DNAs predate the qualitative usage signal — force rebuild.
+        try:
+            parsed = json.loads(existing["text_dna"])
+            if "text_usage" in parsed:
+                return existing["text_dna"] or ""
+        except Exception:  # noqa: BLE001
+            pass
 
     if not thumb_paths:
         return ""
@@ -344,6 +380,97 @@ def generate_smart_hooks(title: str, text_dna: str, n: int = 4) -> list[str]:
             cleaned.append(h)
     # Pad with None-equivalent if model returned fewer than n — caller handles
     return cleaned
+
+
+def get_text_usage(text_dna: str) -> str:
+    """Return the channel's qualitative text-usage label.
+
+    One of: "never", "rare", "sometimes", "often", "always".
+    Falls back to "sometimes" if the DNA is missing/unparseable or doesn't
+    specify — a neutral default that lets both text and text-free variants
+    appear when the user requests many.
+    """
+    if not text_dna:
+        return "sometimes"
+    import json as _json
+    try:
+        d = _json.loads(text_dna)
+    except Exception:  # noqa: BLE001
+        return "sometimes"
+
+    explicit = str(d.get("text_usage", "")).strip().lower()
+    if explicit in {"never", "rare", "sometimes", "often", "always"}:
+        return explicit
+
+    # Fallback: infer from observed_texts array (old DNAs without text_usage)
+    observed = d.get("observed_texts") or []
+    if not isinstance(observed, list) or not observed:
+        return "sometimes"
+    total = len(observed)
+    none_like = sum(
+        1 for t in observed
+        if not t or str(t).strip().lower() in {"[none]", "none", "n/a", "-", ""}
+    )
+    rate = (total - none_like) / total
+    if rate <= 0.1:   return "never"
+    if rate <= 0.35:  return "rare"
+    if rate <= 0.65:  return "sometimes"
+    if rate <= 0.9:   return "often"
+    return "always"
+
+
+def plan_text_slots(text_usage: str, n_variants: int,
+                     user_forced_no_text: bool = False) -> list[bool]:
+    """Decide which variants (by index) should have text rendered.
+
+    Returns a list of booleans, length n_variants. True = this variant
+    renders a hook, False = this variant is text-free. Interleaved so the
+    user sees a visible mix in the grid.
+
+    Rules:
+      - user_forced_no_text → every slot False.
+      - "never"     → 0 slots with text.
+      - "rare"      → 1 slot (≤ 25%) if n_variants >= 2, else 0.
+      - "sometimes" → ~50%, rounded up.
+      - "often"     → ~75%, at least one text-free if n_variants >= 2.
+      - "always"    → every slot True.
+    """
+    if user_forced_no_text or n_variants <= 0:
+        return [False] * max(0, n_variants)
+
+    if text_usage == "never":
+        count = 0
+    elif text_usage == "always":
+        count = n_variants
+    elif text_usage == "rare":
+        count = 1 if n_variants >= 2 else 0
+    elif text_usage == "sometimes":
+        count = (n_variants + 1) // 2  # round up (4→2, 3→2, 5→3)
+    elif text_usage == "often":
+        count = max(1, (n_variants * 3 + 3) // 4)  # ~75%, keep ≥1 text-free when possible
+        if n_variants >= 2 and count >= n_variants:
+            count = n_variants - 1
+    else:
+        count = (n_variants + 1) // 2
+
+    if count <= 0:
+        return [False] * n_variants
+    if count >= n_variants:
+        return [True] * n_variants
+
+    # Interleave: spread `count` True slots evenly across n_variants
+    slots = [False] * n_variants
+    step = n_variants / count
+    for k in range(count):
+        idx = int(k * step)
+        if idx < n_variants:
+            slots[idx] = True
+    # Safety: if rounding underfilled, fill next available
+    while sum(slots) < count:
+        for i in range(n_variants):
+            if not slots[i]:
+                slots[i] = True; break
+    return slots
 
 
 def _clean_hook(raw: str) -> str:

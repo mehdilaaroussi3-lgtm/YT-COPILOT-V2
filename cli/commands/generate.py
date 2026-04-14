@@ -29,7 +29,7 @@ def generate(
     if script_file:
         script_text = script_file.read_text(encoding="utf-8")
 
-    console.print(f"[bold cyan]ThumbCraft[/] generating: [yellow]{title}[/]")
+    console.print(f"[bold cyan]YTcopilot[/] generating: [yellow]{title}[/]")
 
     def progress(msg: str) -> None:
         console.print(f"[dim]→ {msg}[/]")

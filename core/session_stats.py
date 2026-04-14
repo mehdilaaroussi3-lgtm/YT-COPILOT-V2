@@ -1,6 +1,6 @@
 """Process-level counters surfaced as 'credits' in the sidebar.
 
-Not persisted — resets each time `thumbcraft studio` restarts. Tracks calls so the
+Not persisted — resets each time YTcopilot studio restarts. Tracks calls so the
 user can see what the tool has cost them this session.
 """
 from __future__ import annotations

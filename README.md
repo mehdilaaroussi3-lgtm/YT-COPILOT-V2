@@ -1,6 +1,6 @@
-# ThumbCraft
+# YTcopilot
 
-Production-grade YouTube thumbnail generator CLI + local web studio. Powered by Gemini 3 Pro Image with reverse-engineered 1of10 intelligence (outlier scoring, reference injection, thumbnail-title pairing).
+Production-grade YouTube thumbnail generator CLI + local web studio. Powered by YTC 3.0 Pro Image with reverse-engineered 1of10 intelligence (outlier scoring, reference injection, thumbnail-title pairing).
 
 ## Quickstart
 

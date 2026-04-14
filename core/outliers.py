@@ -36,6 +36,8 @@ def _hydrate(row: dict, d) -> dict:
 
 
 def random_outliers(limit: int = 12, min_score: float = 2.0) -> list[dict[str, Any]]:
+    """Return a diverse random sample of outliers — AT MOST one video per
+    channel so the grid isn't flooded with a single channel's catalogue."""
     d = db()
     rows = list(d["videos"].rows_where(
         "outlier_score >= ?", [min_score],
@@ -44,7 +46,27 @@ def random_outliers(limit: int = 12, min_score: float = 2.0) -> list[dict[str, A
     if not rows:
         return []
     random.shuffle(rows)
-    return [_hydrate(r, d) for r in rows[:limit]]
+
+    seen: set[str] = set()
+    diverse: list[dict] = []
+    for r in rows:
+        cid = r.get("channel_id") or ""
+        if cid in seen:
+            continue
+        seen.add(cid)
+        diverse.append(r)
+        if len(diverse) >= limit:
+            break
+    # Fill the tail if we ran out of unique channels
+    if len(diverse) < limit:
+        taken = {r["video_id"] for r in diverse}
+        for r in rows:
+            if r["video_id"] in taken:
+                continue
+            diverse.append(r)
+            if len(diverse) >= limit:
+                break
+    return [_hydrate(r, d) for r in diverse]
 
 
 def search_outliers(query: str = "", niche: str | None = None,

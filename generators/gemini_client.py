@@ -1,4 +1,4 @@
-"""Gemini 3 Pro Image client — Vertex AI API-key endpoint (no SDK, no OAuth).
+"""YTC 3.0 Pro Image client — Vertex AI API-key endpoint (no SDK, no OAuth).
 
 Uses the global aiplatform.googleapis.com host which auto-routes to the region
 with most capacity. Mandatory exponential-backoff-with-jitter retry for 429s.

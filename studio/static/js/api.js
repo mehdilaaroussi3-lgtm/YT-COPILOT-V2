@@ -87,6 +87,7 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ channel, topic, count }),
     }),
+  ideasStatus: (jobId) => request(`/api/ideas/status/${jobId}`),
   ideasHistory: (channel) => {
     const q = channel ? `?channel=${encodeURIComponent(channel)}` : "";
     return request(`/api/ideas/history${q}`);
@@ -99,6 +100,7 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ channel, idea, count }),
     }),
+  titlesStatus: (jobId) => request(`/api/titles/status/${jobId}`),
   titlesHistory: (channel) => {
     const q = channel ? `?channel=${encodeURIComponent(channel)}` : "";
     return request(`/api/titles/history${q}`);

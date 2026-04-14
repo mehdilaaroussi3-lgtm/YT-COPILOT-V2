@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pip --version)"
+      "Bash(pip --version)",
+      "Bash(claude --version)",
+      "Bash(where claude:*)"
     ]
   }
 }

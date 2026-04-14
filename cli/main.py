@@ -1,4 +1,4 @@
-"""ThumbCraft CLI entry point."""
+"""YTcopilot CLI entry point."""
 from __future__ import annotations
 
 import sys
@@ -28,7 +28,7 @@ from cli.commands import studio as studio_cmd
 
 app = typer.Typer(
     name="thumbcraft",
-    help="Production-grade YouTube thumbnail generator powered by Gemini 3 Pro Image.",
+    help="Production-grade YouTube thumbnail generator powered by YTC 3.0 Pro Image.",
     no_args_is_help=True,
     add_completion=False,
 )
@@ -59,8 +59,8 @@ app.command("profiles", help="List channel profiles.")(studio_cmd.profile_list)
 
 @app.command("version")
 def version() -> None:
-    """Print ThumbCraft version."""
-    console.print("[bold cyan]ThumbCraft[/] v0.1.0  (Phase 1 — Foundation)")
+    """Print YTcopilot version."""
+    console.print("[bold cyan]YTcopilot[/] v0.1.0  (Phase 1 — Foundation)")
 
 
 if __name__ == "__main__":
