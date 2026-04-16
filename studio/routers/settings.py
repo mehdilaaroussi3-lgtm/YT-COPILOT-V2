@@ -64,15 +64,73 @@ def stats() -> dict:
         "generated_ideas": d["generated_ideas"].count,
         "generated_titles": d["generated_titles"].count,
     }
+    # Last scan timestamp: max of last_scanned across all channels
+    last_scan_at: str | None = None
+    try:
+        row = d.execute("SELECT MAX(last_scanned) FROM channels WHERE last_scanned IS NOT NULL").fetchone()
+        if row and row[0]:
+            last_scan_at = row[0]
+    except Exception:  # noqa: BLE001
+        pass
+
     from studio.routers.common import CACHE_DIR, OUTPUT_DIR
     return {
         "session": session_stats.snapshot(),
         "db_rows": counts,
+        "last_scan_at": last_scan_at,
         "disk": {
             "cache_mb": round(_dir_size(CACHE_DIR) / 1_000_000, 1),
             "output_mb": round(_dir_size(OUTPUT_DIR) / 1_000_000, 1),
         },
     }
+
+
+@router.get("/api/home/latest-creations")
+def latest_creations(limit: int = 4) -> dict:
+    """Return the most recently modified thumbnails from productions + reverse folders.
+
+    Used by Home "Your Latest Creations" showcase.
+    """
+    from pathlib import Path
+    roots = [Path("data/productions"), Path("data/reverse"), Path("data/lab")]
+    candidates: list[tuple[float, Path]] = []
+    for root in roots:
+        if not root.exists():
+            continue
+        for p in root.rglob("*.png"):
+            try:
+                if p.stat().st_size < 10_000:  # skip tiny/broken
+                    continue
+                candidates.append((p.stat().st_mtime, p))
+            except OSError:
+                continue
+        for p in root.rglob("*.jpg"):
+            try:
+                if p.stat().st_size < 10_000:
+                    continue
+                candidates.append((p.stat().st_mtime, p))
+            except OSError:
+                continue
+
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    items = []
+    data_root = Path("data")
+    for mtime, p in candidates[:limit]:
+        try:
+            rel = p.relative_to(data_root)
+        except ValueError:
+            continue
+        url = "/data/" + str(rel).replace("\\", "/")
+        # Pretty name: parent folder (e.g. production slug or reverse video title)
+        source = p.parts[1] if len(p.parts) > 1 else "unknown"  # e.g. "productions", "reverse", "lab"
+        items.append({
+            "url": url,
+            "name": p.parent.name,
+            "source": source,
+            "filename": p.name,
+            "mtime": mtime,
+        })
+    return {"items": items}
 
 
 @router.post("/api/settings/open-output")

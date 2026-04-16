@@ -25,6 +25,13 @@ dependencies = [
     "fastapi>=0.104.0",
     "uvicorn[standard]>=0.24.0",
     "python-multipart>=0.0.6",
+    "yt-dlp>=2024.8.6",
+    "scenedetect[opencv]>=0.6.4",
+    "imageio-ffmpeg>=0.5.1",
+    "faster-whisper>=1.0.0",
+    "librosa>=0.10.2",
+    "webvtt-py>=0.5.1",
+    "numpy>=1.26.0",
 ]
 
 [project.scripts]
@@ -32,5 +39,5 @@ thumbcraft = "cli.main:app"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cli*", "core*", "generators*", "compositing*", "preview*", "scraper*", "agents*", "studio*"]
+include = ["cli*", "core*", "core.reverse*", "generators*", "compositing*", "preview*", "scraper*", "agents*", "studio*"]
 exclude = ["cache*", "output*", "data*", "channels*", "prompts*"]

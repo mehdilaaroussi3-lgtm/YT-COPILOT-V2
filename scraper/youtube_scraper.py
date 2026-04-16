@@ -63,15 +63,46 @@ class ReferenceScraper:
         if not video_ids:
             return []
         # videos.list supports up to 50 ids per call (1 quota unit)
+        # contentDetails gives duration so we can filter out Shorts
         all_videos: list[dict[str, Any]] = []
         for i in range(0, len(video_ids), 50):
             batch = video_ids[i:i + 50]
             data = self._get("videos", {
-                "part": "statistics,snippet",
+                "part": "statistics,snippet,contentDetails",
                 "id": ",".join(batch),
             })
             all_videos.extend(data.get("items", []))
         return all_videos
+
+    def get_channel_stats(self, channel_ids: list[str]) -> dict[str, dict]:
+        """Return {channel_id: {subscriber_count, view_count, title}} for a batch of IDs."""
+        if not channel_ids:
+            return {}
+        result: dict[str, dict] = {}
+        for i in range(0, len(channel_ids), 50):
+            batch = channel_ids[i:i + 50]
+            data = self._get("channels", {
+                "part": "statistics,snippet",
+                "id": ",".join(batch),
+            })
+            for item in data.get("items", []):
+                cid = item["id"]
+                stats = item.get("statistics", {})
+                snippet = item.get("snippet", {})
+                thumbs = snippet.get("thumbnails", {})
+                avatar = (
+                    (thumbs.get("high") or thumbs.get("medium") or thumbs.get("default") or {})
+                    .get("url", "")
+                )
+                result[cid] = {
+                    "subscriber_count": int(stats.get("subscriberCount") or 0),
+                    "view_count": int(stats.get("viewCount") or 0),
+                    "title": snippet.get("title", ""),
+                    "avatar_url": avatar,
+                    "description": snippet.get("description", ""),
+                    "handle": snippet.get("customUrl", "").lstrip("@"),
+                }
+        return result
 
     def get_top_videos(self, channel_id: str, max_results: int = 10) -> list[dict[str, Any]]:
         """Pull recent videos, sort by view count, return top N."""
@@ -79,3 +110,27 @@ class ReferenceScraper:
         videos = self.get_videos_with_stats(ids)
         videos.sort(key=lambda v: int(v["statistics"].get("viewCount", 0)), reverse=True)
         return videos[:max_results]
+
+    def resolve_handle(self, handle: str) -> dict | None:
+        """Resolve one @handle → {channel_id, title}. Costs 1 quota unit."""
+        h = handle.lstrip("@")
+        data = self._get("channels", {"part": "id,snippet", "forHandle": f"@{h}"})
+        items = data.get("items") or []
+        if not items:
+            return None
+        return {"channel_id": items[0]["id"], "title": items[0]["snippet"]["title"]}
+
+    def resolve_handles_bulk(self, handles: list[str]) -> dict[str, dict]:
+        """Resolve a list of handles. Returns {clean_handle: {channel_id, title}}.
+
+        Unresolved handles are absent from the result.
+        Quota cost: 1 unit per handle (no batch support in YouTube API for forHandle).
+        """
+        results = {}
+        for handle in handles:
+            resolved = self.resolve_handle(handle)
+            if resolved:
+                results[handle.lstrip("@")] = resolved
+            else:
+                print(f"  [warn] Could not resolve handle: {handle}")
+        return results

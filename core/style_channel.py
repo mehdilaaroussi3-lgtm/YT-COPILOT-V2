@@ -15,6 +15,7 @@ from typing import Any
 import httpx
 
 from cli import config as cfg
+from generators import gcp_auth
 from data.db import db
 from scraper.outlier_scorer import channel_median, get_outliers, score_video
 from scraper.thumbnail_downloader import download_thumbnail
@@ -84,24 +85,27 @@ def resolve_style_channel(channel_id: str, handle_or_url: str | None = None,
                 row = add_tracked(lookup)
                 channel_id = row["channel_id"]
                 meta = row
-            except Exception:  # noqa: BLE001
+            except Exception as _e:  # noqa: BLE001
+                import sys
+                print(f"[style_channel] resolve failed for {lookup!r}: {_e}", file=sys.stderr)
                 return None
 
     if meta is None:
         return None
 
+    scrape_count: int = max(1, int(cfg.get("channel.scrape_count", 10)))
+
     existing = list(d["videos"].rows_where(
         "channel_id = ?",
-        [channel_id], order_by="outlier_score desc", limit=25,
+        [channel_id], order_by="outlier_score desc", limit=scrape_count,
     ))
 
     scanned = False
-    if len(existing) < 6 or force_rescan:
-        # Pull the channel's recent videos (up to 50) and cache their
-        # thumbnails regardless of outlier score — we want the channel's
-        # style vocabulary, not only its breakout hits.
+    if len(existing) < scrape_count or force_rescan:
+        # Pull the channel's recent videos and cache their thumbnails.
+        # scrape_count is the single source of truth — set in config.yml.
         scraper = ReferenceScraper.from_config()
-        median, videos = channel_median(scraper, channel_id, sample=50)
+        median, videos = channel_median(scraper, channel_id, sample=scrape_count)
         for v in videos:
             vid = v["id"]
             sn = v.get("snippet", {})
@@ -126,7 +130,7 @@ def resolve_style_channel(channel_id: str, handle_or_url: str | None = None,
         scanned = True
         existing = list(d["videos"].rows_where(
             "channel_id = ?",
-            [channel_id], order_by="outlier_score desc", limit=25,
+            [channel_id], order_by="outlier_score desc", limit=scrape_count,
         ))
 
     # Collect cached thumbnail paths
@@ -138,13 +142,13 @@ def resolve_style_channel(channel_id: str, handle_or_url: str | None = None,
             thumb_paths.append(Path(th["file_path"]))
 
     # Build or reuse style brief
-    brief = _build_channel_brief(channel_id, thumb_paths)
+    brief = _build_channel_brief(channel_id, thumb_paths, scrape_count)
 
     # Build or reuse text DNA (channel's typographic voice)
     text_dna = ""
     try:
         from core.channel_text_dna import build_text_dna
-        text_dna = build_text_dna(channel_id, thumb_paths)
+        text_dna = build_text_dna(channel_id, thumb_paths[:scrape_count])
     except Exception:  # noqa: BLE001
         text_dna = ""
 
@@ -152,15 +156,16 @@ def resolve_style_channel(channel_id: str, handle_or_url: str | None = None,
         "channel_id": channel_id,
         "name": meta.get("name", ""),
         "handle": meta.get("handle", ""),
-        "reference_paths": thumb_paths[:2],
-        "all_reference_paths": thumb_paths[:20],
+        "reference_paths": thumb_paths[:2],        # Gemini image-gen API hard limit
+        "all_reference_paths": thumb_paths,        # pipeline spreads across variants
         "style_brief": brief,
         "text_dna": text_dna,
         "scanned_this_call": scanned,
     }
 
 
-def _build_channel_brief(channel_id: str, thumb_paths: list[Path]) -> str:
+def _build_channel_brief(channel_id: str, thumb_paths: list[Path],
+                          scrape_count: int = 10) -> str:
     """Cache per-channel style briefs in the channels table."""
     d = db()
     # Use a dedicated key in the thumbnails table — we don't want to touch the
@@ -175,7 +180,10 @@ def _build_channel_brief(channel_id: str, thumb_paths: list[Path]) -> str:
             "built_at": str,
         }, pk="channel_id")
 
-    existing = d["channel_briefs"].get(channel_id) if channel_id in d["channel_briefs"].pks else None
+    try:
+        existing = d["channel_briefs"].get(channel_id)
+    except Exception:  # noqa: BLE001
+        existing = None
     if existing and existing.get("thumb_count") == len(thumb_paths):
         return existing["brief"]
 
@@ -183,24 +191,26 @@ def _build_channel_brief(channel_id: str, thumb_paths: list[Path]) -> str:
         return ""
 
     # Gemini Vision
-    api_key = cfg.get("vertex.api_key")
-    model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=model)}?key={api_key}"
+    try:
+        model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
+        url = gcp_auth.vertex_url(model)
+    except Exception:  # noqa: BLE001
+        return ""
 
     parts: list[dict] = []
-    for p in thumb_paths[:6]:
+    for p in thumb_paths[:scrape_count]:
         parts.append({"inlineData": {
             "data": base64.b64encode(p.read_bytes()).decode(),
             "mimeType": "image/jpeg",
         }})
-    parts.append({"text": CHANNEL_BRIEF_PROMPT.format(count=len(thumb_paths[:6]))})
+    parts.append({"text": CHANNEL_BRIEF_PROMPT.format(count=len(thumb_paths[:scrape_count]))})
 
     try:
         with httpx.Client(timeout=120.0) as c:
             resp = c.post(url, json={
                 "contents": [{"role": "user", "parts": parts}],
                 "generationConfig": {"responseModalities": ["TEXT"]},
-            }, headers={"Content-Type": "application/json"})
+            }, headers=gcp_auth.auth_headers())
         if resp.status_code >= 300:
             return ""
         payload = resp.json()

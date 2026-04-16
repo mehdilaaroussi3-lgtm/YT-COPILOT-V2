@@ -15,10 +15,7 @@ import time
 import httpx
 
 from cli import config as cfg
-
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
+from generators import gcp_auth
 
 
 class TextError(RuntimeError):
@@ -42,11 +39,8 @@ def generate_text(prompt: str, model: str | None = None,
 def _generate_text_gemini(prompt: str, model: str | None = None,
                            temperature: float = 0.4) -> str:
     """Legacy Gemini text path. Only reached when text.engine == 'gemini'."""
-    api_key = cfg.get("vertex.api_key")
-    if not api_key or api_key.startswith("your-"):
-        raise TextError("vertex.api_key not set")
     model = model or cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=model)}?key={api_key}"
+    url = gcp_auth.vertex_url(model)
 
     body = {
         "contents": [{"role": "user", "parts": [{"text": prompt}]}],
@@ -60,8 +54,7 @@ def _generate_text_gemini(prompt: str, model: str | None = None,
     for attempt in range(6):
         try:
             with httpx.Client(timeout=120.0) as c:
-                resp = c.post(url, json=body,
-                              headers={"Content-Type": "application/json"})
+                resp = c.post(url, json=body, headers=gcp_auth.auth_headers())
             if resp.status_code == 429:
                 last_err = "429"
             elif resp.status_code >= 300:

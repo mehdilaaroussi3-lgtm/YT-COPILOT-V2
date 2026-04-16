@@ -12,10 +12,7 @@ from pathlib import Path
 import httpx
 
 from cli import config as cfg
-
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
+from generators import gcp_auth
 
 
 ANALYSIS_PROMPT = """\
@@ -54,12 +51,11 @@ def analyze_thumbnails(thumbnail_paths: list[Path], niche: str,
     if not paths:
         return "(no reference thumbnails available)"
 
-    api_key = cfg.get("vertex.api_key")
-    if not api_key or api_key.startswith("your-"):
-        raise VisionError("vertex.api_key not set in config.yml")
-
     vision_model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=vision_model)}?key={api_key}"
+    try:
+        url = gcp_auth.vertex_url(vision_model)
+    except Exception as e:  # noqa: BLE001
+        raise VisionError(str(e)) from e
 
     parts: list[dict] = []
     for p in paths:
@@ -83,7 +79,7 @@ def analyze_thumbnails(thumbnail_paths: list[Path], niche: str,
             with httpx.Client(timeout=120.0) as client:
                 resp = client.post(
                     url, json=body,
-                    headers={"Content-Type": "application/json"},
+                    headers=gcp_auth.auth_headers(),
                 )
             if resp.status_code == 429:
                 last_err = f"429: {resp.text[:200]}"

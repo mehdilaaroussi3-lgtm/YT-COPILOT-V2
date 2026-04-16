@@ -3,7 +3,17 @@
     "allow": [
       "Bash(pip --version)",
       "Bash(claude --version)",
-      "Bash(where claude:*)"
+      "Bash(where claude:*)",
+      "Bash(python -m compileall -q core/reverse cli/commands/reverse.py cli/main.py data/db.py)",
+      "Bash(py -m compileall -q core/reverse cli/commands/reverse.py cli/main.py data/db.py)",
+      "Bash(\"/c/Users/asus/AppData/Local/Programs/Python/Python312/python.exe\" -m compileall -q core/produce cli/commands/produce.py cli/main.py data/db.py)",
+      "Bash(.venv/Scripts/python -c ':*)",
+      "Bash(python3 -c ':*)",
+      "Bash(python -c ':*)",
+      "Bash(netstat -ano)",
+      "Bash(grep -r \"channel_briefs\\\\|smart_finds\\\\|style_channels\" \"d:\\\\THUMBNAIL MODULE\" --include=\"*.py\" ! -path \"*/.venv/*\" ! -path \"*/node_modules/*\")",
+      "Bash(node -c \"d:/THUMBNAIL MODULE/studio/static/js/routes/lab.js\")",
+      "Bash(python -m py_compile \"d:/THUMBNAIL MODULE/studio/routers/lab.py\")"
     ]
   }
 }

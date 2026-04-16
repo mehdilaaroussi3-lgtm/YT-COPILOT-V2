@@ -15,10 +15,8 @@ from pathlib import Path
 import httpx
 
 from cli import config as cfg
+from generators import gcp_auth
 from data.db import db
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
 
 DESCRIBE_PROMPT = """\
 Analyze this YouTube thumbnail. Return STRICT JSON with these keys:
@@ -43,9 +41,8 @@ Output ONLY the JSON object. No prose, no markdown fence.
 class ThumbnailStyleAgent:
     def __init__(self) -> None:
         self.db = db()
-        self.api_key = cfg.get("vertex.api_key")
         self.model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-        self.url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=self.model)}?key={self.api_key}"
+        self.url = gcp_auth.vertex_url(self.model)
 
     def _vision_call(self, image_bytes: bytes) -> dict:
         body = {
@@ -60,7 +57,7 @@ class ThumbnailStyleAgent:
             try:
                 with httpx.Client(timeout=120.0) as c:
                     resp = c.post(self.url, json=body,
-                                  headers={"Content-Type": "application/json"})
+                                  headers=gcp_auth.auth_headers())
                 if resp.status_code == 429:
                     pass
                 elif resp.status_code >= 300:

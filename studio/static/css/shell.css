@@ -20,29 +20,16 @@
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-2) var(--s-3);
-  margin-bottom: var(--s-4);
+  display: block;
+  padding: var(--s-5) var(--s-3) var(--s-4);
+  margin-bottom: var(--s-2);
   text-decoration: none;
+  border-bottom: 1px solid var(--line);
 }
-.brand-mark {
-  width: 34px; height: 34px;
-  display: grid; place-items: center;
-  background: var(--accent);
-  color: white;
-  border-radius: 50%;
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.04em;
-  flex-shrink: 0;
-}
-.brand-text {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--ink-900);
-  letter-spacing: -0.01em;
+.brand-logo {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .brand-collapse {
   margin-left: auto;

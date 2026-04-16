@@ -6,11 +6,17 @@ vision work stays on the Gemini API — see generators/gemini_client.py and
 core/channel_text_dna.build_text_dna.
 
 See CLAUDE.md at the repo root for the routing rule.
+
+IMPORTANT: The CLI is invoked from a temp directory (not the project root) so
+Claude does NOT load CLAUDE.md / project context. If run from the project dir,
+Claude Code interprets text-generation prompts as code execution requests and
+refuses to output raw JSON, breaking every LLM call.
 """
 from __future__ import annotations
 
 import shutil
 import subprocess
+import tempfile
 import time
 
 
@@ -40,17 +46,24 @@ def generate_text(prompt: str, model: str | None = None,
     `model` and `temperature` are accepted for signature compatibility with
     the old Gemini path but ignored — Claude CLI uses its configured model
     and sampling. Prompts already encode the determinism they need.
+
+    Runs from a throwaway temp directory so Claude does not load the project's
+    CLAUDE.md. Without this, Claude Code interprets generation prompts as
+    agentic tasks and refuses to produce raw JSON output.
     """
     del model, temperature
     bin_path = _resolve_bin()
+    cwd = tempfile.mkdtemp(prefix="ytc_claude_")
 
     last_err: str | None = None
-    for attempt in range(2):
+    for attempt in range(3):
         try:
             proc = subprocess.run(
-                [bin_path, "-p", prompt, "--output-format", "text"],
-                capture_output=True, text=True, timeout=180,
+                [bin_path, "-p", prompt, "--output-format", "text",
+                 "--allowedTools", ""],
+                capture_output=True, text=True, timeout=240,
                 encoding="utf-8", errors="replace",
+                cwd=cwd,
             )
             if proc.returncode != 0:
                 last_err = f"exit {proc.returncode}: {(proc.stderr or '')[:400]}"
@@ -69,7 +82,7 @@ def generate_text(prompt: str, model: str | None = None,
         except Exception as e:  # noqa: BLE001
             last_err = f"{type(e).__name__}: {e}"
 
-        if attempt == 0:
-            time.sleep(2.0)
+        if attempt < 2:
+            time.sleep(2.0 * (attempt + 1))
 
     raise ClaudeTextError(f"Claude text generation failed: {last_err}")

@@ -161,6 +161,97 @@ def _ensure_schema(d: sqlite_utils.Database) -> None:
         d["generated_titles"].create_index(["channel"])
         d["generated_titles"].create_index(["batch_id"])
 
+    # --- My Channels workspace tables ----
+    if "my_channels" not in d.table_names():
+        d["my_channels"].create({
+            "name": str,               # user-given channel name (pk)
+            "niche": str,
+            "reference_yt_url": str,
+            "reference_channel_name": str,
+            "reference_channel_id": str,
+            "dna_path": str,
+            "logo_path": str,
+            "avatar_color": str,
+            "target_audience": str,    # e.g. "25-35 men into finance"
+            "tone": str,               # educational | shocking | entertaining | mix
+            "voice_id": str,           # ElevenLabs voice ID for this channel
+            "default_duration": str,   # default video length hint e.g. "10min"
+            "created_at": str,
+        }, pk="name")
+    else:
+        # Back-compat — add new columns if missing
+        mc_cols = {c.name for c in d["my_channels"].columns}
+        for col, typ in [("reference_channel_id", str), ("logo_path", str),
+                         ("target_audience", str), ("tone", str),
+                         ("voice_id", str), ("default_duration", str)]:
+            if col not in mc_cols:
+                d["my_channels"].add_column(col, typ, not_null_default="")
+
+    if "channel_videos" not in d.table_names():
+        d["channel_videos"].create({
+            "id": int,
+            "channel_name": str,
+            "topic": str,
+            "brief": str,              # optional angle/brief before script gen
+            "status": str,             # idea | thumbnail | scripted | producing | done
+            "thumbnail_path": str,     # generated thumbnail PNG
+            "script_json": str,        # JSON string of approved script
+            "script_status": str,      # none | generating | ready | approved
+            "blueprint_path": str,
+            "production_name": str,
+            "final_mp4_path": str,
+            "duration_hint": str,
+            "resolution": str,
+            "created_at": str,
+        }, pk="id")
+        d["channel_videos"].create_index(["channel_name"])
+    else:
+        # Back-compat
+        cv_cols = {c.name for c in d["channel_videos"].columns}
+        for col, typ in [("brief", str), ("thumbnail_path", str),
+                         ("script_json", str), ("script_status", str)]:
+            if col not in cv_cols:
+                d["channel_videos"].add_column(col, typ, not_null_default="")
+
+    # --- Production Pipeline indexing table ----
+    if "productions" not in d.table_names():
+        d["productions"].create({
+            "name": str,
+            "blueprint_path": str,
+            "topic": str,
+            "resolution": str,
+            "voice_id": str,
+            "section_count": int,
+            "status": str,
+            "created_at": str,
+        }, pk="name")
+
+    # --- Ultimate Reverse Engineer (URE) indexing tables ----
+    if "reverse_videos" not in d.table_names():
+        d["reverse_videos"].create({
+            "video_id": str,
+            "url": str,
+            "title": str,
+            "channel": str,
+            "duration_s": float,
+            "production_formula": str,
+            "scenes_count": int,
+            "processed_at": str,
+        }, pk="video_id")
+
+    if "reverse_scenes" not in d.table_names():
+        d["reverse_scenes"].create({
+            "id": int,
+            "video_id": str,
+            "idx": int,
+            "start_s": float,
+            "end_s": float,
+            "production_type": str,
+            "shot_type": str,
+            "keyframe_path": str,
+        }, pk="id")
+        d["reverse_scenes"].create_index(["video_id"])
+
     if "research" not in d.table_names():
         d["research"].create({
             "id": int,
@@ -172,3 +263,49 @@ def _ensure_schema(d: sqlite_utils.Database) -> None:
             "published_at": str,
             "fetched_at": str,
         }, pk="id")
+
+    # --- Custom Styles (for unified style system) ----
+    if "styles" not in d.table_names():
+        d["styles"].create({
+            "id": str,                    # PK: "custom:<uuid4>"
+            "style_type": str,            # always "custom"
+            "name": str,
+            "description": str,
+            "image_prompt_prefix": str,   # for presets / custom
+            "style_brief": str,           # Gemini-generated or user-provided
+            "image_paths": str,           # JSON array of file paths
+            "preview_image_path": str,    # path to auto-generated preview PNG
+            "created_at": str,
+            "updated_at": str,
+        }, pk="id")
+    else:
+        # Back-compat — add preview_image_path column if missing
+        styles_cols = {c.name for c in d["styles"].columns}
+        if "preview_image_path" not in styles_cols:
+            d["styles"].add_column("preview_image_path", str, not_null_default="")
+
+    # --- Content Format Templates ----
+    if "templates" not in d.table_names():
+        d["templates"].create({
+            "id": str,                     # PK: 12-char UUID hex
+            "name": str,                   # e.g. "Your Life As A..."
+            "description": str,            # optional user description
+            "status": str,                 # draft | analyzing | ready | error
+            "stage": str,                  # current analysis stage label
+            "stage_pct": int,              # 0-100 progress percentage
+            "example_channels": str,       # JSON [{name, channel_id, handle}]
+            "example_video_ids": str,      # JSON [video_id, ...] for thumb strip
+            "dna_path": str,               # path to data/templates/<id>/dna.json
+            "reddit_findings": str,        # JSON {tips, success_patterns, posts}
+            "prompt_helpers": str,         # JSON {hook_formulas, script_structure_prompt, image_prompt_prefix}
+            "error": str,                  # error message if status == "error"
+            "created_at": str,
+            "updated_at": str,
+        }, pk="id")
+    else:
+        # Back-compat — add new columns if missing
+        t_cols = {c.name for c in d["templates"].columns}
+        for col, typ in [("stage", str), ("stage_pct", int), ("reddit_findings", str),
+                         ("prompt_helpers", str), ("error", str)]:
+            if col not in t_cols:
+                d["templates"].add_column(col, typ, not_null_default="" if typ == str else 0)

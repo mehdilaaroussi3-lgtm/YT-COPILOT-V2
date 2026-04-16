@@ -15,12 +15,7 @@ from typing import Iterable
 import httpx
 
 from cli import config as cfg
-
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = (
-    "/v1/publishers/google/models/{model}:generateContent"
-)
+from generators import gcp_auth
 
 MIME_BY_EXT = {
     ".png": "image/png",
@@ -54,7 +49,6 @@ class GeminiImage:
 
 @dataclass
 class GeminiImageClient:
-    api_key: str
     model: str = "gemini-3-pro-image-preview"
     image_size: str = "2K"
     aspect_ratio: str = "16:9"
@@ -65,21 +59,14 @@ class GeminiImageClient:
 
     @classmethod
     def from_config(cls) -> "GeminiImageClient":
-        api_key = cfg.get("vertex.api_key")
-        if not api_key or api_key.startswith("your-"):
-            raise GeminiError(
-                "vertex.api_key not set in config.yml. Add a Vertex-enabled "
-                "API key from a GCP project with Vertex AI API + billing on."
-            )
         return cls(
-            api_key=api_key,
             model=cfg.get("gemini.image_model", "gemini-3-pro-image-preview"),
             image_size=cfg.get("gemini.image_size", "2K"),
             aspect_ratio=cfg.get("gemini.aspect_ratio", "16:9"),
         )
 
     def _url(self) -> str:
-        return f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=self.model)}?key={self.api_key}"
+        return gcp_auth.vertex_url(self.model)
 
     def _build_body(self, prompt: str, reference_images: list[Path]) -> dict:
         parts: list[dict] = []
@@ -129,7 +116,7 @@ class GeminiImageClient:
                     resp = client.post(
                         url,
                         json=body,
-                        headers={"Content-Type": "application/json"},
+                        headers=gcp_auth.auth_headers(),
                     )
 
                 # Retryable HTTP statuses

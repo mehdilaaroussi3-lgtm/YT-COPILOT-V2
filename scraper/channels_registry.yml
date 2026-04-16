@@ -1,95 +1,2857 @@
-# Pre-seeded reference channels per niche (from THUMBCRAFT_MASTERPLAN.md §3.2)
-# These are the channels whose thumbnails consistently get high CTR.
-# Add or remove with: thumbcraft registry add/remove
-
 crime_documentary:
   channels:
-    - name: "Fern"
-      channel_id: "UCxFK2uJRN4HWEcFKXRHcBSg"
-      style_tags: ["3d_cinematic", "dark_moody", "dramatic_lighting", "minimal_text"]
-      why: "Millions of views with slick 3D visuals and noir aesthetic"
-    - name: "JCS - Criminal Psychology"
-      channel_id: "UCYwVxWpjeKFWwu8TML-Te9A"
-      style_tags: ["interrogation_footage", "minimal", "dark", "text_focused"]
-      why: "Pioneered the crime breakdown format"
-    - name: "Coffeehouse Crime"
-      channel_id: "UCLLsm5_J-3sNp4MSwDmJCIQ"
-      style_tags: ["editorial", "high_contrast", "red_accent", "evidence_style"]
-      why: "Professional editorial look, consistent brand"
-    - name: "That Chapter"
-      channel_id: "UCL44k-cLvKiB_kDxFMKfWOA"
-      style_tags: ["photo_collage", "mugshot_style", "bold_text"]
-      why: "High CTR with face-forward thumbnail approach"
-    - name: "EWU Crime"
-      channel_id: "UC_ViSsVg5d7dBbwLj3YtHfQ"
-      style_tags: ["cinematic", "dark_tones", "mystery_reveal"]
-      why: "Cinematic dark style with consistent branding"
-
+  - name: Fern
+    channel_id: UCxFK2uJRN4HWEcFKXRHcBSg
+    style_tags:
+    - 3d_cinematic
+    - dark_moody
+    - dramatic_lighting
+    - minimal_text
+    why: Millions of views with slick 3D visuals and noir aesthetic
+  - name: JCS - Criminal Psychology
+    channel_id: UCYwVxWpjeKFWwu8TML-Te9A
+    style_tags:
+    - interrogation_footage
+    - minimal
+    - dark
+    - text_focused
+    why: Pioneered the crime breakdown format
+  - name: Coffeehouse Crime
+    channel_id: UCLLsm5_J-3sNp4MSwDmJCIQ
+    style_tags:
+    - editorial
+    - high_contrast
+    - red_accent
+    - evidence_style
+    why: Professional editorial look, consistent brand
+  - name: That Chapter
+    channel_id: UCL44k-cLvKiB_kDxFMKfWOA
+    style_tags:
+    - photo_collage
+    - mugshot_style
+    - bold_text
+    why: High CTR with face-forward thumbnail approach
+  - name: EWU Crime
+    channel_id: UC_ViSsVg5d7dBbwLj3YtHfQ
+    style_tags:
+    - cinematic
+    - dark_tones
+    - mystery_reveal
+    why: Cinematic dark style with consistent branding
 ai_tech:
   channels:
-    - name: "Fireship"
-      channel_id: "UCsBjURrPoezykLs9EqgamOA"
-      style_tags: ["bold_icon", "gradient_bg", "minimal_text", "logo_centric"]
-      why: "Iconic minimalist thumbnails, instant recognition"
-    - name: "Matt Wolfe"
-      channel_id: "UChpleBmo18P08aKCIgti38g"
-      style_tags: ["tech_collage", "blue_palette", "screenshot_style"]
-      why: "AI tool roundup format with high CTR"
-    - name: "AI Explained"
-      channel_id: "UCNJ1Ymd5yFuUPtn21xtRbbw"
-      style_tags: ["clean", "diagram_style", "educational", "minimal"]
-      why: "Authoritative explainer style"
-    - name: "Two Minute Papers"
-      channel_id: "UCbfYPyITQ-7l4upoX8nvctg"
-      style_tags: ["screenshot_demo", "before_after", "tech_visual"]
-      why: "Research visualization style"
-    - name: "TheAIGRID"
-      channel_id: "UCxRpmvyUAsaN1w465S39QnQ"
-      style_tags: ["news_style", "bold_text", "dark_bg", "neon_accents"]
-      why: "News-style AI thumbnails with urgency"
-
+  - name: Fireship
+    channel_id: UCsBjURrPoezykLs9EqgamOA
+    style_tags:
+    - bold_icon
+    - gradient_bg
+    - minimal_text
+    - logo_centric
+    why: Iconic minimalist thumbnails, instant recognition
+  - name: Matt Wolfe
+    channel_id: UChpleBmo18P08aKCIgti38g
+    style_tags:
+    - tech_collage
+    - blue_palette
+    - screenshot_style
+    why: AI tool roundup format with high CTR
+  - name: AI Explained
+    channel_id: UCNJ1Ymd5yFuUPtn21xtRbbw
+    style_tags:
+    - clean
+    - diagram_style
+    - educational
+    - minimal
+    why: Authoritative explainer style
+  - name: Two Minute Papers
+    channel_id: UCbfYPyITQ-7l4upoX8nvctg
+    style_tags:
+    - screenshot_demo
+    - before_after
+    - tech_visual
+    why: Research visualization style
+  - name: TheAIGRID
+    channel_id: UCxRpmvyUAsaN1w465S39QnQ
+    style_tags:
+    - news_style
+    - bold_text
+    - dark_bg
+    - neon_accents
+    why: News-style AI thumbnails with urgency
+  - name: Fireship
+    channel_id: UCsBjURrPoezykLs9EqgamOA
+    style_tags:
+    - bold_icon
+    - gradient_bg
+    - minimal_text
+    why: Iconic minimalist thumbnails, instant recognition
+  - name: AI Explained
+    channel_id: UCp_9GybIeJV5CDJ7LlJkFvA
+    style_tags:
+    - clean_diagram
+    - educational
+    - minimal
+    why: Authoritative AI explainer style
+  - name: TheAIGRID
+    channel_id: UCbY9xX3_jW5c2fjlZVBI4cg
+    style_tags:
+    - news_style
+    - bold_text
+    - dark_neon
+    why: News-style AI thumbnails with urgency
+  - name: Two Minute Papers
+    channel_id: UCbfYPyITQ-7l4upoX8nvctg
+    style_tags:
+    - screenshot_demo
+    - before_after
+    - tech_visual
+    why: Research visualization paper screenshot style
+  - name: Yannic Kilcher
+    channel_id: UCZHmQk67mSJgfCCTn7xBfew
+    style_tags:
+    - paper_visual
+    - face_serious
+    - academic
+    why: ML paper breakdowns; highly engaged niche audience
+  - name: Lex Fridman
+    channel_id: UCSHZKyawb77ixDdsGog4iWA
+    style_tags:
+    - podcast_face_bw
+    - minimal_clean
+    - serious_tone
+    why: AI/tech podcast; top outlier scores on big interviews
+  - name: Computerphile
+    channel_id: UC9-y-6csu5WGm29I7JiwpnA
+    style_tags:
+    - whiteboard_code
+    - uk_academic
+    - minimal
+    why: Deep computer science topics; cult following
+  - name: Sebastian Lague
+    channel_id: UCmtyQOKKmrMVaKuRXz02jbQ
+    style_tags:
+    - code_simulation
+    - clean_demo
+    - satisfying
+    why: Coding simulations; stunning visual results
+  - name: ThePrimeagen
+    channel_id: UC8ENHE5xdFSwx71u3fDH5Xw
+    style_tags:
+    - face_reaction_code
+    - terminal_bg
+    - dev_culture
+    why: Developer culture face reaction style
+  - name: Mr Crush
+    channel_id: UCpWb4P8cVfI09oHA0f757_w
+    style_tags:
+    - dev_face
+    - hot_take
+    - bold_claim
+    why: Web dev hot takes high CTR face-forward
 finance_money:
   channels:
-    - name: "How Money Works"
-      channel_id: "UCoxWrvPMR9AEB_yTj8BI0Vw"
-      style_tags: ["infographic", "bold_numbers", "green_palette", "clean"]
-      why: "1M+ subs faceless, infographic-style thumbnails"
-    - name: "Economics Explained"
-      channel_id: "UCZ4AMrDcNrfy3X6nsU8-rPg"
-      style_tags: ["diagram", "editorial", "data_viz", "clean_professional"]
-      why: "Professional explainer style with data visuals"
-    - name: "Logically Answered"
-      channel_id: "UCkEB8BcG_-OP_5XuPMqKnfw"
-      style_tags: ["brand_logos", "clean_layout", "corporate_style"]
-      why: "Clean brand-focused business thumbnails"
-    - name: "Patrick Boyle"
-      channel_id: "UCASM17pICdtDwyBjqoXI5Vg"
-      style_tags: ["editorial", "newspaper_style", "sophisticated"]
-      why: "Sophisticated finance editorial look"
-    - name: "Money & Macro"
-      channel_id: "UCE-W39YOkNIKKzlDqwDMaSQ"
-      style_tags: ["data_chart", "clean", "professional", "blue_tones"]
-      why: "Clean data-driven finance style"
-
+  - name: How Money Works
+    channel_id: UCoxWrvPMR9AEB_yTj8BI0Vw
+    style_tags:
+    - infographic
+    - bold_numbers
+    - green_palette
+    - clean
+    why: 1M+ subs faceless, infographic-style thumbnails
+  - name: Economics Explained
+    channel_id: UCZ4AMrDcNrfy3X6nsU8-rPg
+    style_tags:
+    - diagram
+    - editorial
+    - data_viz
+    - clean_professional
+    why: Professional explainer style with data visuals
+  - name: Logically Answered
+    channel_id: UCkEB8BcG_-OP_5XuPMqKnfw
+    style_tags:
+    - brand_logos
+    - clean_layout
+    - corporate_style
+    why: Clean brand-focused business thumbnails
+  - name: Patrick Boyle
+    channel_id: UCASM17pICdtDwyBjqoXI5Vg
+    style_tags:
+    - editorial
+    - newspaper_style
+    - sophisticated
+    why: Sophisticated finance editorial look
+  - name: Money & Macro
+    channel_id: UCE-W39YOkNIKKzlDqwDMaSQ
+    style_tags:
+    - data_chart
+    - clean
+    - professional
+    - blue_tones
+    why: Clean data-driven finance style
+  - name: Graham Stephan
+    channel_id: UCV6KDgJskWaEckne5aPA0aQ
+    style_tags:
+    - face_forward
+    - real_estate
+    - bold_dollar
+    why: High-CTR personal finance face-forward
+  - name: Andrei Jikh
+    channel_id: UCGy7SkBjcIAgTiwkXEtPnYg
+    style_tags:
+    - clean_graphic
+    - stock_visual
+    - face_confident
+    why: Investing clean polished graphic style
+  - name: Minority Mindset
+    channel_id: UCT3EznhW_CNFcfOlyDNTLLw
+    style_tags:
+    - bold_text
+    - face_forward
+    - finance_urgency
+    why: Financial freedom urgency bold text style
+  - name: How Money Works
+    channel_id: UCkCGANrihzExmu9QiqZpPlQ
+    style_tags:
+    - infographic
+    - bold_numbers
+    - green_clean
+    why: 1M+ subs faceless, infographic-style thumbnails
+  - name: Economics Explained
+    channel_id: UCZ4AMrDcNrfy3X6nsU8-rPg
+    style_tags:
+    - diagram
+    - editorial
+    - data_viz
+    - clean_pro
+    why: Professional explainer with data visuals
+  - name: Patrick Boyle
+    channel_id: UCOIi9OLSpXRsX-wp2u26fsA
+    style_tags:
+    - editorial
+    - newspaper_style
+    - sophisticated
+    why: Sophisticated finance editorial look
+  - name: Coffeezilla
+    channel_id: UCFQMnBA3CS502aghlcr0_aw
+    style_tags:
+    - bold_expose
+    - red_accent
+    - dark_face
+    why: Exposé journalist style, extremely high CTR
+  - name: Nate O'Brien
+    channel_id: UCO3tlaeZ6Z0ZN5frMZI3-uQ
+    style_tags:
+    - clean_pastel
+    - face_relaxed
+    - minimalist
+    why: Millennial minimalist finance lifestyle
+  - name: Joseph Carlson After Hours
+    channel_id: UCfCT7SSFEWyG4th9ZmaGYqQ
+    style_tags:
+    - portfolio_visual
+    - face_chart
+    - investing
+    why: Dividend investing face + portfolio chart
 documentary_essay:
   channels:
-    - name: "Fern"
-      channel_id: "UCxFK2uJRN4HWEcFKXRHcBSg"
-      style_tags: ["3d_cinematic", "dark_moody", "dramatic_lighting"]
-      why: "Gold standard for faceless documentary thumbnails"
-    - name: "Veritasium"
-      channel_id: "UCHnyfMqiRRG1u-2MsSQLbXA"
-      style_tags: ["science_visual", "curiosity_gap", "clean_photo"]
-      why: "Curiosity-driven science thumbnails"
-    - name: "Johnny Harris"
-      channel_id: "UCmGSJVG3mCRXVOP4yZrU1Dw"
-      style_tags: ["map_overlay", "editorial_photo", "journalistic"]
-      why: "Journalistic documentary essay style"
-    - name: "Lemmino"
-      channel_id: "UCRcgy6GzDeccI7dkbbBna3Q"
-      style_tags: ["minimal", "dark", "cinematic", "mystery"]
-      why: "Cinematic mystery documentary with clean design"
-    - name: "ColdFusion"
-      channel_id: "UC4QZ_LsYcvcq7qOsOhpAI4A"
-      style_tags: ["tech_doc", "clean_editorial", "blue_dark"]
-      why: "Tech documentary with polished editorial aesthetic"
+  - name: Fern
+    channel_id: UCxFK2uJRN4HWEcFKXRHcBSg
+    style_tags:
+    - 3d_cinematic
+    - dark_moody
+    - dramatic_lighting
+    why: Gold standard for faceless documentary thumbnails
+  - name: Veritasium
+    channel_id: UCHnyfMqiRRG1u-2MsSQLbXA
+    style_tags:
+    - science_visual
+    - curiosity_gap
+    - clean_photo
+    why: Curiosity-driven science thumbnails
+  - name: Johnny Harris
+    channel_id: UCmGSJVG3mCRXVOP4yZrU1Dw
+    style_tags:
+    - map_overlay
+    - editorial_photo
+    - journalistic
+    why: Journalistic documentary essay style
+  - name: Lemmino
+    channel_id: UCRcgy6GzDeccI7dkbbBna3Q
+    style_tags:
+    - minimal
+    - dark
+    - cinematic
+    - mystery
+    why: Cinematic mystery documentary with clean design
+  - name: ColdFusion
+    channel_id: UC4QZ_LsYcvcq7qOsOhpAI4A
+    style_tags:
+    - tech_doc
+    - clean_editorial
+    - blue_dark
+    why: Tech documentary with polished editorial aesthetic
+  - name: Real Engineering
+    channel_id: UCR1IuLEqb6UEA_zQ81kwXfg
+    style_tags:
+    - infographic
+    - technical
+    - professional
+    why: Long-form engineering docs; top outlier scorer
+  - name: ColdFusion
+    channel_id: UC4QZ_LsYcvcq7qOsOhpAX4A
+    style_tags:
+    - tech_history
+    - dark_minimal
+    - face_narrate
+    why: Tech history dark minimal narration style
+  - name: Fall of Civilizations
+    channel_id: UCT6Y5JJPKe_JDMivpKgVXew
+    style_tags:
+    - dark_cinematic
+    - ambient
+    - minimal_text
+    why: History documentary atmospheric style
+  - name: Wendover Productions
+    channel_id: UC9RM-iSvTu1uPJb8X5yp3EQ
+    style_tags:
+    - map_diagram
+    - aviation
+    - logistics
+    why: Logistics/aviation diagram map style
+  - name: Ryan m
+    channel_id: UCR57UrVkq4akKqFmivurwxw
+    style_tags:
+    - film_review_face
+    - whisky
+    - critical
+    why: Film criticism Scottish face whisky style
+  - name: J-M-K
+    channel_id: UC2hv4JNfXdTxQsHQVp89eIw
+    style_tags:
+    - economics_doc
+    - clean_visual
+    - data
+    why: Economics documentary clean visual data
+history_education:
+  channels:
+  - name: Kurzgesagt – In a Nutshell
+    channel_id: UCsXVk37bltHxD1rDPwtNM8Q
+    style_tags:
+    - 2d_illustrated
+    - bright_palette
+    - character_driven
+    why: Gold standard animated explainer, 20M+ subs
+  - name: OverSimplified
+    channel_id: UCNIuvl7V8zACPpTmmNIqP2A
+    style_tags:
+    - 2d_illustrated
+    - humour_visual
+    - cartoon_scene
+    why: Comic-book history, enormous CTR
+  - name: Kings and Generals
+    channel_id: UCMmaBzfCCwZ2KqaBJjkj0fw
+    style_tags:
+    - map_style
+    - battle_illustration
+    - dramatic_scale
+    why: Military history map-style thumbnails
+  - name: RealLifeLore
+    channel_id: UCP5tjEmvPItGyLhmjdwP7Ww
+    style_tags:
+    - map_overlay
+    - infographic
+    - clean_data
+    why: Geography+history infographic style
+  - name: Invicta
+    channel_id: UC7GpiX9uHDyoKMka_Z8cq1A
+    style_tags:
+    - ancient_world
+    - minimal_icon
+    - gold_palette
+    why: Ancient history minimal icon + gold tone
+  - name: Epic History
+    channel_id: UCvPXiKxH-eH9xq-80vpgmKQ
+    style_tags:
+    - cinematic_battle
+    - dramatic_scale
+    - editorial
+    why: Military history dramatic scale visual
+  - name: toldinstone
+    channel_id: UCqBiWcuTF8IaLH7wBqnihsQ
+    style_tags:
+    - talking_head
+    - chalkboard
+    - academic_informal
+    why: Classics prof; face-forward academic look
+  - name: History Hit
+    channel_id: UCZwU2G-KVl-P-O-B35chZOQ
+    style_tags:
+    - editorial_photo
+    - documentary_style
+    - news_look
+    why: Professional documentary channel brand
+  - name: Fall of Civilizations
+    channel_id: UCT6Y5JJPKe_JDMivpKgVXew
+    style_tags:
+    - dark_cinematic
+    - ambient
+    - minimal_text
+    why: Atmospheric long-form docu; very high outlier scores
+  - name: OverSimplified
+    channel_id: UCNIuvl7V8zACPpTmmNIqP2A
+    style_tags:
+    - 2d_illustrated
+    - humour_visual
+    - cartoon
+    why: Comic-book history, enormous CTR
+  - name: Kings and Generals
+    channel_id: UCMmaBzfCCwZ2KqaBJjkj0fw
+    style_tags:
+    - map_style
+    - battle_illustration
+    - dramatic
+    why: Military history map-style thumbnails
+  - name: Invicta
+    channel_id: UC7GpiX9uHDyoKMka_Z8cq1A
+    style_tags:
+    - ancient_world
+    - minimal_icon
+    - gold_palette
+    why: Ancient history minimal icon + gold tone
+  - name: Epic History
+    channel_id: UCvPXiKxH-eH9xq-80vpgmKQ
+    style_tags:
+    - cinematic_battle
+    - dramatic_scale
+    - editorial
+    why: Military history dramatic scale visual
+  - name: toldinstone
+    channel_id: UCqBiWcuTF8IaLH7wBqnihsQ
+    style_tags:
+    - talking_head
+    - academic_informal
+    - chalkboard
+    why: Classics prof; face-forward academic look
+  - name: Fall of Civilizations
+    channel_id: UCT6Y5JJPKe_JDMivpKgVXew
+    style_tags:
+    - dark_cinematic
+    - ambient
+    - minimal_text
+    why: Atmospheric long-form docu; very high outlier scores
+  - name: History Hit
+    channel_id: UCZwU2G-KVl-P-O-B35chZOQ
+    style_tags:
+    - editorial_photo
+    - documentary_style
+    - news
+    why: Professional documentary channel brand
+  - name: HistoryMarche
+    channel_id: UC8MX9ECowgDMTOnFTE8EUJw
+    style_tags:
+    - animated_map
+    - simple_diagram
+    - fast
+    why: Animated map history; very fast format
+  - name: Ryan Chapman // Videoctopus
+    channel_id: UCCkb8buiYKIRabDabKGxNeg
+    style_tags:
+    - editorial_essay
+    - book_visual
+    - face_serious
+    why: History essay face+book aesthetic
+true_crime:
+  channels:
+  - name: Murder Mountain
+    channel_id: UCnHCXCtuJOCs3cTowFh8yNg
+    style_tags:
+    - dark_photo
+    - cinematic_border
+    - red_title
+    why: Mountain crime dark aesthetic
+  - name: Crime Junkie
+    channel_id: UCpRiMGGX2hM9zqv6FgXXbKg
+    style_tags:
+    - podcast_cover
+    - bold_title
+    - face_forward
+    why: Podcast brand crossover, high CTR
+  - name: Stephanie Harlowe
+    channel_id: UClVF8RcTN3UqAognWFGlJcg
+    style_tags:
+    - face_forward_close
+    - warm_color_grade
+    - emotional
+    why: Intimate face-to-camera storytelling
+  - name: Kendall Rae
+    channel_id: UCKBaL17hXLGJvi2KZKpja5w
+    style_tags:
+    - face_forward
+    - warm_bg
+    - trusting
+    why: Female face-forward true crime huge audience
+  - name: Bailey Sarian
+    channel_id: UCtNdVINwfYFTQEEZgMiQ8FA
+    style_tags:
+    - beauty_crime_mashup
+    - face_glam
+    - storytelling
+    why: Beauty + crime unique niche crossover
+  - name: وثائقيات الليل
+    channel_id: UCMBqOSJ_27mw_G9KCS5aylg
+    style_tags:
+    - dark_night
+    - cinematic_still
+    - moody_text
+    why: Dark night-time crime aesthetic
+  - name: Criminally Listed
+    channel_id: UCs3iFCPtX0gzkKxCrobO4ig
+    style_tags:
+    - countdown_style
+    - bold_number
+    - dark_photo
+    why: List-format crime with bold number overlay
+  - name: Murder Mountain
+    channel_id: UCnHCXCtuJOCs3cTowFh8yNg
+    style_tags:
+    - dark_photo
+    - cinematic_border
+    - red_title
+    why: Mountain crime dark aesthetic
+  - name: Bailey Sarian
+    channel_id: UCtNdVINwfYFTQEEZgMiQ8FA
+    style_tags:
+    - beauty_crime_mashup
+    - face_glam
+    - storytelling
+    why: Beauty + crime unique niche crossover
+  - name: Stephanie Harlowe
+    channel_id: UClVF8RcTN3UqAognWFGlJcg
+    style_tags:
+    - face_forward_close
+    - warm_grade
+    - emotional
+    why: Intimate face-to-camera storytelling
+  - name: Kendall Rae
+    channel_id: UCKBaL17hXLGJvi2KZKpja5w
+    style_tags:
+    - face_forward
+    - warm_bg
+    - trusting
+    why: Female face-forward true crime huge audience
+  - name: Criminally Listed
+    channel_id: UCs3iFCPtX0gzkKxCrobO4ig
+    style_tags:
+    - countdown_style
+    - bold_number
+    - dark_photo
+    why: List-format crime with bold number overlay
+  - name: OUTLORE with Eleanor Neale
+    channel_id: UCFMbX7frWZfuWdjAML0babA
+    style_tags:
+    - face_serious
+    - dark_editorial
+    - bold_title
+    why: UK true crime face-forward serious tone
+  - name: '@fern'
+    channel_id: UCHyzc2Pp_fC5hfTLebF1ZiQ
+    style_tags:
+    - 3d_cinematic
+    - dark_moody
+    - minimal_text
+    why: 3D cinematic true crime visuals
+  - name: JCS - Criminal Psychology
+    channel_id: UCYwVxWpjeKFWwu8TML-Te9A
+    style_tags:
+    - interrogation_footage
+    - minimal
+    - text_focused
+    why: Pioneered the crime breakdown format
+  - name: Coffeehouse Crime
+    channel_id: UCcUf33cEPky2GiWBgOP-jQA
+    style_tags:
+    - editorial
+    - high_contrast
+    - red_accent
+    why: Professional editorial consistent brand
+  - name: وثائقيات الليل
+    channel_id: UCMBqOSJ_27mw_G9KCS5aylg
+    style_tags:
+    - dark_night
+    - cinematic_still
+    - moody_text
+    why: Dark night-time crime aesthetic
+business_entrepreneur:
+  channels:
+  - name: Graham Stephan
+    channel_id: UCV6KDgJskWaEckne5aPA0aQ
+    style_tags:
+    - face_forward
+    - real_estate_visual
+    - bold_dollar
+    why: High-CTR personal finance face-forward
+  - name: Coffeezilla
+    channel_id: UCFQMnBA3CS502aghlcr0_aw
+    style_tags:
+    - bold_expose
+    - red_accent
+    - dark_face
+    why: Exposé journalist style, extremely high CTR
+  - name: Ali Abdaal
+    channel_id: UCoOae5nYA7VqaXzerajD0lg
+    style_tags:
+    - clean_minimal
+    - face_side
+    - productivity_visual
+    why: Productivity/entrepreneur clean pastel look
+  - name: Iman Gadzhi
+    channel_id: UCQ4FNww3XoNgqIlkBqEAVCg
+    style_tags:
+    - dark_luxury
+    - face_close
+    - aspirational
+    why: Agency/business dark luxe aesthetic
+  - name: Colin and Samir
+    channel_id: UCamLstJyCa-t5gfZegxsFMw
+    style_tags:
+    - creator_economy
+    - talking_head
+    - warm_tone
+    why: Creator economy reporting editorial feel
+  - name: hbomberguy
+    channel_id: UClt01z1wHHT7c5lKcU8pxRQ
+    style_tags:
+    - essay_style
+    - bold_red_banner
+    - face_forward
+    why: Long-form exposé; extremely high outlier scores
+  - name: thinkmedia
+    channel_id: UCjN5T8kmUBHcmLnO3Tobshg
+    style_tags:
+    - camera_gear
+    - clean_bg
+    - youtube_growth
+    why: YouTube/tech business growth style
+  - name: Minority Mindset
+    channel_id: UCT3EznhW_CNFcfOlyDNTLLw
+    style_tags:
+    - bold_text
+    - face_forward
+    - finance_urgency
+    why: Financial freedom urgency bold text style
+  - name: Andrei Jikh
+    channel_id: UCGy7SkBjcIAgTiwkXEtPnYg
+    style_tags:
+    - clean_graphic
+    - stock_visual
+    - face_confident
+    why: Investing with clean polished graphic style
+  - name: Ali Abdaal
+    channel_id: UCoOae5nYA7VqaXzerajD0lg
+    style_tags:
+    - clean_minimal
+    - face_side
+    - productivity
+    why: Productivity/entrepreneur clean pastel look
+  - name: Colin and Samir
+    channel_id: UCamLstJyCa-t5gfZegxsFMw
+    style_tags:
+    - creator_economy
+    - talking_head
+    - warm_tone
+    why: Creator economy reporting editorial feel
+  - name: hbomberguy
+    channel_id: UClt01z1wHHT7c5lKcU8pxRQ
+    style_tags:
+    - essay_style
+    - bold_red_banner
+    - face_forward
+    why: Long-form exposé; extremely high outlier scores
+  - name: thinkmedia
+    channel_id: UCjN5T8kmUBHcmLnO3Tobshg
+    style_tags:
+    - camera_gear
+    - clean_bg
+    - youtube_growth
+    why: YouTube/tech business growth style
+  - name: Iman Gadzhi
+    channel_id: UCQ4FNww3XoNgqIlkBqEAVCg
+    style_tags:
+    - dark_luxury
+    - face_close
+    - aspirational
+    why: Agency/business dark luxe aesthetic
+  - name: myfirstmillion
+    channel_id: UCDgcdHwUMdDgEcNCfsouLgA
+    style_tags:
+    - podcast_bold
+    - face_two_host
+    - orange_brand
+    why: Podcast business ideas; bold brand style
+  - name: Y Combinator
+    channel_id: UCcefcZRL2oaA_uBNeo5UOWg
+    style_tags:
+    - startup_talk
+    - face_founder
+    - clean_minimal
+    why: Startup world deep insights; niche authority
+  - name: Vaibhav Garg
+    channel_id: UC_xhfYrb_hbv69fXoG1LFDQ
+    style_tags:
+    - business_case
+    - bold_graphic
+    - editorial
+    why: Business case study editorial clean style
+psychology_self_help:
+  channels:
+  - name: Charisma on Command
+    channel_id: UCU_W0oE_ock8bWKjALiGs8Q
+    style_tags:
+    - face_forward_double
+    - warm_grade
+    - social_proof
+    why: Social/charisma split-screen face format
+  - name: Improvement Pill
+    channel_id: UCBIt1VN5j37PVM8LLSuTTlw
+    style_tags:
+    - 2d_illustrated
+    - clean_minimal
+    - metaphor_visual
+    why: Animated psychology explainer style
+  - name: HealthyGamerGG
+    channel_id: UClHVl2N3jPEbkNJVx-ItQIQ
+    style_tags:
+    - face_gaming
+    - mental_health
+    - warm_overlay
+    why: Gaming meets psychology crossover
+  - name: Joseph Everett - WIL
+    channel_id: UCqYPhGiB9tkShZorfgcL2lA
+    style_tags:
+    - infographic_bold
+    - faceless_diagram
+    - neon_data
+    why: Faceless health/psych data-forward style
+  - name: Better Ideas
+    channel_id: UCtUId5WFnN82GdDy7DgaQ7w
+    style_tags:
+    - essay_face
+    - book_visual
+    - philosophical_clean
+    why: Self-improvement philosophy essay style
+  - name: Einzelgänger
+    channel_id: UCybBViio_TH_uiFFDJuz5tg
+    style_tags:
+    - stoic_art
+    - classical_painting
+    - minimal_text
+    why: Philosophy/stoicism with classical art overlays
+  - name: Pursuit of Wonder
+    channel_id: UC-tLyAaPbRZiYrOJxAGB7dQ
+    style_tags:
+    - minimal_dark
+    - philosophical
+    - text_art
+    why: Minimalist philosophical aesthetic
+  - name: Psych2Go
+    channel_id: UCkJEpR7JmS36tajD34Gp4VA
+    style_tags:
+    - 2d_illustrated
+    - pastel_palette
+    - face_icon
+    why: Animated psychology tips; massive audience
+  - name: Charisma on Command
+    channel_id: UCU_W0oE_ock8bWKjALiGs8Q
+    style_tags:
+    - face_double
+    - warm_grade
+    - social_proof
+    why: Social/charisma split-screen face format
+  - name: Improvement Pill
+    channel_id: UCBIt1VN5j37PVM8LLSuTTlw
+    style_tags:
+    - 2d_illustrated
+    - clean_minimal
+    - metaphor
+    why: Animated psychology explainer style
+  - name: HealthyGamerGG
+    channel_id: UClHVl2N3jPEbkNJVx-ItQIQ
+    style_tags:
+    - face_gaming
+    - mental_health
+    - warm_overlay
+    why: Gaming meets psychology crossover
+  - name: Joseph Everett - WIL
+    channel_id: UCqYPhGiB9tkShZorfgcL2lA
+    style_tags:
+    - infographic_bold
+    - faceless_diagram
+    - neon
+    why: Faceless health/psych data-forward style
+  - name: Better Ideas
+    channel_id: UCtUId5WFnN82GdDy7DgaQ7w
+    style_tags:
+    - essay_face
+    - book_visual
+    - philosophical_clean
+    why: Self-improvement philosophy essay style
+  - name: Einzelgänger
+    channel_id: UCybBViio_TH_uiFFDJuz5tg
+    style_tags:
+    - stoic_art
+    - classical_painting
+    - minimal_text
+    why: Philosophy/stoicism with classical art overlays
+  - name: Psych2Go
+    channel_id: UCkJEpR7JmS36tajD34Gp4VA
+    style_tags:
+    - 2d_illustrated
+    - pastel_palette
+    - face_icon
+    why: Animated psychology tips; massive audience
+  - name: Pursuit of Wonder
+    channel_id: UC-tLyAaPbRZiYrOJxAGB7dQ
+    style_tags:
+    - minimal_dark
+    - philosophical
+    - text_art
+    why: Minimalist philosophical aesthetic
+  - name: Einzelgänger
+    channel_id: UCybBViio_TH_uiFFDJuz5tg
+    style_tags:
+    - stoic_visual
+    - classical_art
+    - minimal
+    why: Stoic philosophy classical art thumbnails
+science_space:
+  channels:
+  - name: Veritasium
+    channel_id: UCHnyfMqiRRG1u-2MsSQLbXA
+    style_tags:
+    - curiosity_gap
+    - science_photo
+    - clean_face
+    why: Top science channel; curiosity-gap master
+  - name: SciShow
+    channel_id: UCZYTClx2T1of7BRZ86-8fow
+    style_tags:
+    - bright_lab
+    - face_excited
+    - bold_title
+    why: Classic science explainer bright look
+  - name: PBS Space Time
+    channel_id: UC7_gcs09iThXybpVgjHZ_7g
+    style_tags:
+    - deep_space_photo
+    - minimal_text
+    - cosmic
+    why: Premium physics dark cosmic aesthetic
+  - name: Антон Петров
+    channel_id: UCE3TIAqAKtmtvPtiKaST9Zg
+    style_tags:
+    - space_photo
+    - news_style
+    - rapid_update
+    why: Daily space news with photo collage urgency
+  - name: Real Engineering
+    channel_id: UCR1IuLEqb6UEA_zQ81kwXfg
+    style_tags:
+    - infographic_clean
+    - technical_diagram
+    - professional
+    why: Engineering explainer clean technical style
+  - name: ScienceClic
+    channel_id: UCV6uM3y-8TeO7JlCtcEN-Bg
+    style_tags:
+    - 3d_simulation
+    - clean_motion
+    - no_face
+    why: Stunning 3D simulation thumbnails
+  - name: Arvin Ash
+    channel_id: UCpMcsdZf2KkAnfmxiq2MfMQ
+    style_tags:
+    - physics_diagram
+    - whiteboard
+    - face_serious
+    why: Theoretical physics face+diagram combo
+  - name: Sabine Hossenfelder
+    channel_id: UC1yNl2E66ZzKApQdRuTQ4tw
+    style_tags:
+    - talking_head
+    - minimal
+    - direct_expert
+    why: Contrarian science; high CTR minimal style
+  - name: Kurzgesagt – In a Nutshell
+    channel_id: UCsXVk37bltHxD1rDPwtNM8Q
+    style_tags:
+    - 2d_illustrated
+    - space_palette
+    - bright
+    why: Space/science crossover; massive reach
+gaming_pop_culture:
+  channels:
+  - name: jacksepticeye
+    channel_id: UCYzPXprvl5Y-Sf0g4vX-m6g
+    style_tags:
+    - face_reaction
+    - high_energy
+    - bright_bg
+    why: Classic reaction proven face+emotion formula
+  - name: penguinz0
+    channel_id: UCq6VFHwMzcMXbuKyG7SQYIg
+    style_tags:
+    - face_close
+    - ironic_minimal
+    - white_bg
+    why: Ironic minimal face thumbnail; huge outlier scorer
+  - name: NakeyJakey
+    channel_id: UCSdma21fnJzgmPodhC9SJ3g
+    style_tags:
+    - essay_style
+    - comedic_face
+    - bold_text
+    why: Gaming essay with comedy talking head style
+  - name: videogamedunkey
+    channel_id: UCsvn_Po0SmunchJYOWpOxMg
+    style_tags:
+    - screenshot_game
+    - bold_text_overlay
+    - humor
+    why: Comedy gaming screenshot-heavy style
+  - name: Ludwig
+    channel_id: UCrPseYLGpNygVi34QpGNqpA
+    style_tags:
+    - face_extreme_reaction
+    - bold_saturation
+    - viral
+    why: Streaming personality viral reaction style
+  - name: SkillUpGaming
+    channel_id: UC2RfOulmwch6Fw6sSrIJ1Yw
+    style_tags:
+    - review_thumbnail
+    - face_game_split
+    - clean
+    why: Review-format game+face split layout
+  - name: Gamers Nexus
+    channel_id: UChIs72whgZI9w6d6FhwGGHA
+    style_tags:
+    - tech_hardware
+    - teardown_visual
+    - professional
+    why: PC hardware technical clean style
+  - name: Nerdwriter1
+    channel_id: UCJkMlOu7faDgqh4PfzbpLdg
+    style_tags:
+    - film_still
+    - essay_overlay
+    - thoughtful
+    why: Pop-culture essay with thoughtful minimal aesthetic
+  - name: DidYouKnowGaming
+    channel_id: UCIVmyfvsWvjOLQrB04As8kQ
+    style_tags:
+    - retro_screenshot
+    - bold_logo
+    - nostalgia
+    why: Gaming trivia; bold logo + retro screenshot style
+health_fitness:
+  channels:
+  - name: Jeff Nippard
+    channel_id: UC68TLK0mAEzUyHx5x5k-S1Q
+    style_tags:
+    - scientific_fitness
+    - face_serious
+    - data_overlay
+    why: Science-based lifting face + chart overlay
+  - name: ATHLEAN-X™
+    channel_id: UCe0TLA0EsQbE-MjuHXevj2A
+    style_tags:
+    - face_bold_claim
+    - body_visual
+    - text_heavy
+    why: Fitness claims dramatic face + body proof
+  - name: PictureFit
+    channel_id: UCadiU6WTKl65HUwEih1XLYg
+    style_tags:
+    - 2d_illustrated_body
+    - clean_minimal
+    - soft_palette
+    why: Animated fitness explainer with body diagrams
+  - name: Thomas DeLauer
+    channel_id: UCS-gN7Jui5cJIAMOF7yoqPw
+    style_tags:
+    - face_clean_bg
+    - food_visual
+    - bold_claim
+    why: Keto/fasting face-forward style
+  - name: Jeremy Ethier
+    channel_id: UCERm5yFZ1SptUEU4wZ2vJvw
+    style_tags:
+    - face_before_after
+    - clean_gym
+    - science_backed
+    why: Evidence-based fitness before/after style
+  - name: Nutrition Made Simple!
+    channel_id: UCosmc75v-B2Dk7GWyEyFFMw
+    style_tags:
+    - infographic_clean
+    - faceless_data
+    - green_palette
+    why: Nutrition faceless infographic clean data style
+  - name: rayan Mn
+    channel_id: UCqUFq2IP_1FsyEzgIhBqHYQ
+    style_tags:
+    - face_confident
+    - dark_bg
+    - fitness_brand
+    why: Physique content dark brand aesthetic
+  - name: Joseph Everett - WIL
+    channel_id: UCqYPhGiB9tkShZorfgcL2lA
+    style_tags:
+    - infographic_bold
+    - faceless_diagram
+    - health_data
+    why: Cross-niche health infographic style
+  - name: Polyfit
+    channel_id: UCDjBttRwNkKhveo-L_x34Fw
+    style_tags:
+    - minimal_sport
+    - clean_athlete
+    - performance
+    why: Clean athletic performance thumbnail aesthetic
+  - name: Jeff Nippard
+    channel_id: UC68TLK0mAEzUyHx5x5k-S1Q
+    style_tags:
+    - scientific_fitness
+    - face_serious
+    - data
+    why: Science-based lifting face + chart overlay
+  - name: ATHLEAN-X™
+    channel_id: UCe0TLA0EsQbE-MjuHXevj2A
+    style_tags:
+    - face_bold_claim
+    - body_visual
+    - text_heavy
+    why: Fitness claims dramatic face + body proof
+  - name: PictureFit
+    channel_id: UCadiU6WTKl65HUwEih1XLYg
+    style_tags:
+    - 2d_illustrated_body
+    - clean
+    - soft_palette
+    why: Animated fitness explainer with body diagrams
+  - name: Thomas DeLauer
+    channel_id: UCS-gN7Jui5cJIAMOF7yoqPw
+    style_tags:
+    - face_clean_bg
+    - food_visual
+    - bold_claim
+    why: Keto/fasting face-forward style
+  - name: Jeremy Ethier
+    channel_id: UCERm5yFZ1SptUEU4wZ2vJvw
+    style_tags:
+    - face_before_after
+    - clean_gym
+    - science
+    why: Evidence-based fitness before/after style
+  - name: Andrew Huberman
+    channel_id: UC2D2CMWXMOVWx7giW1n3LIg
+    style_tags:
+    - podcast_face_serious
+    - neuroscience
+    - clean
+    why: Top health podcast; high retention loyal audience
+  - name: Nutrition Made Simple!
+    channel_id: UCosmc75v-B2Dk7GWyEyFFMw
+    style_tags:
+    - infographic_clean
+    - faceless
+    - green
+    why: Nutrition faceless infographic clean data
+  - name: Peter Attia MD
+    channel_id: UC8kGsMa0LygSX9nkBcBH1Sg
+    style_tags:
+    - medical_podcast
+    - face_serious
+    - clean
+    why: Longevity medicine; highly engaged audience
+politics_society:
+  channels:
+  - name: LastWeekTonight
+    channel_id: UC3XTzVzaHQEd30rQbuvCtTQ
+    style_tags:
+    - bold_text_white_bg
+    - TV_show_brand
+    - humor
+    why: HBO editorial bold text style
+  - name: Vox
+    channel_id: UCLXo7UDZvByw2ixzpQCufnA
+    style_tags:
+    - motion_graphic
+    - clean_diagram
+    - editorial
+    why: News explainer polished motion graphic style
+  - name: CaspianReport
+    channel_id: UCwnKziETDbHJtx78nIkfYug
+    style_tags:
+    - map_geopolitics
+    - minimal_clean
+    - flag_overlay
+    why: Geopolitics with clean map thumbnails
+  - name: TLDR News
+    channel_id: UCSMqateX8OA2s1wsOR2EgJA
+    style_tags:
+    - animated_flag
+    - clean_map
+    - infographic
+    why: Daily geopolitics clean animated map style
+  - name: ContraPoints
+    channel_id: UCNvsIonJdJ5E4EXMa65VYpA
+    style_tags:
+    - theatrical_face
+    - cinematic_art
+    - provocative
+    why: Extremely distinctive theatrical video essay style
+  - name: Patrick Boyle
+    channel_id: UCOIi9OLSpXRsX-wp2u26fsA
+    style_tags:
+    - editorial
+    - newspaper_style
+    - sophisticated
+    why: Finance meets politics; editorial newspaper style
+  - name: RealLifeLore
+    channel_id: UCP5tjEmvPItGyLhmjdwP7Ww
+    style_tags:
+    - map_overlay
+    - infographic
+    - society_data
+    why: Cross-niche geography/society infographic style
+  - name: PolyMatter
+    channel_id: UCgNg3vwj3xt7QOrcIDaHdFg
+    style_tags:
+    - clean_minimal
+    - flag_icon
+    - geopolitics
+    why: Geopolitics minimal icon style
+  - name: Half as Interesting
+    channel_id: UCuCkxoKLYO_EQ2GeFtbM_bw
+    style_tags:
+    - quirky_infographic
+    - pastel_map
+    - humor
+    why: Quirky geography facts; extremely distinctive style
+  - name: Wendover Productions
+    channel_id: UC9RM-iSvTu1uPJb8X5yp3EQ
+    style_tags:
+    - map_diagram
+    - clean_professional
+    - aviation
+    why: Aviation/logistics with clean map diagram style
+motivation_lifestyle:
+  channels:
+  - name: Matt D'Avella
+    channel_id: UCJ24N4O0bP7LGLBDvye7oCA
+    style_tags:
+    - minimal_cinematic
+    - b_roll_face
+    - soft_grade
+    why: Minimalism lifestyle; stunning cinematic thumbnails
+  - name: Yes Theory
+    channel_id: UCvK4bOhULCpmLabd2pDMtnA
+    style_tags:
+    - adventure_face_group
+    - emotional
+    - bright
+    why: Adventure viral challenge lifestyle style
+  - name: Nathaniel Drew
+    channel_id: UCrdWRLq10OHuy7HmSckV3Vg
+    style_tags:
+    - minimal_travel
+    - clean_lifestyle
+    - face_aesthetic
+    why: Aesthetic minimalist lifestyle travel style
+  - name: Better Ideas
+    channel_id: UCtUId5WFnN82GdDy7DgaQ7w
+    style_tags:
+    - essay_face
+    - philosophical_clean
+    - warm_tone
+    why: Cross-niche self-improvement philosophy
+  - name: Johnny Harris
+    channel_id: UCmGSJVG3mCRXVOP4yZrU1Dw
+    style_tags:
+    - map_overlay
+    - journalistic
+    - editorial_photo
+    why: Cross-niche; journalism meets lifestyle travel
+  - name: Peter McKinnon
+    channel_id: UC3DkFux8Iv-aYnTRWzwaiBA
+    style_tags:
+    - cinematic_photo
+    - dark_grade
+    - creative_lifestyle
+    why: Photography/videography cinematic dark aesthetic
+  - name: DevTips
+    channel_id: UCQrqrc24tdUbrDxJlAKa_Kw
+    style_tags:
+    - creative_work
+    - minimal_desk
+    - productivity
+    why: Creative workflow lifestyle minimal desk aesthetic
+  - name: Matt D'Avella
+    channel_id: UCJ24N4O0bP7LGLBDvye7oCA
+    style_tags:
+    - minimal_cinematic
+    - b_roll_face
+    - soft_grade
+    why: Minimalism lifestyle; stunning cinematic style
+  - name: Nathaniel Drew
+    channel_id: UCrdWRLq10OHuy7HmSckV3Vg
+    style_tags:
+    - minimal_travel
+    - clean_lifestyle
+    - aesthetic
+    why: Aesthetic minimalist lifestyle travel
+  - name: Peter McKinnon
+    channel_id: UC3DkFux8Iv-aYnTRWzwaiBA
+    style_tags:
+    - cinematic_photo
+    - dark_grade
+    - creative
+    why: Photography/videography cinematic dark aesthetic
+  - name: Bret Maverick
+    channel_id: UCSqcvKFWQhhQOiK4jxyEElQ
+    style_tags:
+    - face_motivational
+    - dark_bg
+    - bold_title
+    why: Motivational content bold dark aesthetic
+  - name: Elie Tahari
+    channel_id: UCynuJ3_dZJXU5QBqNAWQpvQ
+    style_tags:
+    - fashion_lifestyle
+    - luxury_minimal
+    - clean
+    why: Luxury fashion minimal clean aesthetic
+  - name: Pick Up Limes
+    channel_id: UCq2E1mIwUKMWzCA4liA_XGQ
+    style_tags:
+    - plant_based
+    - food_lifestyle
+    - clean_pastel
+    why: Plant-based lifestyle clean pastel aesthetic
+tech_reviews:
+  channels:
+  - name: Marques Brownlee
+    channel_id: UCBJycsmduvYEL83R_U4JriQ
+    style_tags:
+    - product_minimal
+    - black_bg
+    - flagship_visual
+    why: Gold standard product review minimal style
+  - name: Linus Tech Tips
+    channel_id: UCXuqSBlHAE6Xw-yeJA0Tunw
+    style_tags:
+    - face_excited_product
+    - multi_product_grid
+    - bright
+    why: High-energy tech review face + product grid
+  - name: Unbox Therapy
+    channel_id: UCsTcErHg8oDvUnTzoqsYeNw
+    style_tags:
+    - unbox_reveal
+    - face_amazed
+    - dramatic_product
+    why: Unboxing reaction dramatic reveal format
+  - name: Dave2D
+    channel_id: UCVYamHliCI9rw1tHR1xbkfw
+    style_tags:
+    - minimal_flat_lay
+    - clean_bg
+    - apple_adjacent
+    why: Minimal flat-lay product style
+  - name: JerryRigEverything
+    channel_id: UCWFKCr40YwOZQx8FHU_ZqqQ
+    style_tags:
+    - teardown_visual
+    - face_tool
+    - destruction_proof
+    why: Durability test destruction thumbnail proof
+  - name: iJustine
+    channel_id: UCey_c7U86mJGz1VJWH5CYPA
+    style_tags:
+    - face_product_happy
+    - bright_color
+    - approachable
+    why: Female tech face-forward approachable style
+  - name: SnazzyLabs
+    channel_id: UCH7_fVl9_71cNjNDCCZAH6w
+    style_tags:
+    - mac_minimal
+    - clean_white
+    - soft_product
+    why: macOS/Apple minimal clean white aesthetic
+  - name: UrAvgConsumer
+    channel_id: UC9fSZHEh6XsRpX-xJc6lT3A
+    style_tags:
+    - face_comparison
+    - split_layout
+    - bold_title
+    why: Value-focused comparison split-screen layout
+  - name: Marques Brownlee
+    channel_id: UCBJycsmduvYEL83R_U4JriQ
+    style_tags:
+    - product_minimal
+    - black_bg
+    - flagship
+    why: Gold standard product review minimal style
+  - name: Linus Tech Tips
+    channel_id: UCXuqSBlHAE6Xw-yeJA0Tunw
+    style_tags:
+    - face_product_excited
+    - multi_grid
+    - bright
+    why: High-energy tech review face + product grid
+  - name: Unbox Therapy
+    channel_id: UCsTcErHg8oDvUnTzoqsYeNw
+    style_tags:
+    - unbox_reveal
+    - face_amazed
+    - dramatic
+    why: Unboxing reaction dramatic reveal format
+  - name: Dave2D
+    channel_id: UCVYamHliCI9rw1tHR1xbkfw
+    style_tags:
+    - minimal_flat_lay
+    - clean_bg
+    - apple_adjacent
+    why: Minimal flat-lay product style
+  - name: JerryRigEverything
+    channel_id: UCWFKCr40YwOZQx8FHU_ZqqQ
+    style_tags:
+    - teardown_visual
+    - face_tool
+    - destruction
+    why: Durability test destruction thumbnail proof
+  - name: SnazzyLabs
+    channel_id: UCH7_fVl9_71cNjNDCCZAH6w
+    style_tags:
+    - mac_minimal
+    - white_clean
+    - soft_product
+    why: macOS/Apple minimal clean white aesthetic
+  - name: UrAvgConsumer
+    channel_id: UC9fSZHEh6XsRpX-xJc6lT3A
+    style_tags:
+    - face_comparison
+    - split_layout
+    - bold_title
+    why: Value-focused comparison split-screen layout
+  - name: GadgetsBoy
+    channel_id: UCOnA4oZccE0dxZjI733EjSw
+    style_tags:
+    - clean_product
+    - white_bg
+    - studio_shot
+    why: Clean studio product shots
+  - name: ShortCircuit
+    channel_id: UCdBK94H6oZT2Q7l0-b0xmMg
+    style_tags:
+    - unbox_face
+    - bright_product
+    - linus_adjacent
+    why: LTT secondary; fresh product reaction style
+  - name: iJustine
+    channel_id: UCey_c7U86mJGz1VJWH5CYPA
+    style_tags:
+    - face_product_happy
+    - bright_color
+    - approachable
+    why: Female tech face-forward approachable style
+viral_entertainment:
+  channels:
+  - name: MrBeast
+    channel_id: UCX6OQ3DkcsbYNE6H8uQQuVA
+    style_tags:
+    - big_stunt
+    - face_shocked
+    - bright_logo
+    why: Largest YouTube channel; every thumbnail is a masterclass
+  - name: MrBeast
+    channel_id: UCX6OQ3DkcsbYNE6H8uQQuVA
+    style_tags:
+    - big_stunt
+    - face_shocked
+    - bright_logo
+    why: Largest YouTube channel; every thumbnail is a masterclass
+  - name: Mark Rober
+    channel_id: UCY1kMZp36IQSyNx_9h4mpCg
+    style_tags:
+    - engineering_stunt
+    - face_excited
+    - big_reveal
+    why: Science + viral stunts; highest production thumbnails
+  - name: Vsauce
+    channel_id: UC6nSFpj9HTCZ5t-N3Rm3-HA
+    style_tags:
+    - curiosity_gap
+    - minimal_face
+    - clean
+    why: Pioneer of the curious title + minimal thumbnail format
+  - name: jacksepticeye
+    channel_id: UCYzPXprvl5Y-Sf0g4vX-m6g
+    style_tags:
+    - face_reaction
+    - high_energy
+    - bright_bg
+    why: Classic face+emotion formula; proven CTR machine
+  - name: penguinz0
+    channel_id: UCq6VFHwMzcMXbuKyG7SQYIg
+    style_tags:
+    - ironic_minimal
+    - white_bg
+    - face_deadpan
+    why: Ironic minimal; extremely high outlier scores
+  - name: TommyInnit
+    channel_id: UC5p_l5ZeB_wGjO_yDXwiqvw
+    style_tags:
+    - face_young_viral
+    - loud_color
+    - high_energy
+    why: Gen-Z viral sensation; chaotic high-energy style
+  - name: DanTDM
+    channel_id: UCS5Oz6CHmeoF7vSad0qqXfw
+    style_tags:
+    - face_excited_game
+    - bright
+    - logo_prominent
+    why: Long-running gaming/family huge audience
+  - name: Yes Theory
+    channel_id: UCvK4bOhULCpmLabd2pDMtnA
+    style_tags:
+    - adventure_group
+    - emotional
+    - outdoor_bright
+    why: Challenge + adventure viral lifestyle
+  - name: Jorge Marín
+    channel_id: UCHpfyS5YmYUDaIn80qF0l6Q
+    style_tags:
+    - parody_face
+    - bold_text_humor
+    - white_clean
+    why: Comedy parody; highly distinctive style
+  - name: PewDiePie
+    channel_id: UC-lHJZR3Gqxm24_Vd_AJ5Yw
+    style_tags:
+    - face_bold
+    - high_saturation
+    - meme_adjacent
+    why: Most subscribed individual creator in history
+science_education:
+  channels:
+  - name: Veritasium
+    channel_id: UCHnyfMqiRRG1u-2MsSQLbXA
+    style_tags:
+    - curiosity_gap
+    - science_photo
+    - clean_face
+    why: Top science channel; curiosity-gap master
+  - name: 3Blue1Brown
+    channel_id: UCYO_jab_esuFRV4b17AJtAw
+    style_tags:
+    - math_animation
+    - clean_3d
+    - minimal
+    why: Math visualization; gold standard educational
+  - name: SmarterEveryDay
+    channel_id: UC6107grRI4m0o2-emgoDnAA
+    style_tags:
+    - slow_motion_reveal
+    - face_curious
+    - science
+    why: Slow-mo science; face-forward experiment style
+  - name: minutephysics
+    channel_id: UCUHW94eEFW7hkUMVaZz4eDg
+    style_tags:
+    - whiteboard_animation
+    - fast_explainer
+    - clean
+    why: Rapid physics explainer minimal animation style
+  - name: Real Engineering
+    channel_id: UCR1IuLEqb6UEA_zQ81kwXfg
+    style_tags:
+    - technical_diagram
+    - infographic_clean
+    - pro
+    why: Engineering explainer professional diagram style
+  - name: Kurzgesagt – In a Nutshell
+    channel_id: UCsXVk37bltHxD1rDPwtNM8Q
+    style_tags:
+    - 2d_illustrated
+    - bright_palette
+    - character
+    why: Gold standard animated explainer, 20M+ subs
+  - name: SciShow
+    channel_id: UCZYTClx2T1of7BRZ86-8fow
+    style_tags:
+    - bright_lab
+    - face_excited
+    - bold_title
+    why: Classic science explainer bright look
+  - name: PBS Space Time
+    channel_id: UC7_gcs09iThXybpVgjHZ_7g
+    style_tags:
+    - deep_space
+    - minimal_text
+    - cosmic
+    why: Premium physics dark cosmic aesthetic
+  - name: Антон Петров
+    channel_id: UCE3TIAqAKtmtvPtiKaST9Zg
+    style_tags:
+    - space_photo
+    - news_style
+    - rapid_update
+    why: Daily space news photo collage urgency
+  - name: ScienceClic
+    channel_id: UCV6uM3y-8TeO7JlCtcEN-Bg
+    style_tags:
+    - 3d_simulation
+    - clean_motion
+    - no_face
+    why: Stunning 3D simulation thumbnails
+  - name: Arvin Ash
+    channel_id: UCpMcsdZf2KkAnfmxiq2MfMQ
+    style_tags:
+    - physics_diagram
+    - whiteboard
+    - face_serious
+    why: Theoretical physics face+diagram combo
+  - name: Sabine Hossenfelder
+    channel_id: UC1yNl2E66ZzKApQdRuTQ4tw
+    style_tags:
+    - talking_head
+    - minimal
+    - direct_expert
+    why: Contrarian science; high CTR minimal style
+  - name: Wendover Productions
+    channel_id: UC9RM-iSvTu1uPJb8X5yp3EQ
+    style_tags:
+    - map_diagram
+    - clean_professional
+    - aviation
+    why: Aviation/logistics with clean map diagram style
+  - name: Half as Interesting
+    channel_id: UCuCkxoKLYO_EQ2GeFtbM_bw
+    style_tags:
+    - quirky_infographic
+    - pastel_map
+    - humor
+    why: Quirky geography facts; extremely distinctive style
+  - name: CGP Grey
+    channel_id: UC2C_jShtL725hvbm1arSV9w
+    style_tags:
+    - minimal_icon
+    - clean_animation
+    - faceless
+    why: Animation-explainer pioneer; timeless minimalism
+  - name: RealLifeLore
+    channel_id: UCP5tjEmvPItGyLhmjdwP7Ww
+    style_tags:
+    - map_overlay
+    - infographic
+    - clean_data
+    why: Geography+society infographic style
+food_cooking:
+  channels:
+  - name: Joshua Weissman
+    channel_id: UChBEbMKI1eCcejTtmI32UEw
+    style_tags:
+    - food_stunt
+    - face_taste
+    - bold_title
+    why: High-energy food recreation; massive CTR
+  - name: Ethan Chlebowski
+    channel_id: UCDq5v10l4wkV5-ZBIJJFbzQ
+    style_tags:
+    - science_food
+    - clean_data
+    - face_neutral
+    why: Science-based cooking with clean data style
+  - name: Sorted Food
+    channel_id: UCfyehHM_eo4g5JUyWmms2LA
+    style_tags:
+    - uk_food_group
+    - bright_studio
+    - challenge
+    why: UK food challenge bright studio group style
+  - name: Kenji
+    channel_id: UC5roJHl2fTWh85s7jl1qKHQ
+    style_tags:
+    - serious_cook
+    - close_food
+    - technical
+    why: J. Kenji Lopez-Alt; technical food science
+  - name: Taste Show
+    channel_id: UCkRBu0K655809AdvDajyJJA
+    style_tags:
+    - satisfying_cook
+    - asmr_adjacent
+    - close_macro
+    why: Satisfying cooking process; high retention
+diy_maker:
+  channels:
+  - name: Michael Reeves
+    channel_id: UCtHaxi4GTYDpJgMSGy7AeSw
+    style_tags:
+    - chaotic_maker
+    - face_manic
+    - tech_humor
+    why: Chaotic engineering humor; extremely high CTR
+  - name: William Osman
+    channel_id: UCfMJ2MchTSW2kWaT0kK94Yw
+    style_tags:
+    - engineering_comedy
+    - face_dumb_idea
+    - bright
+    why: Comedy maker; dumb ideas with high production
+  - name: Simone Giertz
+    channel_id: UC3KEoMzNz8eYnwBC34RaKCQ
+    style_tags:
+    - bad_robot
+    - face_smile
+    - shitty_machines
+    why: Queen of Shitty Robots; unique humor style
+  - name: Stuff Made Here
+    channel_id: UCj1VqrHhDte54oLgPG4xpuQ
+    style_tags:
+    - engineering_reveal
+    - face_serious_project
+    - dark
+    why: Over-engineered projects; very high outlier scores
+  - name: NileRed
+    channel_id: UCFhXFikryT4aFcLkLw2LBLA
+    style_tags:
+    - chemistry_visual
+    - color_reaction
+    - minimal
+    why: Chemistry experiments visually stunning style
+  - name: NightHawkInLight
+    channel_id: UCFtc3XdXgLFwhlDajMGK69w
+    style_tags:
+    - science_macro
+    - glowing
+    - satisfying
+    why: Science macro photography; incredibly satisfying
+  - name: ElectroBOOM
+    channel_id: UCJ0-OtVpF0wOKEqT2Z1HEtA
+    style_tags:
+    - shock_humor
+    - electricity_visual
+    - face_pain
+    why: Electrical engineering humor; huge outlier scores
+cars_automotive:
+  channels:
+  - name: Engineering Explained
+    channel_id: UClqhvGmHcvWL9w3R48t9QXQ
+    style_tags:
+    - whiteboard_car
+    - face_explain
+    - technical
+    why: Car engineering explanations whiteboard face
+  - name: hoonigan
+    channel_id: UCxHOwUUMJZQBgXttO3OjAIA
+    style_tags:
+    - burnout_action
+    - bold_brand
+    - high_energy
+    why: Car culture action-forward high energy brand
+  - name: Regular Car Reviews
+    channel_id: UCo1pShh6dtg-T_ZZkgi_JDQ
+    style_tags:
+    - car_review_quirky
+    - face_subtle
+    - dry_humor
+    why: Quirky car reviews; highly distinctive voice
+  - name: TitaniumDave
+    channel_id: UCHWzhushWdW56hKmpwMR1Qw
+    style_tags:
+    - car_deal_hunting
+    - face_excited
+    - value
+    why: Car buying deals face excited value style
+  - name: Car Throttle
+    channel_id: UCNBbCOuAN1NZAuj0vPe_MkA
+    style_tags:
+    - uk_car_culture
+    - group_face
+    - fun_driving
+    why: UK car culture group fun driving style
+  - name: ChristinaZ_Witchblade
+    channel_id: UC6YQXM6r7WKHE2Fijl-lPHQ
+    style_tags:
+    - car_lifestyle
+    - face_driving
+    - bold
+    why: Car lifestyle driving bold style
+  - name: TheSmokingTire
+    channel_id: UCgeGealT0QYcrnoYRMltDZg
+    style_tags:
+    - car_review
+    - face_driving
+    - road_test
+    why: In-depth car reviews road test style
+gaming:
+  channels:
+  - name: videogamedunkey
+    channel_id: UCsvn_Po0SmunchJYOWpOxMg
+    style_tags:
+    - screenshot_game
+    - bold_overlay
+    - humor
+    why: Comedy gaming screenshot-heavy style
+  - name: Ludwig
+    channel_id: UCrPseYLGpNygVi34QpGNqpA
+    style_tags:
+    - face_extreme_reaction
+    - bold_saturation
+    - viral
+    why: Streaming personality viral reaction style
+  - name: NakeyJakey
+    channel_id: UCSdma21fnJzgmPodhC9SJ3g
+    style_tags:
+    - essay_style
+    - comedic_face
+    - bold_text
+    why: Gaming essay comedy talking head style
+  - name: Gamers Nexus
+    channel_id: UChIs72whgZI9w6d6FhwGGHA
+    style_tags:
+    - tech_hardware
+    - teardown
+    - professional
+    why: PC hardware technical clean style
+  - name: SkillUpGaming
+    channel_id: UC2RfOulmwch6Fw6sSrIJ1Yw
+    style_tags:
+    - review_thumbnail
+    - face_game_split
+    - clean
+    why: Review-format game+face split layout
+  - name: DidYouKnowGaming
+    channel_id: UCIVmyfvsWvjOLQrB04As8kQ
+    style_tags:
+    - retro_screenshot
+    - bold_logo
+    - nostalgia
+    why: Gaming trivia; bold logo retro screenshot
+  - name: Sodapoppin
+    channel_id: UCtu2BCnJoFGRBOuIh570QWw
+    style_tags:
+    - face_reaction_stream
+    - colorful
+    - live
+    why: Streaming face reaction high energy
+  - name: LowSpecGamer
+    channel_id: UCQkd05iAYed2-LOmhjzDG6g
+    style_tags:
+    - pc_optimization
+    - face_test
+    - technical
+    why: Budget PC gaming niche; high engagement
+  - name: Noclip
+    channel_id: UCKx9fycSal6edp34DQXt3lw
+    style_tags:
+    - documentary_game
+    - cinematic
+    - no_face
+    why: Game documentary cinematic minimal style
+film_media_essay:
+  channels:
+  - name: Nerdwriter1
+    channel_id: UCJkMlOu7faDgqh4PfzbpLdg
+    style_tags:
+    - film_still
+    - essay_overlay
+    - thoughtful
+    why: Pop-culture essay thoughtful minimal aesthetic
+  - name: Every Frame a Painting
+    channel_id: UCjFqcJQXGZ6T6sxyFB-5i6A
+    style_tags:
+    - film_still
+    - montage
+    - cinematic_minimal
+    why: Seminal film essay channel; top outlier scores
+  - name: kaptainkristian
+    channel_id: UCuPgdqQKpq4T4zeqmTelnFg
+    style_tags:
+    - branding_essay
+    - clean_design
+    - minimal
+    why: Brand/design essay clean minimal style
+  - name: 中村樹基
+    channel_id: UCOyLh4DHHlgyP74WwNBFEiA
+    style_tags:
+    - music_essay
+    - score_visual
+    - minimal
+    why: Music theory essay visual clean style
+  - name: Schaffrillas Productions
+    channel_id: UC5UYMeKfZbFYnLHzoTJB1xA
+    style_tags:
+    - disney_essay
+    - colorful_still
+    - humor
+    why: Disney/animation essays colorful still
+geopolitics_news:
+  channels:
+  - name: CaspianReport
+    channel_id: UCwnKziETDbHJtx78nIkfYug
+    style_tags:
+    - map_geopolitics
+    - minimal_clean
+    - flag
+    why: Geopolitics with clean map thumbnails
+  - name: TLDR News
+    channel_id: UCSMqateX8OA2s1wsOR2EgJA
+    style_tags:
+    - animated_flag
+    - clean_map
+    - infographic
+    why: Daily geopolitics clean animated map style
+  - name: ContraPoints
+    channel_id: UCNvsIonJdJ5E4EXMa65VYpA
+    style_tags:
+    - theatrical_face
+    - cinematic_art
+    - provocative
+    why: Distinctive theatrical video essay style
+  - name: PolyMatter
+    channel_id: UCgNg3vwj3xt7QOrcIDaHdFg
+    style_tags:
+    - clean_minimal
+    - flag_icon
+    - geopolitics
+    why: Geopolitics minimal icon style
+  - name: Johnny Harris
+    channel_id: UCmGSJVG3mCRXVOP4yZrU1Dw
+    style_tags:
+    - map_overlay
+    - journalistic
+    - editorial_photo
+    why: Journalism meets travel; top outlier scores
+  - name: Vox
+    channel_id: UCLXo7UDZvByw2ixzpQCufnA
+    style_tags:
+    - motion_graphic
+    - clean_diagram
+    - editorial
+    why: News explainer polished motion graphic style
+  - name: Second Thought
+    channel_id: UCJm2TgUqtK1_NLBrjNQ1P-w
+    style_tags:
+    - essay_minimal
+    - face_forward
+    - political
+    why: Political essay minimal face forward style
+  - name: RealLifeLore
+    channel_id: UCP5tjEmvPItGyLhmjdwP7Ww
+    style_tags:
+    - map_overlay
+    - infographic
+    - society_data
+    why: Geography/society infographic crossover
+  - name: EmperorTigerstar
+    channel_id: UCUXqYwTCR6R3Wr-FkLTD4AQ
+    style_tags:
+    - animated_map
+    - war_history
+    - clean_simple
+    why: Animated map history wars clean simple
+  - name: KnowledgeHusk
+    channel_id: UC2_KC8lshtCyiLApy27raYw
+    style_tags:
+    - explainer_minimal
+    - dark_aesthetic
+    - bold
+    why: Political/social explainer dark minimal
+travel_adventure:
+  channels:
+  - name: Kara and Nate
+    channel_id: UC4ijq8Cg-8zQKx8OH12dUSw
+    style_tags:
+    - travel_couple
+    - adventure_bright
+    - world_map
+    why: Full-time travel couple; consistent CTR
+  - name: Mark Wiens
+    channel_id: UCyEd6QBSgat5kkC6svyjudA
+    style_tags:
+    - food_travel
+    - face_taste_joy
+    - local_food
+    why: Food travel face-forward joy expression
+  - name: bald and bankrupt
+    channel_id: UCxDZs_ltFFvn0FDHT6kmoXA
+    style_tags:
+    - dark_travel
+    - ex_soviet
+    - face_local
+    why: Dark travel ex-Soviet face-local style; huge outlier
+  - name: Drew Binsky
+    channel_id: UC0Ize0RLIbGdH5x4wI45G-A
+    style_tags:
+    - face_excited_travel
+    - bold_fact
+    - world
+    why: Travel facts bold text face excited world map
+photography_filmmaking:
+  channels:
+  - name: Peter McKinnon
+    channel_id: UC3DkFux8Iv-aYnTRWzwaiBA
+    style_tags:
+    - cinematic_dark
+    - face_serious
+    - creator
+    why: Top photography/filmmaking educator on YouTube
+  - name: Gordon Laing
+    channel_id: UCH5ibYn9ubr1Mc08NP_gUmg
+    style_tags:
+    - camera_review_clean
+    - white_bg
+    - tech
+    why: Camera reviews clean white background style
+  - name: Tony & Chelsea Northrup
+    channel_id: UCDkJEEIifDzR_2K2p9tnwYQ
+    style_tags:
+    - couple_photo
+    - face_reaction
+    - camera
+    why: Photography couple review format
+  - name: DSLRguide
+    channel_id: UCzQ1L-wzA_1qmLf49ey9iTQ
+    style_tags:
+    - tutorial_clean
+    - camera_visual
+    - minimal
+    why: Photography tutorial clean minimal style
+  - name: Kai W
+    channel_id: UCJF-_6XC9ZQB7-hPMgjb9Lw
+    style_tags:
+    - comedy_camera
+    - face_uk
+    - review_humor
+    why: Comedy camera reviews UK style
+  - name: PolyMike
+    channel_id: UCmIm8J8nolez6KO7Fe7yFHg
+    style_tags:
+    - cinematic_bts
+    - film_making
+    - dark
+    why: Filmmaking behind-the-scenes dark cinematic
+music:
+  channels:
+  - name: Rick Beato
+    channel_id: UCJquYOG5EL82sKTfH9aMA9Q
+    style_tags:
+    - music_theory_face
+    - guitar_visual
+    - serious
+    why: Music theory; extremely high outlier scores
+  - name: Adam Neely
+    channel_id: UCnkp4xDOwqqJD7sSM3xdUiQ
+    style_tags:
+    - music_essay
+    - bass_visual
+    - thoughtful
+    why: Music theory essays thoughtful face style
+  - name: 12tonemusic.com
+    channel_id: UCkunaz-0Yx4PDZNWxKtnDhg
+    style_tags:
+    - music_diagram
+    - staff_notation
+    - clean
+    why: Music analysis notation clean diagram style
+  - name: David Bennett Music Theory
+    channel_id: UCz2iUx-Imr6HgDC3zAFpjOw
+    style_tags:
+    - piano_close
+    - harmony_visual
+    - gentle
+    why: Piano analysis gentle close-up face style
+  - name: Stephanie Lynn
+    channel_id: UCqeAEGzuI8iE2Jc22UFrp5g
+    style_tags:
+    - mixing_tutorial
+    - DAW_screenshot
+    - professional
+    why: Mixing tutorials DAW screenshot professional
+  - name: Polyphia
+    channel_id: UCDe08Fs0s0YKJuk5h45csAQ
+    style_tags:
+    - guitar_performance
+    - dark_cinematic
+    - brand
+    why: Guitar band cinematic dark performance style
+space_astronomy:
+  channels:
+  - name: Scott Manley
+    channel_id: UCxzC4EngIsMrPmbm6Nxvb-A
+    style_tags:
+    - space_news
+    - simulation_visual
+    - face_expert
+    why: Space news daily updates simulation style
+  - name: Elon Musk
+    channel_id: UCydu_w6dZSWc8X6k9VxrpDQ
+    style_tags:
+    - rocket_launch
+    - dramatic
+    - engineering
+    why: SpaceX official; launch footage dramatically
+  - name: Everyday Astronaut
+    channel_id: UC6uKrU_WqJ1R2HMTY3LIx5Q
+    style_tags:
+    - face_excited_launch
+    - rocket_visual
+    - bright
+    why: Rocket launches face excited bright style
+  - name: NASASpaceflight
+    channel_id: UCSUu1lih2RifWkKtDOJdsBA
+    style_tags:
+    - live_launch
+    - technical
+    - engineering_visual
+    why: SpaceX/NASA technical launch coverage
+  - name: PBS Space Time
+    channel_id: UC7_gcs09iThXybpVgjHZ_7g
+    style_tags:
+    - deep_space
+    - physics_visual
+    - cosmic
+    why: Premium physics cosmic aesthetic
+  - name: FragmentedSpace
+    channel_id: UCZNjBRJn8i88SPTAviImW3g
+    style_tags:
+    - space_cinematic
+    - dark_ambient
+    - minimal
+    why: Space cinematic dark ambient minimal style
+  - name: The Space boy
+    channel_id: UCBTmgGh-NSMeERa6QL8_nrA
+    style_tags:
+    - space_bright
+    - face_excited
+    - educational
+    why: Space education bright face excited
+comedy_sketch:
+  channels:
+  - name: Internet Historian
+    channel_id: UCR1D15p_vdP3HkrH8wgjQRw
+    style_tags:
+    - dark_humor
+    - image_collage
+    - no_face
+    why: Dark internet history; extremely high outlier scores
+  - name: Casually Explained
+    channel_id: UCr3cBLTYmIK9kY0F_OdFWFQ
+    style_tags:
+    - stick_figure_irony
+    - minimal_humor
+    - clean
+    why: Stick figure ironic explainer; iconic minimal style
+  - name: Ryan George
+    channel_id: UCh9IfI45mmk59eDvSWtuuhQ
+    style_tags:
+    - pitch_meeting
+    - face_only
+    - white_bg
+    why: Pitch Meeting format iconic face-only style
+  - name: Overly Sarcastic Productions
+    channel_id: UCodbH5mUeF-m_BsNueRDjcw
+    style_tags:
+    - illustrated_humor
+    - colorful
+    - cartoon
+    why: Illustrated humor colorful cartoon style
+  - name: Jazza
+    channel_id: UCHu2KNu6TtJ0p4hpSW7Yv7Q
+    style_tags:
+    - art_comedy
+    - face_excited
+    - bright_art
+    why: Art challenge comedy face excited bright
+  - name: Sam O'Nella Academy
+    channel_id: UC1DTYW241WD64ah5BFWn4JA
+    style_tags:
+    - crude_stick_figure
+    - dark_humor
+    - minimal
+    why: Crude animation dark humor; very distinctive
+  - name: JaidenAnimations
+    channel_id: UCGwu0nbY2wSkW8N-cghnLpA
+    style_tags:
+    - personal_animation
+    - face_illustrated
+    - relatable
+    why: Relatable animated stories large audience
+  - name: TheOdd1sOut
+    channel_id: UCo8bcnLyZH8tBIH9V1mLgqQ
+    style_tags:
+    - personal_comic
+    - illustrated_life
+    - bright
+    why: Personal life illustrated comic style
+nature_wildlife:
+  channels:
+  - name: Kurzgesagt – In a Nutshell
+    channel_id: UCsXVk37bltHxD1rDPwtNM8Q
+    style_tags:
+    - nature_illustrated
+    - bright
+    - ecosystem
+    why: Nature explainer illustrated bright
+  - name: AntsCanada
+    channel_id: UCONd1SNf3_QqjzjCVsURNuA
+    style_tags:
+    - ant_colony
+    - macro_shot
+    - dark_bg
+    why: Ant colony macro photography dark background
+  - name: Joseph Everett - WIL
+    channel_id: UCqYPhGiB9tkShZorfgcL2lA
+    style_tags:
+    - nature_data
+    - infographic
+    - health
+    why: Crossover nature/health data style
+  - name: zoosandaquariums
+    channel_id: UCP-xx0SZ-sJb29pKA112rzw
+    style_tags:
+    - animal_close
+    - colorful
+    - face_animal
+    why: Zoo animal close-up colorful style
+  - name: Emma Stevenson
+    channel_id: UC5-ROHTmYKwxMI01bR8itUg
+    style_tags:
+    - wildlife_photography
+    - clean
+    - nature
+    why: Wildlife photography clean minimal style
+fashion_style:
+  channels:
+  - name: G Q
+    channel_id: UCYQpzRfsIS975untuYLapbw
+    style_tags:
+    - fashion_editorial
+    - magazine_style
+    - clean
+    why: GQ editorial fashion magazine clean style
+  - name: Style on a budget
+    channel_id: UCnAWriF5epT7I9QbSIrUsew
+    style_tags:
+    - budget_fashion
+    - face_outfit
+    - before_after
+    why: Budget fashion before/after face outfit
+  - name: aguywhoknows
+    channel_id: UCHQWZ3W86sTl10ILhVmjuwg
+    style_tags:
+    - menswear_minimal
+    - clean_bg
+    - product_close
+    why: Menswear minimal clean background style
+  - name: jessica hayden
+    channel_id: UCmuRVy52VqHApB-xd1dYxHQ
+    style_tags:
+    - aesthetic_fashion
+    - clean
+    - soft_palette
+    why: Aesthetic fashion clean soft palette
+animation:
+  channels:
+  - name: Kurzgesagt – In a Nutshell
+    channel_id: UCsXVk37bltHxD1rDPwtNM8Q
+    style_tags:
+    - 2d_illustration
+    - bright_palette
+    - character
+    why: Gold standard animation explainer 20M+ subs
+  - name: OverSimplified
+    channel_id: UCNIuvl7V8zACPpTmmNIqP2A
+    style_tags:
+    - 2d_cartoon
+    - humor
+    - history
+    why: Comic-book animation history enormous CTR
+  - name: TerminalMontage
+    channel_id: UCLFXk9J3O-hhOk0msOjKYdQ
+    style_tags:
+    - fast_animation
+    - meme_visual
+    - game_parody
+    why: Fast animation meme parody viral style
+  - name: Random
+    channel_id: UC11OVEX8yq1r6IbbJY5IlXA
+    style_tags:
+    - personal_story
+    - cute_illustrated
+    - relatable
+    why: Relatable personal story illustrated style
+  - name: RebelTaxi
+    channel_id: UCN3Jj2sU9LNFQplsjsdxdrw
+    style_tags:
+    - animation_review
+    - face_reaction
+    - cartoon
+    why: Animation review face reaction cartoon style
+  - name: gillion
+    channel_id: UCdP9fu4CI60jUGbcmABTdpA
+    style_tags:
+    - anime_essay
+    - dark_bg
+    - minimal_text
+    why: Anime essay dark minimal text style
+crypto_web3:
+  channels:
+  - name: Coin Bureau
+    channel_id: UCqK_GSMbpiV8spgD3ZGloSw
+    style_tags:
+    - face_explain
+    - crypto_visual
+    - bold
+    why: Top crypto channel; professional editorial style
+  - name: THE BITCOIN BEN SHOW
+    channel_id: UCNlyF438fz1mIf5vuGk-jng
+    style_tags:
+    - bitcoin_orange
+    - face_forward
+    - bold
+    why: Bitcoin maximalist bold orange brand
+  - name: Whiteboard Crypto
+    channel_id: UCsYYksPHiGqXHPoHI-fm5sg
+    style_tags:
+    - whiteboard_explainer
+    - clean_diagram
+    - minimal
+    why: Crypto whiteboard explainer clean minimal
+  - name: InvestAnswers
+    channel_id: UClgJyzwGs-GyaNxUHcLZrkg
+    style_tags:
+    - data_visual
+    - face_analyze
+    - clean
+    why: Crypto data analysis clean visual face
+language_culture:
+  channels:
+  - name: Langfocus
+    channel_id: UCNhX3WQEkraW3VHPyup8jkQ
+    style_tags:
+    - language_map
+    - clean_educational
+    - minimal
+    why: Language analysis clean map minimal style
+  - name: Polyglot Pal
+    channel_id: UCflHUSZxhVwzgfLAnPRpIgg
+    style_tags:
+    - face_language
+    - flag_bg
+    - enthusiastic
+    why: Polyglot face forward flag background style
+  - name: Not Just Bikes
+    channel_id: UC0intLFzLaudFG-xAvUEO-A
+    style_tags:
+    - urban_planning
+    - map_overlay
+    - clean
+    why: Urban planning map overlay clean style
+  - name: Becky Jade
+    channel_id: UCvJUhYtcgfTdISptt6pwouw
+    style_tags:
+    - cultural_explainer
+    - face_curious
+    - minimal
+    why: Cultural explainer face minimal style
+productivity_dev:
+  channels:
+  - name: Ali Abdaal
+    channel_id: UCoOae5nYA7VqaXzerajD0lg
+    style_tags:
+    - clean_minimal
+    - face_side
+    - productivity
+    why: Top productivity channel clean pastel style
+  - name: Thomas Frank Explains
+    channel_id: UCd_WBvzBg1UbHE8j8MIL5Ng
+    style_tags:
+    - face_organized
+    - clean_bg
+    - productivity_tips
+    why: Productivity tips clean organized face style
+  - name: NetworkChuck
+    channel_id: UC9x0AN7BWHpCDHSm9NiJFJQ
+    style_tags:
+    - face_excited_code
+    - terminal_bg
+    - hacking
+    why: Networking/hacking face excited terminal style
+  - name: Tech With Tim
+    channel_id: UC4JX40jDee_tINbkjycV4Sg
+    style_tags:
+    - coding_tutorial
+    - face_explain
+    - clean
+    why: Python tutorials clean face explain style
+  - name: Fireship
+    channel_id: UCsBjURrPoezykLs9EqgamOA
+    style_tags:
+    - bold_code_icon
+    - gradient
+    - minimal
+    why: Dev content iconic minimalist thumbnails
+  - name: Coderized
+    channel_id: UCrsLPlwxUInDoNubOP85EWQ
+    style_tags:
+    - code_explainer
+    - minimal_terminal
+    - clean
+    why: Programming explainer minimal terminal clean
+luxury_wealth:
+  channels:
+  - name: LuxuryReviews
+    channel_id: UCQvqx059n6VwUS72BXgTrSw
+    style_tags:
+    - product_luxury
+    - clean_minimal
+    - gold
+    why: Luxury product minimal gold aesthetic
+  - name: Supercar Blondie
+    channel_id: UCKSVUHI9rbbkXhvAXK-2uxA
+    style_tags:
+    - supercar_woman_driver
+    - face_excited
+    - speed
+    why: Female supercar vlogger excited face
+  - name: diamondcertified
+    channel_id: UCkOpza-PMMvDySsnW0dA61w
+    style_tags:
+    - jewelry_luxury
+    - sparkle_visual
+    - minimal
+    why: Jewelry luxury sparkle minimal
+parenting_family:
+  channels:
+  - name: Family Fun Pack
+    channel_id: UCvthuVsurPaVz2a7_4LepGg
+    style_tags:
+    - family_activities
+    - bright_fun
+    - kids
+    why: Family activities fun bright kids
+books_literature:
+  channels:
+  - name: Booktube
+    channel_id: UC9iPzaUiqy3eko02V6B_zMA
+    style_tags:
+    - book_review
+    - face_thoughtful
+    - book_visual
+    why: Book review channel thoughtful face
+  - name: Read with Mary
+    channel_id: UChqUnM8P1aODXAcQ86TepRQ
+    style_tags:
+    - reading_vlog
+    - book_close
+    - calming
+    why: Reading vlog close-up calming
+asmr_relaxation:
+  channels:
+  - name: Gibi ASMR
+    channel_id: UCE6acMV3m35znLcf0JGNn7Q
+    style_tags:
+    - asmr_roleplay
+    - close_micro
+    - whisper
+    why: ASMR roleplay close whisper
+  - name: ASMRtingle
+    channel_id: UC858wtbd9FR3Ht-ZIFkbSHQ
+    style_tags:
+    - asmr_tapping
+    - hand_close
+    - satisfying
+    why: ASMR tapping close satisfying
+  - name: ClickASMR
+    channel_id: UCqqtaiydUV8PpfSGh_GspqA
+    style_tags:
+    - asmr_sound_design
+    - minimal_visual
+    - trigger
+    why: ASMR sound design minimal visual
+  - name: RELAX
+    channel_id: UCE1SRqpBvSs79cKuarrwLVw
+    style_tags:
+    - meditation_asmr
+    - nature_ambience
+    - calm
+    why: Meditation ASMR calm nature
+  - name: Sleep stories
+    channel_id: UCIvtUVdlVSc2xMSUlC5wllw
+    style_tags:
+    - bedtime_story
+    - face_narrator
+    - soft
+    why: Bedtime story narrator soft aesthetic
+real_estate_property:
+  channels:
+  - name: Property Brothers
+    channel_id: UCkWXcq-YRV4KcIey8JQ0CPg
+    style_tags:
+    - home_renovation
+    - before_after
+    - high_energy
+    why: Home renovation before/after high energy
+  - name: Million Dollar Listing
+    channel_id: UCCW7bQ1hzN52MVAlRDSp-wg
+    style_tags:
+    - luxury_property
+    - expensive_home
+    - dramatic
+    why: Million dollar property dramatic
+  - name: Real Estate Investing Community
+    channel_id: UCsWn0TGx-hoV0DpHvw79ThQ
+    style_tags:
+    - property_analysis
+    - chart_data
+    - clean
+    why: Property investment analysis chart
+  - name: C.D. Reaves
+    channel_id: UCCQ36bqHfb_6sc_iyh67XGQ
+    style_tags:
+    - small_space
+    - minimalist_home
+    - functional
+    why: Tiny house minimalist functional
+reaction_videos:
+  channels:
+  - name: Reaction Masters
+    channel_id: UC8rDUXl3wRDDxL_8dDa512A
+    style_tags:
+    - face_reaction
+    - split_screen
+    - vocal
+    why: Split-screen reaction vocal
+  - name: Metal Reaction
+    channel_id: UCz_tsm7iT4p0GN5siiM5cKg
+    style_tags:
+    - musician_reaction
+    - face_headphones
+    - intense
+    why: Musician reaction intense headphones
+stock_trading:
+  channels:
+  - name: InvestAnswers
+    channel_id: UClgJyzwGs-GyaNxUHcLZrkg
+    style_tags:
+    - stock_analysis
+    - chart_visual
+    - clean
+    why: Stock analysis chart clean visual
+  - name: Options Alpha
+    channel_id: UCxdqxdpgg3-nFKyzJoWmOjQ
+    style_tags:
+    - options_trading
+    - graph_data
+    - professional
+    why: Options trading data graph professional
+  - name: Trend Spotter
+    channel_id: UCm9OsuJBPXjmScii3b9wntA
+    style_tags:
+    - day_trading
+    - screen_recording
+    - intense
+    why: Day trading screen recording intense
+  - name: dividendgenius
+    channel_id: UCRzIgpvBj6A1jtIryXD1oxQ
+    style_tags:
+    - dividend_investing
+    - passive_income
+    - calm
+    why: Dividend investing passive income calm
+woodworking_crafts:
+  channels:
+  - name: woodworkerpro
+    channel_id: UC7bdHOitz-uZZkYmFb7c9pg
+    style_tags:
+    - wood_project
+    - before_after
+    - satisfying
+    why: Woodworking project satisfying
+  - name: FineWoodworking
+    channel_id: UC47EhkMV18WlRqV3VhUH3yg
+    style_tags:
+    - furniture_build
+    - joinery_detail
+    - professional
+    why: Fine furniture build professional
+  - name: Leather Craft
+    channel_id: UCRicuZ3IcqJttb_1dlnLkyg
+    style_tags:
+    - leather_work
+    - hand_tool
+    - tactile
+    why: Leather crafting hand tool tactile
+makeup_beauty:
+  channels:
+  - name: James Charles
+    channel_id: UCucot-Zp428OwkyRm2I7v2Q
+    style_tags:
+    - makeup_transformation
+    - dramatic
+    - high_energy
+    why: Makeup transformation dramatic
+  - name: NikkieTutorials
+    channel_id: UCzTKskwIc_-a0cGvCXA848Q
+    style_tags:
+    - makeup_tutorial
+    - face_glow
+    - beautiful
+    why: Makeup tutorial beautiful face
+  - name: Michelle Phan
+    channel_id: UCuYx81nzzz4OFQrhbKDzTng
+    style_tags:
+    - beauty_hack
+    - creative_makeup
+    - colorful
+    why: Beauty hack creative colorful
+hair_care:
+  channels:
+  - name: HairStylingTips
+    channel_id: UCIge_rCLHIliFkif9HBWDHg
+    style_tags:
+    - hair_tutorial
+    - close_head
+    - step_by_step
+    why: Hair tutorial step-by-step close
+  - name: BarbershopASMR
+    channel_id: UCmWXEJcCN4gvvI5-PYrabSg
+    style_tags:
+    - haircut_asmr
+    - close_sound
+    - satisfying
+    why: Haircut ASMR satisfying sound
+fashion_styling_deep:
+  channels:
+  - name: Designer Archive
+    channel_id: UCFd-AO29ey1SB_jlUbe7tbg
+    style_tags:
+    - fashion_history
+    - designer_profile
+    - elegant
+    why: Fashion history designer profile
+  - name: Fashion on a Budget
+    channel_id: UCbPm8dG_qVFw4gRl5dKVn-g
+    style_tags:
+    - budget_outfits
+    - cheap_finds
+    - practical
+    why: Budget fashion practical
+interior_design_home:
+  channels:
+  - name: SD Aaroooz crafterina
+    channel_id: UCeuSAbV8VGEQ0v1teiZb_zg
+    style_tags:
+    - decor_project
+    - affordable
+    - cozy
+    why: Home decor DIY cozy
+  - name: John Rice
+    channel_id: UCxKl5hPgEZ024Ed9hn93oCQ
+    style_tags:
+    - minimalist_space
+    - clean_lines
+    - peaceful
+    why: Minimalist home peaceful
+  - name: JS Sehgal
+    channel_id: UCG4x-iHvThr3sUcB0eCGz8Q
+    style_tags:
+    - vintage_decor
+    - antique_hunt
+    - aesthetic
+    why: Vintage interior aesthetic
+  - name: Luxury Suites
+    channel_id: UCrC_9f55PI4RU9BXOaRqrGw
+    style_tags:
+    - high_end_design
+    - cinematic_tour
+    - aspirational
+    why: Luxury design aspirational
+motorcycles_bikes:
+  channels:
+  - name: Motorcycle community
+    channel_id: UCzu51rTysG_1OOLEVlQvjDQ
+    style_tags:
+    - bike_culture
+    - rider_lifestyle
+    - outdoor
+    why: Motorcycle lifestyle outdoor
+  - name: Mountain Bike Life
+    channel_id: UCpqkGjHhxDKnt3O1JfOsTJg
+    style_tags:
+    - mtb_ride
+    - trail_footage
+    - adrenaline
+    why: Mountain bike trail adrenaline
+aquascaping_fish:
+  channels:
+  - name: Aquascapelife
+    channel_id: UCd8xUBbyXqTuErYsBBTUGsQ
+    style_tags:
+    - aquatic_garden
+    - plant_arrangement
+    - beautiful
+    why: Aquascaping beautiful arrangement
+  - name: tank tutorials
+    channel_id: UCs6_8Gtmn-uLyGXDINRJ2CQ
+    style_tags:
+    - aquarium_setup
+    - step_by_step
+    - detailed
+    why: Aquarium setup detailed
+  - name: Reef Life
+    channel_id: UCCcKXrcYh7IkeSwDQoKqcsg
+    style_tags:
+    - coral_reef
+    - saltwater
+    - colorful
+    why: Coral reef colorful
+3d_printing_robotics:
+  channels:
+  - name: 3D Printing Videos
+    channel_id: UCP1_vG_6wLL_UzY_g4WShxQ
+    style_tags:
+    - 3d_print_result
+    - object_reveal
+    - satisfying
+    why: 3D printing reveal satisfying
+  - name: Robotics Today
+    channel_id: UCREjRNCA-b_JTuWElh72m1Q
+    style_tags:
+    - robot_demo
+    - ai_visual
+    - futuristic
+    why: Robotics demo futuristic
+drones_aerial:
+  channels:
+  - name: Robert Krogh
+    channel_id: UC1ui9oWXIYhfpy6nSx3cZ-A
+    style_tags:
+    - fpv_drone_race
+    - high_speed
+    - intense
+    why: FPV racing intense
+  - name: aerialphotography
+    channel_id: UCU0j8z3G52PNlC3OKCqoyzw
+    style_tags:
+    - landscape_aerial
+    - cinematic_nature
+    - stunning
+    why: Landscape aerial stunning
+vintage_restoration:
+  channels:
+  - name: Restore Channel
+    channel_id: UCfvPsv1pMZjHcWtaF8_o3JQ
+    style_tags:
+    - object_restoration
+    - before_after
+    - satisfying
+    why: Restoration satisfying
+  - name: Emmalyn
+    channel_id: UCdDpMZJHUAtMli-gU__hewA
+    style_tags:
+    - antique_hunt
+    - treasure
+    - discovery
+    why: Antique hunting discovery
+  - name: Adrian Priestley
+    channel_id: UCRHAq-0hIlmAyl271zdDRAg
+    style_tags:
+    - car_restoration
+    - old_to_new
+    - impressive
+    why: Classic car restoration
+  - name: Vintage Audio
+    channel_id: UCrN6GUJhFQoOCKwZOrmkHug
+    style_tags:
+    - speaker_restore
+    - sound_quality
+    - nostalgia
+    why: Vintage audio restoration
+minimalism_organization:
+  channels:
+  - name: Влад
+    channel_id: UC0UwK3xatZKP1UQqs_A16fg
+    style_tags:
+    - decluttering_process
+    - before_after
+    - peaceful
+    why: Decluttering peaceful
+  - name: Organize With Marie
+    channel_id: UC5DA0ODcb6OLt1JrE1YqYxQ
+    style_tags:
+    - organization_method
+    - tidy_space
+    - calm
+    why: Organization calm method
+  - name: Simple Storage
+    channel_id: UCGXOcwvC1y7gFxmkz2Gm09w
+    style_tags:
+    - storage_solutions
+    - practical
+    - functional
+    why: Storage solutions functional
+  - name: 금자의 쓰레기덕질 ZeroWaste
+    channel_id: UCKFKhD0WOpDVmzxFeyP9S-w
+    style_tags:
+    - sustainable_living
+    - eco
+    - conscious
+    why: Sustainable living conscious
+content_creation_business:
+  channels:
+  - name: Video Editing Mastery
+    channel_id: UC4oVoOWJXKsZQsxYsJ2mXNA
+    style_tags:
+    - editing_tutorial
+    - before_after
+    - professional
+    why: Video editing professional
+  - name: audioengineer
+    channel_id: UCRPmyk3kPy29l5GvGPozdfg
+    style_tags:
+    - sound_design
+    - mixing
+    - technical
+    why: Audio engineering technical
+  - name: Stream Setup
+    channel_id: UC79qe77fEJUAlYi_5pWMPiQ
+    style_tags:
+    - streaming_gear
+    - setup_tour
+    - organized
+    why: Streaming setup organized
+  - name: CreatorTools
+    channel_id: UCsPZBhzM-15Ges3AlbtKINw
+    style_tags:
+    - software_review
+    - workflow
+    - efficient
+    why: Creator tools efficient
+architecture_urban:
+  channels:
+  - name: Architecture Walks
+    channel_id: UCQa_WfUlyhrm4Ltu6cH-EYA
+    style_tags:
+    - building_tour
+    - design_analysis
+    - educational
+    why: Architecture tour educational
+  - name: BuiltEnviroCanada
+    channel_id: UCbhWBHUz1Rxi8zr2Ije6emQ
+    style_tags:
+    - infrastructure
+    - documentary
+    - impressive
+    why: Infrastructure documentary
+  - name: skyscraperlife
+    channel_id: UCmQYUdXwKP4SNqXr6bOtWLg
+    style_tags:
+    - tall_building
+    - construction
+    - scale
+    why: Skyscraper construction scale
+personal_finance_deep:
+  channels:
+  - name: Bob Willoughby
+    channel_id: UCSbmmxkHeo4cwrIYn7Rxs_Q
+    style_tags:
+    - debt_payoff
+    - motivation
+    - progress
+    why: Debt payoff journey motivation
+  - name: Budgeting Hacks
+    channel_id: UCGRejPkBR7GNMQdAMfCTHiw
+    style_tags:
+    - money_saving
+    - practical_tips
+    - relatable
+    why: Budgeting practical tips
+  - name: retirementplan
+    channel_id: UC0JBQi_vIVh7ERLQPZVdDug
+    style_tags:
+    - retirement_strategy
+    - compound
+    - educational
+    why: Retirement education compound
+podcast_clips:
+  channels:
+  - name: ClipsDaily
+    channel_id: UC9IkYy5VZ1pAXkHxZh9I3Xw
+    style_tags:
+    - podcast_moment
+    - highlight_viral
+    - bold_text
+    why: Podcast clip viral highlight
+  - name: TalkShowClips
+    channel_id: UCiXjx0CSd2Jd_xdqfKIQpRA
+    style_tags:
+    - interview_highlight
+    - face_reaction
+    - engaging
+    why: Interview clip engaging
+  - name: Podcast Wisdom
+    channel_id: UCSIt7F6UHe3Y8bVHs2UH5Xg
+    style_tags:
+    - quote_visual
+    - motivation
+    - text_overlay
+    why: Podcast wisdom motivation
+mukbang_food_asmr:
+  channels:
+  - name: Asmr Eating
+    channel_id: UCS7RdFuEjjDBL79I4ZiKWBw
+    style_tags:
+    - eating_asmr
+    - close_mouth
+    - satisfying
+    why: Eating ASMR satisfying
+  - name: Restaurant Review
+    channel_id: UCPffprmwrQdFXCcmzayqA2A
+    style_tags:
+    - food_review
+    - taste_reaction
+    - honest
+    why: Restaurant review honest
+anime_manga:
+  channels:
+  - name: AnimeAnalysis
+    channel_id: UCZEnsEv_Q0bCdw4KmtKpVYg
+    style_tags:
+    - anime_review
+    - scene_breakdown
+    - critical
+    why: Anime analysis critical
+productivity_time:
+  channels:
+  - name: Productivity Hacks with Claus Geissendoerfer
+    channel_id: UCp2MyIcxRaNaA_Wvkyfel2g
+    style_tags:
+    - routine_build
+    - workflow
+    - efficient
+    why: Productivity routine efficient
+  - name: Фокус метод
+    channel_id: UCFWsSuofXbJk9mBGfF1yclw
+    style_tags:
+    - deep_work
+    - technique
+    - educational
+    why: Focus technique educational

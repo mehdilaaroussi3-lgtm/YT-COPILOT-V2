@@ -14,6 +14,9 @@ const PERSON_PLUS_ICON = `
 </svg>`;
 
 export async function mount(outlet) {
+  // Track active scan streams so we can abort them on navigation
+  const activeAborts = new Set();
+
   outlet.appendChild(h("header", { class: "page-header" }, [
     h("h1", { class: "page-title" }, ["Manage channels"]),
     h("div", { class: "page-subtitle" }, ["Connect your YouTube channels."]),
@@ -25,7 +28,7 @@ export async function mount(outlet) {
 
   const addCard = h("section", { class: "card hero", style: { marginBottom: "48px" } }, [
     h("div", { style: { color: "var(--ink-500)", display: "flex", justifyContent: "center", marginBottom: "16px" }, html: PERSON_PLUS_ICON }),
-    h("div", { class: "display-s", style: { color: "var(--ink-600)", fontWeight: 500, marginBottom: "8px" } }, ["Add your channel handle. (e.g. @1of10pod)"]),
+    h("div", { class: "display-s", style: { color: "var(--ink-600)", fontWeight: 500, marginBottom: "8px" } }, ["Add your channel handle. (e.g. @DigitalCrimeScene1)"]),
     h("div", { class: "caption", style: { marginBottom: "24px" } }, ["Unlimited channels. Added locally — no SaaS limits."]),
     h("div", { style: { display: "flex", justifyContent: "center" } }, [
       h("div", { class: "pill-input", style: { width: "min(560px, 100%)" } }, [
@@ -42,7 +45,9 @@ export async function mount(outlet) {
   outlet.appendChild(tableWrap);
 
   async function refresh() {
+    if (!outlet.isConnected) return;
     const { items } = await api.trackers();
+    if (!outlet.isConnected) return;
     tableWrap.innerHTML = "";
     if (!items.length) {
       tableWrap.appendChild(h("div", { class: "empty" }, [
@@ -153,9 +158,11 @@ export async function mount(outlet) {
       const { job_id, error } = await api.trackerRefresh(row.channel_id);
       if (error) return toast(error, { kind: "error" });
       toast(`Scanning ${row.handle || row.name}…`);
-      streamJob(`/api/trackers/scan/${job_id}`, { onMessage: (d) => d.msg && toast(d.msg) })
-        .then((r) => toast(`${r?.outliers ?? 0} outliers cached`, { kind: "success" }))
-        .catch(() => toast("Scan failed", { kind: "error" }));
+      const abort = new AbortController();
+      activeAborts.add(abort);
+      streamJob(`/api/trackers/scan/${job_id}`, { onMessage: (d) => d.msg && toast(d.msg), signal: abort.signal })
+        .then((r) => { activeAborts.delete(abort); toast(`${r?.outliers ?? 0} outliers cached`, { kind: "success" }); })
+        .catch(() => { activeAborts.delete(abort); if (!abort.signal.aborted) toast("Scan failed", { kind: "error" }); });
     });
     addItem("Remove", async () => {
       menu.remove();
@@ -183,30 +190,47 @@ export async function mount(outlet) {
     if (!handle) return toast("Type a @handle or URL", { kind: "error" });
     addBtn.disabled = true;
     addBtn.innerHTML = `${icons.sparkle}<span>Adding…</span>`;
+
+    let addedItem = null;
     try {
       const r = await api.trackerAdd(handle);
       if (r.error) { toast(r.error, { kind: "error" }); return; }
+      addedItem = r.item;
       toast(`Added ${r.item.name || r.item.handle}`, { kind: "success" });
       input.value = "";
       refresh();
-      // Fire off a background scan so outliers populate
-      const sc = await api.trackerRefresh(r.item.channel_id);
-      if (sc.job_id) {
-        streamJob(`/api/trackers/scan/${sc.job_id}`, {
-          onMessage: (d) => d.msg && console.info("[scan]", d.msg),
-        }).then((res) => {
-          toast(`${res?.outliers ?? 0} outliers indexed for @${r.item.handle || r.item.name}`, { kind: "success" });
-        }).catch(() => { /* silent */ });
-      }
     } catch (e) {
       toast(e.message, { kind: "error" });
     } finally {
       addBtn.disabled = false;
       addBtn.innerHTML = `${icons.plus}<span>Add</span>`;
     }
+
+    // Background scan — completely detached, never surfaces an error toast
+    if (!addedItem) return;
+    try {
+      const sc = await api.trackerRefresh(addedItem.channel_id);
+      if (sc?.job_id) {
+        const abort = new AbortController();
+        activeAborts.add(abort);
+        streamJob(`/api/trackers/scan/${sc.job_id}`, {
+          onMessage: (d) => d.msg && console.info("[scan]", d.msg),
+          signal: abort.signal,
+        }).then((res) => {
+          activeAborts.delete(abort);
+          if (!abort.signal.aborted)
+            toast(`${res?.outliers ?? 0} outliers indexed for @${addedItem.handle || addedItem.name}`, { kind: "success" });
+        }).catch(() => { activeAborts.delete(abort); });
+      }
+    } catch { /* scan kick-off failure is non-fatal — never surface to user */ }
   }
 
   refresh();
+
+  return function unmount() {
+    for (const abort of activeAborts) abort.abort();
+    activeAborts.clear();
+  };
 }
 
 function formatDate(iso) {

@@ -11,12 +11,35 @@ config.yml
 .env
 *.json.key
 service-account*.json
+vertex-key.json
+*-service-account*.json
 
 # Generated content
 output/
 cache/
 data/*.db
 data/*.db-journal
+
+# Heavy scraped / generated data (do not commit)
+data/channel_thumbnails/
+data/channel_logos/
+data/logos_archive/
+data/custom_styles/
+data/productions/
+data/reverse/
+data/lab/
+data/templates/
+data/channel_dna/
+tmp_videos/
+.firecrawl/
+
+# Logs & tmp
+*.log
+studio.log
+tmp_*.py
+
+# Claude local state
+.claude/scheduled_tasks.lock
 
 # IDE
 .vscode/

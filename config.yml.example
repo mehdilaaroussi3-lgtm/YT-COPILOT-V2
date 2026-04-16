@@ -3,9 +3,14 @@
 
 text:
   # Engine for text reasoning (titles, ideas, hooks, scripts).
-  # "claude" (default) routes through the local Claude CLI.
+  # "claude" (default) routes through the local Claude CLI bridge.
   # "gemini" falls back to the Vertex text API (legacy).
   engine: "claude"
+
+claude:
+  # Model passed to `claude --model` for all text LLM calls.
+  # claude-opus-4-6 is the most capable — use it for script analysis / replication.
+  model: "claude-opus-4-6"
 
 vertex:
   # Vertex-enabled API key from a GCP project with Vertex AI API + billing.
@@ -22,6 +27,17 @@ gemini:
 youtube:
   api_key: "your-youtube-data-api-v3-key"
 
+channel:
+  # How many videos to scrape per channel for style analysis.
+  # This is the single source of truth — controls the YouTube API sample,
+  # the DB retrieval limit, the Vision brief, and the text DNA analysis.
+  # Allowed values: 1 | 2 | 5 | 10
+  scrape_count: 10
+
+outlier:
+  min_score: 3.0          # seed / registry channels (3× median = top performer)
+  tracked_min_score: 3.0  # user-tracked channels
+
 defaults:
   variants: 3
   output_dir: "output"
@@ -31,3 +47,22 @@ quality_gate:
   enabled: true
   min_score: 6.0
   max_retries: 3
+
+elevenlabs:
+  api_key: "your-elevenlabs-api-key"
+  default_voice_id: ""             # auto-populated after first interactive pick
+  model: "eleven_multilingual_v2"
+
+produce:
+  music_duck_level: 0.15           # music bed volume relative to VO (0.0–1.0)
+
+# Ultimate Reverse Engineer (URE) — picture-perfect video dissection
+reverse:
+  output_dir: "data/reverse"
+  tmp_dir: "tmp_videos"
+  scene_threshold: 27.0          # PySceneDetect ContentDetector threshold
+  whisper_model: "base"          # tiny|base|small|medium
+  whisper_enabled: true
+  motion_analysis_enabled: true
+  max_scenes_default: 25         # structurally sampled (hook/body/closer); override with --max-scenes
+  long_video_warn_min: 30        # warn above this duration

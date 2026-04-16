@@ -13,6 +13,22 @@ export async function mount(outlet) {
 
   const trackers = (await api.trackers()).items;
   const defaultTracker = trackers.find((t) => t.is_default);
+
+  // Build channel_id → @handle / name lookup for history display
+  const channelLookup = {};
+  for (const t of trackers) {
+    const pretty = t.handle ? `@${t.handle}` : (t.name || "");
+    channelLookup[t.channel_id] = pretty;
+    if (t.handle) channelLookup[t.handle] = `@${t.handle}`;
+  }
+  function prettyChannel(c) {
+    if (!c) return "Unknown channel";
+    if (channelLookup[c]) return channelLookup[c];
+    if (typeof c === "string" && c.startsWith("@")) return c;
+    if (typeof c === "string" && c.startsWith("UC")) return "Unknown channel";
+    return c;
+  }
+
   const picker = channelPicker({
     items: trackers,
     selected: defaultTracker?.channel_id || "",
@@ -113,13 +129,15 @@ export async function mount(outlet) {
   }
 
   async function pollIdeasJob(jobId) {
-    while (true) {
+    const MAX_ATTEMPTS = 900; // ~30 minutes at 1.2s intervals
+    for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
       const r = await api.ideasStatus(jobId);
       if (r.status === "done") return r.items || [];
       if (r.status === "error") throw new Error(r.error || "generation failed");
       if (r.status === "unknown") throw new Error("job not found (server may have restarted)");
       await new Promise((res) => setTimeout(res, 1200));
     }
+    throw new Error("Generation timed out after 30 minutes");
   }
 
   function showIdeasSkeleton() {
@@ -136,6 +154,9 @@ export async function mount(outlet) {
   }
 
   async function afterIdeas(ideas, channel, alsoThumbs) {
+    // If we completed in the background while the user navigated away,
+    // don't clear job state — they need it to see results on return.
+    if (!outlet.isConnected) return;
     results.innerHTML = "";
     if (!alsoThumbs) {
       renderIdeas(results, ideas, channel);
@@ -163,6 +184,7 @@ export async function mount(outlet) {
     genBtn.innerHTML = `<span class="spinner-sm"></span><span>Rendering thumbnails…</span>`;
     await Promise.all(ideas.map((idea, i) => renderThumbnailTile(idea, i, channel, tiles[i])));
 
+    if (!outlet.isConnected) return;
     renderHistory();
     resetBtn();
     clearActiveJob();
@@ -279,7 +301,7 @@ export async function mount(outlet) {
   async function renderHistory() {
     const [r, thumbIdx] = await Promise.all([api.ideasHistory(), fetchThumbnailIndex()]);
     historyWrap.innerHTML = "";
-    if (!r.items.length) return;
+    if (!r.items || !r.items.length) return;
     historyWrap.appendChild(h("div", { class: "section-head" }, [
       h("div", { class: "section-title" }, ["History"]),
       h("div", { class: "section-sub" }, [`${r.items.length} ideas across ${groupByDate(r.items).length} batches`]),
@@ -293,7 +315,7 @@ export async function mount(outlet) {
         historyWrap.appendChild(h("div", { style: { marginBottom: "24px" } }, [
           h("div", { class: "flex between center", style: { marginBottom: "12px" } }, [
             h("div", { class: "caption" }, [
-              `${first.channel}${first.topic ? ` · ${first.topic}` : ""}`,
+              `${prettyChannel(first.channel)}${first.topic ? ` · ${first.topic}` : ""}`,
             ]),
             h("div", { class: "caption" }, [formatRelative(first.created_at)]),
           ]),
@@ -346,4 +368,8 @@ export async function mount(outlet) {
 
     return h("div", { class: "card sm idea-card" + (thumb ? " has-thumb" : "") }, children);
   }
+
+  return function unmount() {
+    hideRunningBanner(); // stops the timer interval immediately
+  };
 }

@@ -6,7 +6,7 @@ export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel
 /** Create a DOM element with attrs and children.
  *  h("div", {class: "card"}, [h("h2", {}, ["Title"])])
  */
-export function h(tag, attrs = {}, children = []) {
+export function h(tag, attrs = {}, ...rest) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs || {})) {
     if (v == null || v === false) continue;
@@ -16,10 +16,12 @@ export function h(tag, attrs = {}, children = []) {
     else if (k === "style" && typeof v === "object") Object.assign(el.style, v);
     else el.setAttribute(k, v);
   }
-  const arr = Array.isArray(children) ? children : [children];
+  // Accept either h(tag, attrs, [children]) OR h(tag, attrs, child1, child2, ...)
+  const children = rest.length === 1 && Array.isArray(rest[0]) ? rest[0] : rest;
+  const arr = Array.isArray(children) ? children.flat(Infinity) : [children];
   for (const c of arr) {
     if (c == null || c === false) continue;
-    el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    el.appendChild(typeof c === "string" || typeof c === "number" ? document.createTextNode(String(c)) : c);
   }
   return el;
 }
@@ -217,25 +219,42 @@ export function modal({ title, body, confirmText = "Confirm", onConfirm, onCance
 
 // --- Thumbnail card ---
 export function thumbCard(item, {
-  onClick, onBookmark, onUseAsReference, showActions = true,
+  onClick, onBookmark, onUseAsReference, onAddChannel, showActions = true,
 } = {}) {
   const score = item.outlier_score || 0;
   const badge = score >= 5 ? "high" : "";
   const views = formatViews(item.views);
+  const niche = item.niche || "";
+
+  const ytIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
 
   const el = h("div", { class: "thumb-card", onclick: () => onClick && onClick(item) }, [
     h("div", { class: `outlier-badge ${badge}` }, [`${score.toFixed(1)}x`]),
     showActions && h("div", { class: "thumb-actions" }, [
       onBookmark && h("button", { class: "icon-btn", title: "Bookmark", onclick: (e) => { e.stopPropagation(); onBookmark(item); }, html: icons.bookmark }),
       onUseAsReference && h("button", { class: "icon-btn", title: "Use as reference", onclick: (e) => { e.stopPropagation(); onUseAsReference(item); }, html: icons.spark }),
+      item.yt_url && h("a", {
+        class: "icon-btn",
+        title: "Open on YouTube",
+        href: item.yt_url,
+        target: "_blank",
+        rel: "noopener",
+        onclick: (e) => e.stopPropagation(),
+        html: ytIcon,
+      }),
     ].filter(Boolean)),
     h("img", { class: "thumb-img", src: item.thumb_url || "", loading: "lazy", alt: item.title || "" }),
     h("div", { class: "thumb-meta" }, [
       h("div", { class: "thumb-title" }, [item.title || "—"]),
       h("div", { class: "thumb-sub" }, [
-        item.channel_name || "Unknown channel",
+        h("span", { class: "thumb-channel-name" }, [item.channel_name || "Unknown channel"]),
         " · ",
         views,
+        onAddChannel && item.channel_id && h("button", {
+          class: "add-channel-btn",
+          title: `Track ${item.channel_name || "this channel"}`,
+          onclick: (e) => { e.stopPropagation(); onAddChannel(item); },
+        }, ["+ Track"]),
       ]),
     ]),
   ]);

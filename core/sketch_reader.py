@@ -17,9 +17,7 @@ from pathlib import Path
 import httpx
 
 from cli import config as cfg
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
+from generators import gcp_auth
 
 
 SKETCH_READER_PROMPT = """\
@@ -66,11 +64,11 @@ def describe_sketch(sketch_path: Path) -> str:
     """
     if sketch_path is None or not Path(sketch_path).exists():
         return ""
-    api_key = cfg.get("vertex.api_key")
-    if not api_key or api_key.startswith("your-"):
+    try:
+        model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
+        url = gcp_auth.vertex_url(model)
+    except Exception:  # noqa: BLE001
         return ""
-    model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=model)}?key={api_key}"
 
     parts = [
         {"inlineData": {
@@ -87,7 +85,7 @@ def describe_sketch(sketch_path: Path) -> str:
                     "responseModalities": ["TEXT"],
                     "temperature": 0.15,
                 },
-            }, headers={"Content-Type": "application/json"})
+            }, headers=gcp_auth.auth_headers())
         if resp.status_code >= 300:
             return ""
         payload = resp.json()

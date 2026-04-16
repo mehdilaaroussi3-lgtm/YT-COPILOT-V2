@@ -17,7 +17,7 @@ from core.pairing_validator import validate_pairing
 from core.profile_loader import list_profiles
 from core.text_extractor import extract_hook, suggest_alternatives
 from scraper.registry_manager import list_niches
-from studio.routers import bookmarks, ideas, outliers, settings, style_channels, thumbnails, titles, trackers, winners
+from studio.routers import bookmarks, channels_ws, ideas, lab, outliers, settings, style_channels, styles, templates, thumbnails, titles, trackers, winners
 from studio.routers.common import CACHE_DIR, OUTPUT_DIR
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
@@ -35,16 +35,25 @@ app.mount("/output", StaticFiles(directory=OUTPUT_DIR), name="output")
 if CACHE_DIR.exists():
     app.mount("/cache", StaticFiles(directory=CACHE_DIR), name="cache")
 
+# Mount data/ so homepage latest-creations can preview production + reverse thumbnails
+_DATA_DIR = Path("data")
+if _DATA_DIR.exists():
+    app.mount("/data", StaticFiles(directory=_DATA_DIR), name="data")
+
 # --- Routers ---
 app.include_router(outliers.router)
+app.include_router(channels_ws.router)
 app.include_router(trackers.router)
 app.include_router(bookmarks.router)
 app.include_router(ideas.router)
 app.include_router(titles.router)
 app.include_router(thumbnails.router)
 app.include_router(winners.router)
+app.include_router(lab.router)
 app.include_router(settings.router)
 app.include_router(style_channels.router)
+app.include_router(styles.router)
+app.include_router(templates.router)
 
 
 # --- Top-level endpoints ---
@@ -103,5 +112,5 @@ async def hook(title: str, channel: str | None = None) -> dict:
 
 def start_studio(host: str = "127.0.0.1", port: int = 8000) -> None:
     import uvicorn
-    print(f"\n  YTcopilot Studio → http://{host}:{port}\n")
+    print(f"\n  YTcopilot Studio -> http://{host}:{port}\n")
     uvicorn.run(app, host=host, port=port, log_level="info")

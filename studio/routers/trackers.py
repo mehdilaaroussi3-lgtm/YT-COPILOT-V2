@@ -56,7 +56,7 @@ def resummarize(channel_id: str) -> dict:
 
 
 @router.post("/{channel_id}/refresh")
-def refresh(channel_id: str) -> dict:
+async def refresh(channel_id: str) -> dict:
     """Kick off background outlier scan, return job_id for SSE."""
     job_id = uuid.uuid4().hex[:12]
     _scan_jobs[job_id] = {"status": "queued", "events": [], "result": None, "error": None}

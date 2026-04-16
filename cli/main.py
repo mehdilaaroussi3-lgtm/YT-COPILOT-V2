@@ -23,6 +23,8 @@ from rich.console import Console
 
 from cli.commands import agents as agents_cmd
 from cli.commands import generate as generate_cmd
+from cli.commands import produce as produce_cmd
+from cli.commands import reverse as reverse_cmd
 from cli.commands import scrape as scrape_cmd
 from cli.commands import studio as studio_cmd
 
@@ -55,6 +57,12 @@ app.command("research-update", help="Pull latest 1of10 blog posts.")(agents_cmd.
 app.command("studio", help="Launch local web UI at http://127.0.0.1:8000")(studio_cmd.studio)
 app.command("refine", help="Refine an existing thumbnail with natural language.")(studio_cmd.refine)
 app.command("profiles", help="List channel profiles.")(studio_cmd.profile_list)
+
+# Ultimate Reverse Engineer
+app.command("reverse", help="Reverse-engineer a YouTube video into a production blueprint.")(reverse_cmd.reverse)
+
+# Production Pipeline
+app.command("produce", help="Produce a video in the style of a reversed blueprint.")(produce_cmd.produce)
 
 
 @app.command("version")

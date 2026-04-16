@@ -86,6 +86,24 @@ async function renderFolderList(outlet) {
 async function renderFolderDetail(outlet, folderId) {
   const folders = (await api.folders()).items;
   const f = folders.find((x) => x.id === folderId);
+
+  // Build channel lookup for displaying pretty names on generated thumbnails
+  const channelLookup = {};
+  try {
+    const trackers = (await api.trackers()).items || [];
+    for (const t of trackers) {
+      const pretty = t.handle ? `@${t.handle}` : (t.name || "");
+      channelLookup[t.channel_id] = pretty;
+      if (t.handle) channelLookup[t.handle] = `@${t.handle}`;
+    }
+  } catch { /* offline */ }
+  function prettyChannel(c) {
+    if (!c) return "";
+    if (channelLookup[c]) return channelLookup[c];
+    if (typeof c === "string" && c.startsWith("@")) return c;
+    if (typeof c === "string" && c.startsWith("UC")) return "Your channel";
+    return c;
+  }
   if (!f) {
     outlet.appendChild(emptyState({ title: "Folder not found" }));
     return;
@@ -122,7 +140,7 @@ async function renderFolderDetail(outlet, folderId) {
           video_id: `gen_${b.generation_id}`,
           title: (b.generation || {}).title || "—",
           thumb_url: b.thumb_url,
-          channel_name: `Your · ${(b.generation || {}).channel || ""}`,
+          channel_name: `Your · ${prettyChannel((b.generation || {}).channel)}`,
           views: 0,
           outlier_score: 0,
         };

@@ -188,6 +188,79 @@ def generate_ideas(channel: str, topic: str | None = None,
     return persisted
 
 
+def generate_ideas_for_channel(channel_ctx: dict, topic: str | None = None,
+                               count: int = 6) -> list[dict]:
+    """Generate ideas using a pre-built channel_ctx dict (no profile_loader).
+
+    channel_ctx keys:
+      name, niche, reference_channel_id, reference_channel_name, tone
+    """
+    niche = channel_ctx.get("niche") or "documentary_essay"
+    channel_id = channel_ctx.get("reference_channel_id") or None
+    channel_name = channel_ctx.get("name") or ""
+
+    real_titles = _channel_real_titles(channel_id, limit=20)
+
+    if real_titles:
+        channel_titles_block = "\n".join(f"- {t}" for t in real_titles)
+    else:
+        channel_titles_block = (
+            "(No past titles cached for this channel yet — infer the topic "
+            "domain from the channel name and niche label alone.)"
+        )
+
+    topic_block = f"TOPIC DIRECTION: {topic}\n" if topic else ""
+    outliers = _recent_outlier_titles(niche, channel_id=channel_id)
+    outlier_block = ""
+    if outliers:
+        outlier_block = (
+            "(These come from OTHER channels in a similar niche — borrow "
+            "their ENERGY / structure only. They are NOT the topic domain.)\n"
+            + "\n".join(f"- {t}" for t in outliers[:10])
+            + "\n"
+        )
+    else:
+        outlier_block = "(none available)\n"
+
+    handle = channel_ctx.get("reference_channel_name") or channel_name
+    if handle and not handle.startswith("@"):
+        handle = "@" + handle
+
+    prompt = IDEA_PROMPT.format(
+        channel_handle=handle or "(unknown handle)",
+        channel_name=channel_name,
+        niche=niche,
+        channel_titles_block=channel_titles_block,
+        topic_block=topic_block,
+        outlier_block=outlier_block,
+        count=count,
+    )
+
+    raw = generate_text(prompt, temperature=0.85)
+    items = _parse_json_array(raw)
+    batch_id = uuid.uuid4().hex[:12]
+    now = dt.datetime.now(dt.UTC).isoformat()
+
+    persisted = []
+    d = db()
+    for item in items[:count]:
+        row = {
+            "channel": channel_name,
+            "topic": topic or "",
+            "idea_title": (item.get("title") or "").strip(),
+            "idea_description": (item.get("description") or "").strip(),
+            "created_at": now,
+            "batch_id": batch_id,
+        }
+        d["generated_ideas"].insert(row, alter=True)
+        persisted.append({
+            **row,
+            "angle": (item.get("angle") or "").strip(),
+            "id": d["generated_ideas"].last_pk,
+        })
+    return persisted
+
+
 def history(channel: str | None = None, limit: int = 50) -> list[dict]:
     """Return recent ideas grouped by batch_id → date."""
     d = db()

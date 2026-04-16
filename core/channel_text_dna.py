@@ -24,6 +24,7 @@ from pathlib import Path
 import httpx
 
 from cli import config as cfg
+from generators import gcp_auth
 from data.db import db
 from generators.gemini_text import generate_text
 
@@ -281,24 +282,26 @@ def build_text_dna(channel_id: str, thumb_paths: list[Path]) -> str:
     if not thumb_paths:
         return ""
 
-    api_key = cfg.get("vertex.api_key")
-    model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=model)}?key={api_key}"
+    try:
+        model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
+        url = gcp_auth.vertex_url(model)
+    except Exception:  # noqa: BLE001
+        return ""
 
     parts: list[dict] = []
-    for p in thumb_paths[:8]:
+    for p in thumb_paths:
         parts.append({"inlineData": {
             "data": base64.b64encode(p.read_bytes()).decode(),
             "mimeType": "image/jpeg",
         }})
-    parts.append({"text": TEXT_DNA_PROMPT.format(count=len(thumb_paths[:8]))})
+    parts.append({"text": TEXT_DNA_PROMPT.format(count=len(thumb_paths))})
 
     try:
         with httpx.Client(timeout=120.0) as c:
             resp = c.post(url, json={
                 "contents": [{"role": "user", "parts": parts}],
                 "generationConfig": {"responseModalities": ["TEXT"], "temperature": 0.2},
-            }, headers={"Content-Type": "application/json"})
+            }, headers=gcp_auth.auth_headers())
         if resp.status_code >= 300:
             return ""
         payload = resp.json()

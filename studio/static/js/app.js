@@ -4,50 +4,73 @@ import { api } from "./api.js";
 import { h, icons, $ } from "./components.js";
 import { register, start } from "./router.js";
 
-import * as home from "./routes/home.js";
-import * as trackers from "./routes/trackers.js";
-import * as bookmarks from "./routes/bookmarks.js";
-import * as ideas from "./routes/ideas.js";
-import * as titles from "./routes/titles.js";
-import * as thumbnails from "./routes/thumbnails.js";
-import * as winners from "./routes/winners.js";
-import * as settings from "./routes/settings.js";
-import * as archive from "./routes/archive.js";
+import * as homeNew        from "./routes/home_new.js";
+import * as home            from "./routes/home.js";
+import * as randomChannels  from "./routes/random_channels.js";
+import * as trackers        from "./routes/trackers.js";
+import * as bookmarks       from "./routes/bookmarks.js";
+import * as ideas           from "./routes/ideas.js";
+import * as titles          from "./routes/titles.js";
+import * as thumbnails      from "./routes/thumbnails.js";
 
-register("/home",       home);
-register("/trackers",   trackers);
-register("/bookmarks",  bookmarks);
-register("/ideas",      ideas);
-register("/titles",     titles);
-register("/thumbnails", thumbnails);
-register("/archive",    archive);
-register("/winners",    winners);
-register("/settings",   settings);
+import * as settings        from "./routes/settings.js";
+import * as archive         from "./routes/archive.js";
+import * as smartFinds      from "./routes/smart_finds.js";
+import * as channelsWs      from "./routes/channels_ws.js";
+import * as lab             from "./routes/lab.js";
+import * as myVideos        from "./routes/my_videos.js";
+import * as templates       from "./routes/templates.js";
+import * as myStyles        from "./routes/my_styles.js";
+
+register("/home",             homeNew);
+register("/outliers",         home);
+register("/random-channels",  randomChannels);
+register("/trackers",         trackers);
+register("/bookmarks",        bookmarks);
+register("/ideas",            ideas);
+register("/titles",           titles);
+register("/thumbnails",       thumbnails);
+register("/archive",          archive);
+register("/smart-finds",      smartFinds);
+
+register("/my-channels",      channelsWs);
+register("/my-videos",        myVideos);
+register("/my-styles",        myStyles);
+register("/lab",              lab);
+register("/templates",        templates);
+register("/settings",         settings);
 
 const NAV = [
   { section: "Outliers", items: [
-    { path: "/home",       label: "Home",       icon: icons.home },
-    { path: "/trackers",   label: "Channels",   icon: icons.track },
-    { path: "/bookmarks",  label: "Bookmarks",  icon: icons.bookmark },
+    { path: "/home",            label: "Home",            icon: icons.home   },
+    { path: "/outliers",        label: "Random Outliers", icon: icons.random },
+    { path: "/random-channels", label: "Random Channels", icon: icons.track  },
+    { path: "/trackers",        label: "Channels",        icon: icons.track  },
+    { path: "/smart-finds",     label: "Smart Finds",     icon: icons.search },
+    { path: "/bookmarks",       label: "Bookmarks",       icon: icons.bookmark },
   ]},
   { section: "Create", items: [
     { path: "/ideas",      label: "Idea Generator",      icon: icons.idea },
     { path: "/titles",     label: "Title Generator",     icon: icons.title },
     { path: "/thumbnails", label: "Thumbnail Generator", icon: icons.thumb },
   ]},
+  { section: "My Studio", items: [
+    { path: "/my-channels", label: "My Channels", icon: icons.track },
+    { path: "/my-videos",   label: "My videos",   icon: icons.film || icons.idea },
+    { path: "/my-styles",   label: "My Styles",   icon: icons.sparkle },
+    { path: "/templates",   label: "My Templates", icon: icons.title },
+    { path: "/lab",         label: "The Lab",     icon: icons.idea },
+  ]},
   { section: "Library", items: [
     { path: "/archive",    label: "Archive",             icon: icons.folder || icons.bookmark },
   ]},
-  { section: "Analyze", items: [
-    { path: "/winners",    label: "Thumbnail Winners",   icon: icons.winner, badge: "Beta" },
-  ]},
+
 ];
 
 function buildSidebar() {
   const sidebar = h("aside", { class: "sidebar" }, [
     h("a", { class: "brand", href: "#/home" }, [
-      h("span", { class: "brand-mark" }, ["YT"]),
-      h("span", { class: "brand-text" }, ["YTcopilot"]),
+      h("img", { class: "brand-logo", src: "/static/img/logo.png", alt: "YTcopilot" }),
     ]),
 
     h("div", { class: "credits" }, [
@@ -105,6 +128,7 @@ function init() {
   pollCredits();
 }
 
+let _creditsPollId = null;
 async function pollCredits() {
   const el = document.getElementById("credits-value");
   const tick = async () => {
@@ -116,7 +140,8 @@ async function pollCredits() {
     } catch { /* ignore */ }
   };
   tick();
-  setInterval(tick, 5000);
+  if (_creditsPollId !== null) clearInterval(_creditsPollId);
+  _creditsPollId = setInterval(tick, 5000);
 }
 
 init();

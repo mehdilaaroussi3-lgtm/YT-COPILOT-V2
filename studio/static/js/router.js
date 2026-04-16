@@ -3,16 +3,15 @@
 const routes = new Map();
 let currentRoute = null;
 let currentUnmount = null;
+let mountGeneration = 0; // incremented on every navigation; stale mounts check this
 
 export function register(path, module) {
   routes.set(path, module);
 }
 
 export function navigate(path, state = null) {
-  // Pass state via sessionStorage (survives hash change, not page reload)
   if (state) sessionStorage.setItem(`_route_state_${path}`, JSON.stringify(state));
   if (location.hash === `#${path}`) {
-    // Same route — force re-mount
     handleRoute();
   } else {
     location.hash = `#${path}`;
@@ -45,9 +44,14 @@ async function handleRoute() {
   const route = routes.get(path) || routes.get("/home");
   if (!route) return;
 
-  // Unmount previous
+  // Claim this navigation slot — any older async mount that finishes
+  // after this point will see gen !== mountGeneration and bail out.
+  const gen = ++mountGeneration;
+
+  // Unmount previous route
   if (typeof currentUnmount === "function") {
     try { currentUnmount(); } catch (e) { console.error(e); }
+    currentUnmount = null;
   }
 
   // Update sidebar active state
@@ -55,26 +59,34 @@ async function handleRoute() {
     el.classList.toggle("active", el.dataset.route === path);
   });
 
-  // Mount new
-  const outlet = document.getElementById("outlet");
-  outlet.innerHTML = "";
-  outlet.classList.remove("content-entrance");
-  // Force reflow so animation replays
-  void outlet.offsetWidth;
-  outlet.classList.add("content-entrance");
+  // Replace the outlet element entirely.
+  // Any in-flight async mount from the previous route holds a reference to
+  // the OLD (now detached) outlet — its DOM writes go nowhere visible.
+  const oldOutlet = document.getElementById("outlet");
+  const freshOutlet = oldOutlet.cloneNode(false); // same tag + classes, no children
+  freshOutlet.classList.remove("content-entrance");
+  void freshOutlet.offsetWidth; // force reflow so animation replays
+  freshOutlet.classList.add("content-entrance");
+  oldOutlet.replaceWith(freshOutlet);
 
   try {
-    currentUnmount = await route.mount(outlet, {
+    const unmount = await route.mount(freshOutlet, {
       query,
       state: consumeState(path),
     });
+
+    // If the user navigated again while this mount was awaiting,
+    // discard — a newer handleRoute() already owns the outlet.
+    if (gen !== mountGeneration) return;
+
+    currentUnmount = unmount || null;
     currentRoute = path;
   } catch (e) {
+    if (gen !== mountGeneration) return;
     console.error(e);
-    outlet.innerHTML = `<div class="card"><h2 class="display-m">Error</h2><p class="body-s" style="margin-top:12px">${e.message}</p></div>`;
+    freshOutlet.innerHTML = `<div class="card"><h2 class="display-m">Error</h2><p class="body-s" style="margin-top:12px">${e.message}</p></div>`;
   }
 
-  // Scroll to top on navigation
   window.scrollTo(0, 0);
 }
 

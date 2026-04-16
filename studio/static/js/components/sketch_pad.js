@@ -157,6 +157,20 @@ export function openSketchPad({ onUse, initialBlob } = {}) {
 
   const canvasWrap = el("div", { class: "sketch-canvas-wrap" }, [canvas]);
 
+  // SketchHelp — optional natural-language description to boost AI reading
+  const sketchHelpInput = el("textarea", {
+    class: "sketch-help-input",
+    placeholder: "Optional: describe what you drew to help the AI read it accurately — e.g. \"Black hole center-left, galaxy spiral to the right, person silhouette bottom\"",
+    rows: 2,
+  });
+  const sketchHelpSection = el("div", { class: "sketch-help-section" }, [
+    el("div", { class: "sketch-help-label" }, [
+      el("span", { class: "sketch-help-badge" }, ["SketchHelp"]),
+      el("span", { class: "sketch-help-desc" }, ["Optional — helps the AI understand your drawing"]),
+    ]),
+    sketchHelpInput,
+  ]);
+
   const cancelBtn = el("button", { class: "btn" }, ["Cancel"]);
   const useBtn = el("button", { class: "btn primary" }, ["Use Sketch"]);
   const footer = el("div", { class: "sketch-footer" }, [
@@ -165,7 +179,7 @@ export function openSketchPad({ onUse, initialBlob } = {}) {
     cancelBtn, useBtn,
   ]);
 
-  const panel = el("div", { class: "sketch-panel" }, [header, toolbar, canvasWrap, footer]);
+  const panel = el("div", { class: "sketch-panel" }, [header, toolbar, canvasWrap, sketchHelpSection, footer]);
   const backdrop = el("div", { class: "sketch-backdrop" }, [panel]);
 
   const close = () => {
@@ -187,17 +201,19 @@ export function openSketchPad({ onUse, initialBlob } = {}) {
 
   useBtn.addEventListener("click", () => {
     commitTextEditor();
+    const helpText = sketchHelpInput.value.trim();
     canvas.toBlob((blob) => {
       if (!blob) return;
       const file = new File([blob], "sketch.png", { type: "image/png" });
-      onUse && onUse(file);
+      onUse && onUse(file, helpText);
       close();
     }, "image/png");
   });
 
   // Keyboard shortcuts
   const onKey = (e) => {
-    if (state.textEditor) return; // typing inside text input
+    if (state.textEditor) return; // typing inside canvas text input
+    if (document.activeElement === sketchHelpInput) return; // typing in SketchHelp
     if ((e.ctrlKey || e.metaKey) && e.key === "z") { e.preventDefault(); doUndo(); return; }
     if ((e.ctrlKey || e.metaKey) && (e.key === "y" || (e.shiftKey && e.key === "Z"))) { e.preventDefault(); doRedo(); return; }
     if (e.key === "Escape") { close(); return; }

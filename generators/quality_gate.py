@@ -7,9 +7,7 @@ from pathlib import Path
 import httpx
 
 from cli import config as cfg
-
-VERTEX_HOST = "https://aiplatform.googleapis.com"
-ENDPOINT_TMPL = "/v1/publishers/google/models/{model}:generateContent"
+from generators import gcp_auth
 
 DESCRIBE_PROMPT = """\
 Describe this YouTube thumbnail in 60-100 words:
@@ -24,9 +22,8 @@ Describe this YouTube thumbnail in 60-100 words:
 
 
 def describe(image_path: Path) -> str:
-    api_key = cfg.get("vertex.api_key")
     model = cfg.get("gemini.vision_model", "gemini-2.5-pro")
-    url = f"{VERTEX_HOST}{ENDPOINT_TMPL.format(model=model)}?key={api_key}"
+    url = gcp_auth.vertex_url(model)
     body = {
         "contents": [{"role": "user", "parts": [
             {"inlineData": {"data": base64.b64encode(image_path.read_bytes()).decode(),
@@ -36,7 +33,7 @@ def describe(image_path: Path) -> str:
         "generationConfig": {"responseModalities": ["TEXT"]},
     }
     with httpx.Client(timeout=120.0) as c:
-        resp = c.post(url, json=body, headers={"Content-Type": "application/json"})
+        resp = c.post(url, json=body, headers=gcp_auth.auth_headers())
     resp.raise_for_status()
     payload = resp.json()
     out = []

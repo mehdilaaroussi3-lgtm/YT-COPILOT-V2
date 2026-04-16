@@ -27,7 +27,7 @@ export function streamJob(url, { onMessage, onVariant, onError, signal } = {}) {
     es.addEventListener("error", (e) => {
       close();
       let err;
-      try { err = JSON.parse(e.data).error; } catch { err = "connection closed"; }
+      try { err = JSON.parse(e.data || "{}").error || "connection closed"; } catch { err = e.message || "connection closed"; }
       onError && onError(err);
       reject(new Error(err));
     });

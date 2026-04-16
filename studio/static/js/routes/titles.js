@@ -13,6 +13,22 @@ export async function mount(outlet, { state }) {
 
   const trackers = (await api.trackers()).items;
   const defaultTracker = trackers.find((t) => t.is_default);
+
+  // Build channel_id → @handle / name lookup for history display
+  const channelLookup = {};
+  for (const t of trackers) {
+    const pretty = t.handle ? `@${t.handle}` : (t.name || "");
+    channelLookup[t.channel_id] = pretty;
+    if (t.handle) channelLookup[t.handle] = `@${t.handle}`;
+  }
+  function prettyChannel(c) {
+    if (!c) return "Unknown channel";
+    if (channelLookup[c]) return channelLookup[c];
+    if (typeof c === "string" && c.startsWith("@")) return c;
+    if (typeof c === "string" && c.startsWith("UC")) return "Unknown channel";
+    return c;
+  }
+
   const prefillIdea = state?.prefill_idea || "";
   const prefillChannel = state?.channel || "";
   const picker = channelPicker({
@@ -147,6 +163,7 @@ export async function mount(outlet, { state }) {
   }
 
   async function afterTitles(channelTitles, outlierTitles, channel, alsoThumbs) {
+    if (!outlet.isConnected) return; // completed in background — preserve job state for return
     results.innerHTML = "";
     if (!alsoThumbs) {
       renderDualTitles(results, channelTitles, outlierTitles, channel);
@@ -174,6 +191,7 @@ export async function mount(outlet, { state }) {
     genBtn.innerHTML = `<span class="spinner-sm"></span><span>Rendering thumbnails…</span>`;
     await Promise.all(titles.map((t, i) => renderThumbnailTile(t, i, channel, tiles[i])));
 
+    if (!outlet.isConnected) return;
     renderHistory();
     resetBtn();
     clearActiveJob();
@@ -348,7 +366,7 @@ export async function mount(outlet, { state }) {
       const first = rows[0];
       historyWrap.appendChild(h("div", { style: { marginBottom: "32px" } }, [
         h("div", { class: "flex between center", style: { marginBottom: "10px" } }, [
-          h("div", { class: "caption" }, [`${first.channel}  —  ${first.source_idea.slice(0, 80)}${first.source_idea.length > 80 ? "…" : ""}`]),
+          h("div", { class: "caption" }, [`${prettyChannel(first.channel)}  —  ${first.source_idea.slice(0, 80)}${first.source_idea.length > 80 ? "…" : ""}`]),
           h("div", { class: "caption" }, [formatRelative(first.created_at)]),
         ]),
         h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "8px" } },
@@ -357,4 +375,8 @@ export async function mount(outlet, { state }) {
     }
   }
   renderHistory();
+
+  return function unmount() {
+    hideRunningBanner(); // stops the timer interval immediately
+  };
 }
