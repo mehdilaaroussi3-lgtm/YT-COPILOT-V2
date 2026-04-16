@@ -106,7 +106,6 @@ function thumbSlide(it) {
   const score = it.outlier_score || 0;
   return h("div", {
     class: "slide thumb-slide",
-    onclick: () => navigate("/thumbnails", { reference_video: it }),
     title: it.title || "",
   }, [
     h("img", {
@@ -141,7 +140,6 @@ function channelSlide(ch) {
     : h("div", { class: "chan-avatar-fallback" }, [initials]);
   return h("div", {
     class: "slide chan-slide",
-    onclick: () => navigate(`/outliers?channel_id=${ch.channel_id}`),
     title: ch.name,
   }, [
     h("div", { class: "chan-avatar" }, [avatar]),
@@ -178,7 +176,6 @@ function styleSlide(s) {
   }
   return h("div", {
     class: "slide style-slide",
-    onclick: () => navigate("/lab"),
     title: s.name || "",
   }, [
     h("img", { class: "slide-img", src: previewUrl, alt: s.name || "", loading: "lazy" }),

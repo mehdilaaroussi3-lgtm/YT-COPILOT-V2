@@ -24,7 +24,10 @@ data/*.db-journal
 data/channel_thumbnails/
 data/channel_logos/
 data/logos_archive/
-data/custom_styles/
+data/custom_styles/*
+!data/custom_styles/*/
+data/custom_styles/*/*
+!data/custom_styles/*/preview.png
 data/productions/
 data/reverse/
 data/lab/
